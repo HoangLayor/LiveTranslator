@@ -1,0 +1,72 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.log
+*.env
+.env
+.venv/
+venv/
+*.sqlite3
+
+# FastAPI / Uvicorn specific
+instance/
+*.db
+*.sqlite
+
+# Virtual environment
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# VS Code settings
+.vscode/
+
+# macOS files
+.DS_Store
+
+# Node.js / React
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+build/
+dist/
+.cache/
+.next/
+out/
+
+# Tailwind / PostCSS
+*.css.map
+*.postcss
+
+# Frontend static files (generated)
+frontend/static/css/
+frontend/static/js/
+
+# Docker / Compose
+*.pid
+docker-compose.override.yml
+*.tar
+*.img
+*.container
+
+# Testing
+.coverage
+htmlcov/
+.tox/
+nosetests.xml
+pytest_cache/
+__coverage__/
+
+# System
+Thumbs.db
+ehthumbs.db
+*.swp
+*.swo
