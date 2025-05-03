@@ -1,0 +1,1252 @@
+{
+    "pred": "Tôi phải đi ngủ.",
+    "target": "Tôi phải đi ngủ."
+}
+{
+    "pred": "- Anh đang làm gì vậy?",
+    "target": "Bạn đang làm gì đây?"
+}
+{
+    "pred": "Cái gì thế?",
+    "target": "Cái này là gì?"
+}
+{
+    "pred": "Hôm nay là ngày 18 tháng 6, và đó là ngày sinh nhật của Muriel!",
+    "target": "Hôm nay là ngày 18 tháng sáu, và cũng là ngày sinh nhật của Muiriel!"
+}
+{
+    "pred": "Chúc mừng sinh nhật, Muriel!",
+    "target": "Chúc mừng sinh nhật, Muiriel!"
+}
+{
+    "pred": "Muriel đang ở tuổi 20.",
+    "target": "Bây giờ Muiriel được 20 tuổi."
+}
+{
+    "pred": "Từ khóa Muiriel.",
+    "target": "Mật mã là \"Muiriel\"."
+}
+{
+    "pred": "Tôi không có lời nói.",
+    "target": "Tôi hết lời để nói."
+}
+{
+    "pred": "Tôi không biết phải nói gì.",
+    "target": "Tôi không biết nên nói gì cả..."
+}
+{
+    "pred": "Đó là một con thỏ ác.",
+    "target": "Đó là một con thỏ hung ác."
+}
+{
+    "pred": "Đây là bức ảnh mới sao?",
+    "target": "Tấm hình này có mới không?"
+}
+{
+    "pred": "Cuối cùng, mỗi người phải tự học.",
+    "target": "Rốt cuộc, ai cũng phải tự học thôi."
+}
+{
+    "pred": "Không thể xảy ra.",
+    "target": "Sẽ không xảy ra đâu."
+}
+{
+    "pred": "Tôi sẽ cố gắng không cản trở bạn học.",
+    "target": "Tôi sẽ cố không quấy rầy bạn học hành."
+}
+{
+    "pred": "Đừng lo.",
+    "target": "Đừng lo."
+}
+{
+    "pred": "Tôi sẽ gọi cho họ vào ngày mai khi tôi về nhà.",
+    "target": "Toi se goi ho ngay mai."
+}
+{
+    "pred": "Anh nên ngủ đi.",
+    "target": "Bạn nên đi ngủ đi."
+}
+{
+    "pred": "Người cuối cùng tôi nói với ý tưởng của tôi đã nghĩ tôi điên.",
+    "target": "Người trước tôi nói ý kiến với tưởng tôi điên."
+}
+{
+    "pred": "Nếu thế giới không như thế này, tôi có thể tin tưởng vào con người.",
+    "target": "Nếu thế giới không như bây giờ, thì tôi có thể tin ai cũng được."
+}
+{
+    "pred": "Thật không may, đó là sự thật.",
+    "target": "Tiếc rằng cái đó là sự thật."
+}
+{
+    "pred": "Hầu hết mọi người nghĩ tôi điên.",
+    "target": "Phần nhiều người ta nghĩ tôi điên."
+}
+{
+    "pred": "Ôi, đây là một con bướm!",
+    "target": "Ô kìa, con bươm bướm!"
+}
+{
+    "pred": "Nếu tôi có thể như thế...",
+    "target": "Giá mà tôi cũng như vậy..."
+}
+{
+    "pred": "Điều đó phụ thuộc vào bối cảnh.",
+    "target": "Cái đó tùy thuộc vào văn cảnh."
+}
+{
+    "pred": "Đó là điều ngu ngốc nhất tôi từng nói.",
+    "target": "Cái đó la một cái điều tào lao nhất tôi noi từ xưa đến giờ."
+}
+{
+    "pred": "Mỹ là một nơi rất dễ thương nếu bạn đang ở đây để kiếm tiền.",
+    "target": "Sống ở Mỹ rất thích nếu là ở đây để kiếm tiền."
+}
+{
+    "pred": "Tôi quá béo.",
+    "target": "Tôi mập quá."
+}
+{
+    "pred": "Vậy là sao?",
+    "target": "Thì sao?"
+}
+{
+    "pred": "Tôi sẽ bắn hắn.",
+    "target": "Tao sẽ bắn nó suống."
+}
+{
+    "pred": "Đó là vì cô là một cô gái.",
+    "target": "Cái đó tại vì bạn là đàn bà."
+}
+{
+    "pred": "Tôi không muốn tự ích kỷ.",
+    "target": "Tôi không có ý định ích kỷ đâu."
+}
+{
+    "pred": "Anh có bao nhiêu người bạn thân?",
+    "target": "Bạn có bao nhiêu bạn thân?"
+}
+{
+    "pred": "Có thể tìm được thời gian.",
+    "target": "Một người luôn luôn có thể kiếm thêm thì giờ."
+}
+{
+    "pred": "Nhiều người viết về cuộc sống bình thường của họ.",
+    "target": "Phần nhiều người ta viết về chuyện cuộc đời hàng ngày."
+}
+{
+    "pred": "Nếu tôi có thể gửi cho anh một con xa hoa, Chang, tôi sẽ làm điều đó.",
+    "target": "Nếu tôi có thể gửi Trang một cục marshmallow thì tôi sẽ gửi."
+}
+{
+    "pred": "Tôi là người có những khuyết điểm, nhưng đó là những khuyết điểm có thể dễ dàng khắc phục.",
+    "target": "Tôi là người có nhiều thói xấu nhưng những thói xấu này có thể dễ dàng sửa."
+}
+{
+    "pred": "Bất cứ khi nào tôi tìm thấy thứ gì đó mà tôi thích, nó quá đắt.",
+    "target": "Hễ tôi kiếm được cái gì tôi thích thì nó lại đắt quá."
+}
+{
+    "pred": "Có lẽ cũng như anh ta.",
+    "target": "Có lẽ cũng vậy cho anh ấy luôn."
+}
+{
+    "pred": "Điều đó rất thú vị.",
+    "target": "Cái đó nhìn hấp dẫn."
+}
+{
+    "pred": "Giáo viên vật lý của tôi không quan tâm tôi bỏ lỡ lớp học hay không.",
+    "target": "Thầy vật lý không để ý đến việc lên lớp của tôi."
+}
+{
+    "pred": "Tôi không thích đám đông.",
+    "target": "Tôi ghét những lúc đông người."
+}
+{
+    "pred": "Cảnh sát sẽ bắt các anh tìm ra đạn.",
+    "target": "Cảnh sát sẽ bắt bạn tìm ra mấy viên đạn."
+}
+{
+    "pred": "Cảm ơn anh đã giải thích.",
+    "target": "Cám ơn chỉ dạy."
+}
+{
+    "pred": "Tôi không hiểu anh muốn nói gì.",
+    "target": "Tôi không biết ý của bạn là gì."
+}
+{
+    "pred": "Anh muốn nói với tôi về tự do?",
+    "target": "Bạn muốn nói với tôi về sự tự do hả?"
+}
+{
+    "pred": "Có rất nhiều từ tôi không hiểu.",
+    "target": "Có nhiều chữ tôi không hiểu."
+}
+{
+    "pred": "Tôi cần hỏi anh một câu hỏi ngu ngốc.",
+    "target": "Tôi cần hỏi một câu hỏi ngớ ngẩn."
+}
+{
+    "pred": "Tôi không biết làm thế nào để cho thấy điều đó, bởi vì nó đã rõ ràng.",
+    "target": "Tôi không biết phải trình bày thế nào, bởi vì nó đã quá rõ ràng rồi."
+}
+{
+    "pred": "Có thể nói khác không?",
+    "target": "Có thể nói cách khác được không?"
+}
+{
+    "pred": "Tôi đã tìm ra giải pháp, nhưng tôi đã tìm ra nó nhanh đến nỗi nó chắc chắn không thể đúng.",
+    "target": "Tôi đã tìm ra cách, nhưng mà tìm ra nhanh thế này thì chắc hẳn đó không phải là cách hay rồi."
+}
+{
+    "pred": "Tôi thấy điều đó thú vị!",
+    "target": "Cái này rất là hấp dẫn!"
+}
+{
+    "pred": "Nhưng trừ nơi này, không phải là dễ dàng.",
+    "target": "Nhưng ở đây, không dễ dàng như vậy đâu."
+}
+{
+    "pred": "Không, đó không phải là bạn trai mới của tôi.",
+    "target": "Không, anh ấy không phải bạn trai mới của tôi."
+}
+{
+    "pred": "Anh không có giờ học hay sao?",
+    "target": "Bạn không bao giờ có lớp hay sao?"
+}
+{
+    "pred": "Vấn đề là gì?",
+    "target": "Vấn đề ở đâu?"
+}
+{
+    "pred": "Tôi chỉ có thể chờ đợi.",
+    "target": "Tôi chỉ còn chờ đợi được thôi."
+}
+{
+    "pred": "Tôi yêu anh!",
+    "target": "Anh phải lòng em."
+}
+{
+    "pred": "Tôi không thích anh nữa.",
+    "target": "Tao không thích mày nữa."
+}
+{
+    "pred": "Xin chúc mừng anh.",
+    "target": "Xin chúc mừng!"
+}
+{
+    "pred": "Tôi không biết phải làm gì nữa.",
+    "target": "Tôi không còn biết phải làm gì nữa."
+}
+{
+    "pred": "Tôi không muốn điều này xảy ra.",
+    "target": "Tôi cũng không muốn vụ này xảy ra."
+}
+{
+    "pred": "Anh có thể đoán được điều gì sẽ xảy ra.",
+    "target": "Chắc bạn cũng đoán được cái gì xảy ra mà."
+}
+{
+    "pred": "Tôi có những lựa chọn nào khác?",
+    "target": "Tôi còn có sự chọn lựa nào khác nữa?"
+}
+{
+    "pred": "Tôi không thể làm gì tốt hơn.",
+    "target": "Tôi không có gì tốt hơn để làm hết."
+}
+{
+    "pred": "Mỗi người đều có điểm mạnh và điểm yếu.",
+    "target": "Người nào cũng có cái hay và cái dở của họ."
+}
+{
+    "pred": "Tôi không biết tôi có còn có nó không.",
+    "target": "Không biết là tôi còn không nữa."
+}
+{
+    "pred": "Anh nghĩ tôi đã làm gì?",
+    "target": "Bạn nghĩ tôi đang làm gì?"
+}
+{
+    "pred": "Mẹ tôi không nói tiếng Anh tốt.",
+    "target": "Mẹ của tôi không nói tiếng Anh giỏi lắm."
+}
+{
+    "pred": "Làm sao bạn có thể tìm thấy thức ăn trong không gian?",
+    "target": "Làm sao để tìm được thức ăn khi đang ở ngoài không gian?"
+}
+{
+    "pred": "Mọi người đều muốn gặp anh, anh là một người nổi tiếng!",
+    "target": "Mọi người muốn gặp bạn vì bạn nổi tiếng!"
+}
+{
+    "pred": "Tôi không thể chịu đựng được kiểu chữ chính thức!",
+    "target": "Tôi rất ghét phải viết theo khuôn mẫu!"
+}
+{
+    "pred": "Sao anh không ngủ lâu thế?",
+    "target": "Bạn làm gì mà thức khuya quá vậy?"
+}
+{
+    "pred": "Anh không đủ nhanh.",
+    "target": "Bạn không đủ nhanh."
+}
+{
+    "pred": "Chỉ có một cái thật đẹp.",
+    "target": "Chỉ có sự thật là tốt đẹp."
+}
+{
+    "pred": "Tôi không nói tiếng Nhật.",
+    "target": "Tôi không biết nói tiếng Nhật."
+}
+{
+    "pred": "Không ai hiểu tôi.",
+    "target": "Không ai hiểu được tôi hết."
+}
+{
+    "pred": "Không thể!",
+    "target": "Khong thế nào!"
+}
+{
+    "pred": "Học tiếng Pháp trong 23 năm là khá khó.",
+    "target": "Rất là khó để thành thạo tiếng Pháp trong hai hay ba năm."
+}
+{
+    "pred": "Không có nghi ngờ gì nữa, vũ trụ là vô tận.",
+    "target": "Nhưng mà vũ trụ là vô tận."
+}
+{
+    "pred": "Tuy nhiên, điều ngược lại cũng đúng.",
+    "target": "Nhưng, sự trái ngược cũng luôn luôn có lý."
+}
+{
+    "pred": "Vì lỗi của anh, tôi mất thèm ăn.",
+    "target": "Nhờ ơn của bạn tôi hết còn thèm ăn."
+}
+{
+    "pred": "Tôi đói rồi!",
+    "target": "Tôi đói quá rồi!"
+}
+{
+    "pred": "Tôi đã mất cảm hứng.",
+    "target": "Tôi đã mất hưng."
+}
+{
+    "pred": "- Anh nói gì vậy?",
+    "target": "Bạn đang nói cái gì vậy?"
+}
+{
+    "pred": "Mùa đông là thời điểm yêu thích của tôi.",
+    "target": "Mùa đông là mùa tôi thích nhất."
+}
+{
+    "pred": "Anh đến từ quốc gia nào?",
+    "target": "Bạn đến từ nước nào vậy?"
+}
+{
+    "pred": "Tôi sẽ quay lại sớm thôi.",
+    "target": "Tôi trở lại mau."
+}
+{
+    "pred": "Tôi không biết.",
+    "target": "Tôi không biết."
+}
+{
+    "pred": "Nhanh lên!",
+    "target": "Mau lên!"
+}
+{
+    "pred": "Hãy nói chuyện với tôi, Chang!",
+    "target": "Thôi nào! Nói chuyện với mình đi Trang."
+}
+{
+    "pred": "Một, hai, ba, bốn, năm, sáu, bảy, tám, chín, mười.",
+    "target": "Một, hai, ba, bốn, năm, sáu, bảy, tám, chín, mười."
+}
+{
+    "pred": "Mưa đã biến thành tuyết.",
+    "target": "Mưa chuyển thành tuyết."
+}
+{
+    "pred": "Tên anh là gì?",
+    "target": "Ông tên là gì?"
+}
+{
+    "pred": "Tên anh là gì?",
+    "target": "Bà tên là gì?"
+}
+{
+    "pred": "- Ai là hắn?",
+    "target": "Anh ấy là ai?"
+}
+{
+    "pred": "Lửa của sự đau khổ bắt đầu.",
+    "target": "Vạn sự khởi đầu nan."
+}
+{
+    "pred": "Tất cả các con đường đều dẫn đến Rome.",
+    "target": "Ðường nào cũng tới La Mã."
+}
+{
+    "pred": "Không có khói mà không có lửa.",
+    "target": "Không có lửa sao có khói."
+}
+{
+    "pred": "Hôm nay là thứ Hai.",
+    "target": "Hôm nay là thứ Hai."
+}
+{
+    "pred": "Tại sao cô bé đó khóc?",
+    "target": "Sao em ấy lại khóc?"
+}
+{
+    "pred": "Tại sao đứa trẻ đó khóc?",
+    "target": "Sao em ấy lại khóc?"
+}
+{
+    "pred": "Tại sao anh ta khóc?",
+    "target": "Sao em ấy lại khóc?"
+}
+{
+    "pred": "Tại sao cô ấy khóc?",
+    "target": "Sao em ấy lại khóc?"
+}
+{
+    "pred": "Con lạc đã tháo cả hai cánh.",
+    "target": "Một con vịt xòe ra hai cái cánh."
+}
+{
+    "pred": "Con vịt đang sấp sấp.",
+    "target": "Con vịt kêu quác quác."
+}
+{
+    "pred": "Đừng làm phiền chúng tôi nữa!",
+    "target": "Đừng làm phiền người ta nữa!"
+}
+{
+    "pred": "Cô gái này đã hết kiên nhẫn rồi.",
+    "target": "Cô ấy đã hết kiên nhẫn rồi."
+}
+{
+    "pred": "Bộ phim này thật sự rất buồn tẻ!",
+    "target": "Bộ phim này chán òm!"
+}
+{
+    "pred": "Hôm qua anh ta đã nói dối!",
+    "target": "Hôm qua anh ta nói dối đấy."
+}
+{
+    "pred": "Cô ấy đã nói dối hôm qua!",
+    "target": "Hôm qua anh ta nói dối đấy."
+}
+{
+    "pred": "Không có cá và ung thư cá.",
+    "target": "Không chó bắt mèo ăn dơ."
+}
+{
+    "pred": "Em phải nhớ rằng em bé còn trẻ hơn em nhiều.",
+    "target": "Bạn phải luôn nhớ rằng cô ta nhỏ tuổi hơn bạn nhiều."
+}
+{
+    "pred": "Ông tập trung vào việc dạy những lời ngón ngữ.",
+    "target": "Anh ấy đã tập trung vào việc học các giới từ."
+}
+{
+    "pred": "Đừng hỏi họ nghĩ gì, hãy hỏi họ làm gì.",
+    "target": "Đừng hỏi những gì họ nghĩ. Hãy hỏi những gì họ làm."
+}
+{
+    "pred": "Tôi đi dạo, anh sẽ đi không?",
+    "target": "Tôi đi chơi, anh đi không?"
+}
+{
+    "pred": "Tôi không có thời gian để ngồi và nói chuyện.",
+    "target": "tôi không có thời gian để ngồi nói chuyện."
+}
+{
+    "pred": "Tôi không có thời gian để ngồi và nói chuyện.",
+    "target": "Tôi không rảnh để ngồi nói chuyện."
+}
+{
+    "pred": "Những gì anh trồng, anh sẽ thu hoạch.",
+    "target": "Gieo gì gặt nấy."
+}
+{
+    "pred": "Đó là lỗi của anh.",
+    "target": "Bạn phải chịu trách nhiệm về tai nạn này."
+}
+{
+    "pred": "Sưởi ấm là một loại năng lượng.",
+    "target": "Nhiệt là một hình thức năng lượng."
+}
+{
+    "pred": "Những gì anh trồng, anh sẽ thu hoạch.",
+    "target": "Gieo gì gặt nấy."
+}
+{
+    "pred": "Chúng tôi cho con chó của mình ăn ba lần mỗi ngày.",
+    "target": "Chúng tôi cho chó của chúng tôi ăn ba lần một ngày."
+}
+{
+    "pred": "Cô ấy không có giấy phép lái xe.",
+    "target": "Chị ấy không có bằng lái xe."
+}
+{
+    "pred": "Ai là người đó?",
+    "target": "Nó là ai?"
+}
+{
+    "pred": "Nó như nước từ một con khỉ.",
+    "target": "Nườc đổ đầu vịt."
+}
+{
+    "pred": "Anh ta đi theo cách của mình, tôi đi theo cách của mình.",
+    "target": "Anh đi đường anh , tôi đi đường tôi."
+}
+{
+    "pred": "Anh đã gọi cho cô ấy à?",
+    "target": "bạn đã gọi cô ta chưa ?"
+}
+{
+    "pred": "Hoa chết vì thiếu độ ẩm.",
+    "target": "Bông hoa chết vì thiếu nước."
+}
+{
+    "pred": "Con gà đếm vào mùa thu.",
+    "target": "Chin mươi chủa què chớ khoe mình tốt."
+}
+{
+    "pred": "Tôi ăn táo.",
+    "target": "Tôi đang ăn táo."
+}
+{
+    "pred": "Cô không thể giấu được vải trong túi.",
+    "target": "Cái kim trong bọc cũng có ngày lòi ra."
+}
+{
+    "pred": "Tôi đã đi đến vườn thú.",
+    "target": "Tôi đã tới vườn thú."
+}
+{
+    "pred": "Tôi đã đi đến vườn thú.",
+    "target": "Tôi đã tới vườn thú."
+}
+{
+    "pred": "Người La Mã sẽ không có đủ thời gian để chinh phục thế giới nếu họ phải học tiếng Latinh trước.",
+    "target": "Nếu người La Mã phải học tiếng La-tinh trước rồi mới đi chinh phục thế giới thì sẽ không còn kịp nữa."
+}
+{
+    "pred": "Thật là rất ngon.",
+    "target": "Cái đó ăn rất ngon."
+}
+{
+    "pred": "Thật là rất ngon.",
+    "target": "Vị của nó thật sự ngon."
+}
+{
+    "pred": "Với mái tóc đỏ rực rỡ, Karl nổi bật trong đám đông.",
+    "target": "Với mái tóc đỏ chói của mình, Carl thực sự nổi bật trong đám đông."
+}
+{
+    "pred": "Nancy sẽ không bao giờ hẹn hò với tôi.",
+    "target": "Nancy sẽ không bao giờ hẹn hò với tôi. Cô ấy quá cao xa đối với tôi."
+}
+{
+    "pred": "Tôi yêu anh.",
+    "target": "Anh yêu em."
+}
+{
+    "pred": "Không ai làm được tốt hơn.",
+    "target": "Chẳng có ai làm việc này tốt hơn."
+}
+{
+    "pred": "Không ai làm được tốt hơn.",
+    "target": "Không ai làm việc này tốt hơn."
+}
+{
+    "pred": "Với sự bình an trên dây, mặc áo choàng trần truồng.",
+    "target": "Góp gió làm bão."
+}
+{
+    "pred": "Tom hỏi Mary liệu cô ấy có sớm trở lại không.",
+    "target": "Tom hỏi Mary có về sớm được không."
+}
+{
+    "pred": "Anh ta còn rất nhiều việc chưa làm.",
+    "target": "Anh vẫn còn nhiều việc phải làm."
+}
+{
+    "pred": "Có linh hồn sống ở đó không?",
+    "target": "Đó là những sinh vật gì?"
+}
+{
+    "pred": "Mẹ tôi không biết.",
+    "target": "Mẹ không biết."
+}
+{
+    "pred": "Có lẽ đôi khi cũng có thể cười, phải không?",
+    "target": "Giờ thì con có thể cười lên một chút không?"
+}
+{
+    "pred": "Cô ấy đã 20 tuổi rồi.",
+    "target": "Cô ấy đã mong chờ điều này 20 năm rồi."
+}
+{
+    "pred": "Đôi khi tôi nghĩ đến việc ly dị với anh ấy.",
+    "target": "Có lúc tôi nghĩ đến chuyện ly dị anh ta."
+}
+{
+    "pred": "Tôi không chỉ đưa ra lời khuyên cho anh ấy mà còn đưa ra xe đạp.",
+    "target": "Tôi không chỉ cho anh ấy lời khuyên, tôi còn tặng anh ấy một chiếc xe đạp."
+}
+{
+    "pred": "Tôi không chỉ đưa ra lời khuyên cho anh ấy mà còn đưa ra xe đạp.",
+    "target": "Tôi không chỉ cho anh ấy lời khuyên mà còn tặng anh ấy một chiếc xe đạp."
+}
+{
+    "pred": "Những gì anh gieo, anh sẽ thu hoạch.",
+    "target": "Gieo gì gặt nấy."
+}
+{
+    "pred": "Tôi thích bóng đá.",
+    "target": "Tôi thích bóng đá."
+}
+{
+    "pred": "Bạn uống cà phê không?",
+    "target": "Anh uống cà phê không ?"
+}
+{
+    "pred": "Có bao nhiêu quốc gia trên thế giới?",
+    "target": "Có bao nhiêu nước trên thế giới?"
+}
+{
+    "pred": "Tôi sẽ tham gia cuộc họp này.",
+    "target": "Tôi định tham dự buổi họp mặt ấy."
+}
+{
+    "pred": "Để tôi vào.",
+    "target": "Cho tôi vào."
+}
+{
+    "pred": "Công ty này nổi tiếng với sản phẩm chất lượng cao.",
+    "target": "Công ty đó được biết đến qua các sản phẩm chất lượng cao của họ."
+}
+{
+    "pred": "Mọi người đều có đồ uống yêu thích của mình.",
+    "target": "Mỗi người có một loại rượu ưu thích khác nhau."
+}
+{
+    "pred": "Ai cầm kiếm, sẽ chết vì nó.",
+    "target": "Chơi dao có ngày đứt tay."
+}
+{
+    "pred": "Chuyến đi nhanh đã làm anh ta tươi mới.",
+    "target": "Xe chạy nhanh làm nó tươi tỉnh lên."
+}
+{
+    "pred": "Một con mèo đen chạy giữa chúng.",
+    "target": "Họ bất hòa với nhau."
+}
+{
+    "pred": "Những gì anh trồng, anh sẽ thu hoạch.",
+    "target": "Gieo gì gặt nấy."
+}
+{
+    "pred": "Không ai cần.",
+    "target": "Chó tha đi mèo tha lại."
+}
+{
+    "pred": "Con chó mang lại, mèo lấy đi.",
+    "target": "Chó tha đi mèo tha lại."
+}
+{
+    "pred": "Một con chó béo sẽ xấu hổ về chủ của mình.",
+    "target": "Chó gầy hổ mặt người nuôi."
+}
+{
+    "pred": "Nó không bắt được con chó, nó sẽ ăn mèo.",
+    "target": "Không chó bắt mèo ăn dơ."
+}
+{
+    "pred": "Trishkin là một thợ làm cà phê.",
+    "target": "Giật gấu vá vai."
+}
+{
+    "pred": "Tháo chân, đập vai.",
+    "target": "Giật gấu vá vai."
+}
+{
+    "pred": "Hãy trở thành nạn nhân của những mưu đồ của mình.",
+    "target": "Gậy ông đập lưng ông."
+}
+{
+    "pred": "Ông nội đấm đập cổ ông ấy.",
+    "target": "Gậy ông đập lưng ông."
+}
+{
+    "pred": "Mặt trăng đã tối.",
+    "target": "Gấu ăn trăng."
+}
+{
+    "pred": "Con gấu đã ăn mặt trăng.",
+    "target": "Gấu ăn trăng."
+}
+{
+    "pred": "Không xe, không sân.",
+    "target": "Ăn gió nằm mưa."
+}
+{
+    "pred": "Ăn gió, ngủ dưới mưa.",
+    "target": "Ăn gió nằm mưa."
+}
+{
+    "pred": "Một cái bắp đã bị gãy ở giữa đường.",
+    "target": "Giữa đường đứt gánh."
+}
+{
+    "pred": "Người bạn đời đã chết.",
+    "target": "Giữa đường đứt gánh."
+}
+{
+    "pred": "Tay đang làm việc, hàm đang nhai.",
+    "target": "Tay làm hàm nhai."
+}
+{
+    "pred": "Nấu ăn bằng việc làm của mình.",
+    "target": "Tay làm hàm nhai."
+}
+{
+    "pred": "Hai lần năm là mười.",
+    "target": "Hai năm rõ mười."
+}
+{
+    "pred": "Dù mưa, tôi sẽ đến.",
+    "target": "Mà mưa thì vẫn cứ."
+}
+{
+    "pred": "Da và xương.",
+    "target": "Còn da bọc xương."
+}
+{
+    "pred": "Khi chơi với dao, chắc chắn bạn sẽ bị cắt.",
+    "target": "Chơi dao có ngày đứt tay."
+}
+{
+    "pred": "Đây là nơi mà những con bò bò đang đi đến.",
+    "target": "Đầu đường xó chợ."
+}
+{
+    "pred": "Đầu đường, góc thị trường.",
+    "target": "Đầu đường xó chợ."
+}
+{
+    "pred": "Ở gần chùa, Phật được gọi là anh em.",
+    "target": "Gần chùa gọi Bụt bằng anh."
+}
+{
+    "pred": "Sự gần gũi tạo ra sự gia đình.",
+    "target": "Gần chùa gọi Bụt bằng anh."
+}
+{
+    "pred": "Một đồng ru-bul sẽ giữ lại.",
+    "target": "Năng nhặt chặt bị."
+}
+{
+    "pred": "Bạn thường chọn, đạp túi vào.",
+    "target": "Năng nhặt chặt bị."
+}
+{
+    "pred": "Bạn sẽ không chết trước khi chết.",
+    "target": "Gần đất xa trời không thể thở được."
+}
+{
+    "pred": "Tôi muốn uống một chút nước.",
+    "target": "Tôi muốn uống một ly nước."
+}
+{
+    "pred": "Khi nào anh sẽ trả tiền cho tôi?",
+    "target": "Khi nào mày trả tiền cho tao?"
+}
+{
+    "pred": "Khi nào anh tốt nghiệp?",
+    "target": "Khi nào nó tốt nghiệp?"
+}
+{
+    "pred": "Mẹ và con bé đều khỏe mạnh.",
+    "target": "Chúc mẹ tròn con vuông."
+}
+{
+    "pred": "Gió sẽ thổi, sẽ có một cơn bão.",
+    "target": "Góp gió làm bão."
+}
+{
+    "pred": "Không có tiền cho linh hồn.",
+    "target": "Nghèo rớt mùng tơi."
+}
+{
+    "pred": "Như một con gà đang ngón tay.",
+    "target": "Chữ như gà bới."
+}
+{
+    "pred": "Hãy vẽ con cừu cho tôi!",
+    "target": "Xin vẽ hộ tôi một con cừu..."
+}
+{
+    "pred": "Không có khói mà không có lửa.",
+    "target": "Không có lửa, làm sao có khói."
+}
+{
+    "pred": "Trong sự hiệp nhất, cuộc sống, trong sự bất hòa, cái chết.",
+    "target": "Đoàn kết là sống, chia rẽ là chết."
+}
+{
+    "pred": "Không thể tìm lại thời gian bị mất.",
+    "target": "Thời gian đã mất thì không tìm lại được."
+}
+{
+    "pred": "Sự tốt lành sinh ra sự tốt lành, sự xấu  chỉ sinh ra sự xấu.",
+    "target": "Ở hiền gặp lành ở ác gặp ác."
+}
+{
+    "pred": "Thời gian và cơn lụt không chờ đợi ai.",
+    "target": "Thời gian và thủy triều không đợi ai."
+}
+{
+    "pred": "Con chim khôn ngoan giữ gìn những lời đồn, người khôn ngoan giữ gìn những lời nói.",
+    "target": "Chim khôn tiêc lông, người khôn tiêc lời."
+}
+{
+    "pred": "Đúng là chúng ta đã không bị mất đâu!",
+    "target": "Trời tru đất diệt!"
+}
+{
+    "pred": "Tất cả mọi người đều được sinh ra bình đẳng về quyền của mình.",
+    "target": "Tất cả mọi người đều sinh ra có quyền bình đẳng."
+}
+{
+    "pred": "Nếu chị gái rơi xuống, anh trai sẽ nâng lên.",
+    "target": "Chị ngã em nâng."
+}
+{
+    "pred": "Trẻ em lớn lên tốt hơn khi ở trong công ty.",
+    "target": "Chị ngã em nâng."
+}
+{
+    "pred": "Học tập của một người dạy học không giống như học tập của một người bạn.",
+    "target": "Học thầy không tày học bạn."
+}
+{
+    "pred": "Từ người dạy dỗ là kiến thức, từ người bạn là kinh nghiệm.",
+    "target": "Học thầy không tày học bạn."
+}
+{
+    "pred": "Không khó khăn gì để lấy cá ra khỏi hồ.",
+    "target": "Không thầy đố mày làm nên."
+}
+{
+    "pred": "Không có tập luyện, bạn sẽ không thành công.",
+    "target": "Không thầy đố mày làm nên."
+}
+{
+    "pred": "Một con mèo già trở nên giống như một con cáo.",
+    "target": "Mèo già hóa cáo."
+}
+{
+    "pred": "Ông nói \"nồi\" và bà nói \"nồi\".",
+    "target": "Ông nói gà bà nói vịt."
+}
+{
+    "pred": "Họ không thích nhau.",
+    "target": "Ông nói gà bà nói vịt."
+}
+{
+    "pred": "Nước yên tĩnh hơn, dưới cỏ.",
+    "target": "Ăn ốc nói mò."
+}
+{
+    "pred": "Ăn con sấu, nói như con sấu.",
+    "target": "Ăn ốc nói mò."
+}
+{
+    "pred": "Khi ăn trái cây, hãy nhớ cây trồng.",
+    "target": "Ăn quả nhớ kẻ trồng cây."
+}
+{
+    "pred": "Đi theo đường đi của kiến thức là tìm kiếm sự khôn ngoan.",
+    "target": "Đi một ngày đàng học một sàng khôn."
+}
+{
+    "pred": "Chủ sở hữu thị trường VITARUS ở Kazan là một phụ nữ Việt Nam tên là Dao Thi Quay.",
+    "target": "Chủ nhân của thị trường VITARUS ở Kazan là người phụ nữ Việt Nam tên là Đào Thị Côi (Bà Côi)."
+}
+{
+    "pred": "Cây nào mà ngươi trồng, cái hàng rào cũng sẽ như vậy.",
+    "target": "Ăn cây nào rào cây nấy."
+}
+{
+    "pred": "Tin tưởng vào chiến thắng là một vòng tay vững chắc.",
+    "target": "Ăn chắc mặc bền."
+}
+{
+    "pred": "Một chân trống trong nước.",
+    "target": "Ăn cỗ đi trước, lội nước theo sau."
+}
+{
+    "pred": "Thực phẩm lâu hơn nấm mốc.",
+    "target": "Ăn cơm trước kẻng."
+}
+{
+    "pred": "Nếu ăn đúng giờ, bạn sẽ không bị lạc hậu trong thế kỷ.",
+    "target": "Ăn theo thuở, ở theo thời."
+}
+{
+    "pred": "Súp quá dày, kho của anh trống rỗng.",
+    "target": "Ăn không lo của kho cũng hết."
+}
+{
+    "pred": "Cây từ gốc, sông từ nguồn.",
+    "target": "Cây có cội, nước có nguồn."
+}
+{
+    "pred": "Cây cao và bóng tối lớn.",
+    "target": "Cây cao bóng cả."
+}
+{
+    "pred": "Khi còn nhỏ, bạn sẽ khó khăn, khi lớn lên, bạn sẽ xin ăn.",
+    "target": "Bé đi câu, lớn đi hầu, già đi hỏi nợ."
+}
+{
+    "pred": "Cẩn thận, đi bộ!",
+    "target": "Sẵn sàng, chạy!"
+}
+{
+    "pred": "Nếu không phải ở tuổi 90, đừng nói rằng bạn khỏe mạnh.",
+    "target": "Chin mươi chủa què chớ khoe mình tốt."
+}
+{
+    "pred": "Hãy để mọi thứ biến thành bụi!",
+    "target": "Trời tru đất diệt!"
+}
+{
+    "pred": "Quay hết đi!",
+    "target": "Trời tru đất diệt!"
+}
+{
+    "pred": "Mỗi vùng đất đều có phong tục riêng.",
+    "target": "Đất lề quê thói."
+}
+{
+    "pred": "Làm sao tôi biết anh cũng cần cuốn sách này?",
+    "target": "Biết đâu anh cần quyển sách đó!"
+}
+{
+    "pred": "Ông ta đã già đi rồi.",
+    "target": "Đầu bạc răng long rồi."
+}
+{
+    "pred": "Và đầu của nó là màu xám và răng của nó là mỏng manh.",
+    "target": "Đầu bạc răng long rồi."
+}
+{
+    "pred": "Maria đã cắt cam bằng những vòng tròn cho Tom.",
+    "target": "Mary cắt quả cam thành khoanh cho Tom."
+}
+{
+    "pred": "Một con bò yếu kém hoạt động tốt hơn một con bò mạnh.",
+    "target": "Yếu trâu còn hơn khỏe bò."
+}
+{
+    "pred": "Anh sống sót nhờ một sự kiện may mắn.",
+    "target": "Mày có sống thì là may."
+}
+{
+    "pred": "Ai đi rừng, ai đi gỗ.",
+    "target": "Kẻ thế này người thế khác."
+}
+{
+    "pred": "Họ làm những gì họ muốn.",
+    "target": "Kẻ thế này người thế khác."
+}
+{
+    "pred": "Họ là thế, những người này là khác.",
+    "target": "Kẻ thế này người thế khác."
+}
+{
+    "pred": "Mồm của Phật, trái tim của con rắn.",
+    "target": "Khẩu Phật tâm xà."
+}
+{
+    "pred": "Ngôn ngữ của con là mật ong, trái tim của con là băng.",
+    "target": "Khẩu Phật tâm xà."
+}
+{
+    "pred": "Tom say rượu đi bộ, đi từ bên này sang bên kia.",
+    "target": "Tom đã say rượu đi khất kha khất khưởng."
+}
+{
+    "pred": "Mọi nơi đều thất bại.",
+    "target": "Xôi hỏng bỏng không."
+}
+{
+    "pred": "L Rice đã bị hư hỏng, không còn cơm.",
+    "target": "Xôi hỏng bỏng không."
+}
+{
+    "pred": "Một con bò đeo bắp đeo bắp ghen tị với người chăn nuôi.",
+    "target": "Trâu buộc ghét trâu ăn."
+}
+{
+    "pred": "Những gì viết bằng bút, bạn không thể cắt bằng cây giáo.",
+    "target": "Bút sa gà chết."
+}
+{
+    "pred": "Khi ăn trái cây, hãy nhớ cây trồng.",
+    "target": "Ăn quả nhớ kẻ trồng cây."
+}
+{
+    "pred": "Hãy biết ơn.",
+    "target": "Ăn quả nhớ kẻ trồng cây."
+}
+{
+    "pred": "Tôi là người Việt Nam.",
+    "target": "Tôi là người Việt Nam."
+}
+{
+    "pred": "Tôi là một lập trình viên.",
+    "target": "Tôi là lập trình viên."
+}
+{
+    "pred": "Cô ấy rất nhút nhát và không thể nói \"Tôi yêu anh\".",
+    "target": "Cô ấy ngại ngùng nên không thể nói \"Em yêu anh\"."
+}
+{
+    "pred": "Việt Nam là một quốc gia ở Đông Nam Á.",
+    "target": "Việt Nam là một nước ở khu vực Đông Nam Á."
+}
+{
+    "pred": "Không có gì đắt hơn tự do và độc lập.",
+    "target": "Không có gì quý hơn độc lập tự do."
+}
+{
+    "pred": "Khi đi qua mùa đông, chúng ta sẽ cảm thấy ấm áp của mùa xuân.",
+    "target": "Vượt qua mùa đông giá rét, chúng ta sẽ có một mùa xuân ấm áp."
+}
+{
+    "pred": "Mỹ, nhưng không phải là một nước tuyệt vời!",
+    "target": "Mỹ mà không đẹp!"
+}
+{
+    "pred": "Tôi muốn học tiếng Anh.",
+    "target": "Tôi muốn học tiếng Anh."
+}
+{
+    "pred": "Hãy học tiếng Việt cùng với Tom.",
+    "target": "Nghiên cứu ngôn ngữ Việt với Tom."
+}
+{
+    "pred": "Người tốt không thể bị thất vọng.",
+    "target": "Không phải là người hay than vãn."
+}
+{
+    "pred": "Ai học được, biết được ai đi được.",
+    "target": "Có học thi mới biết, có đi thì mới đến."
+}
+{
+    "pred": "Nói là dễ dàng, làm là khó.",
+    "target": "Nói thì dễ, làm thì khó."
+}
+{
+    "pred": "Hôm nay tôi có ngày nghỉ.",
+    "target": "Hôm nay tôi rỗi cả ngày."
+}
+{
+    "pred": "Tôi muốn gia hạn thị thực.",
+    "target": "Tôi muốn gia hạn thị thực."
+}
+{
+    "pred": "Việt Nam cũng là thành viên của Ngân hàng Thế giới, Quỹ Tiền tệ Quốc tế, Ngân hàng tái thiết và phát triển.",
+    "target": "Nước Việt Nam cũng là thành viên của Ngân hàng Thế giới, Quỹ Tiền tệ Quốc tế, Ngân hàng Tái thiết và Phát triển."
+}
+{
+    "pred": "Bạn phải đi về phía bắc bằng đường xe đỗ.",
+    "target": "Anh cần đi về phía bắc trên đường thu phí."
+}
+{
+    "pred": "Ăn không có rau giống như tang lễ của người giàu không có âm nhạc.",
+    "target": "Ăn cơm không rau như nhà giàu chết không nhạc."
+}
+{
+    "pred": "Dù cậu quay đi nhiều như thế nào, thì cũng có thể đưa con kim ra ngoài.",
+    "target": "Cái kim trong bọc cũng có ngày lòi ra."
+}
+{
+    "pred": "Trong nước bốc hơi, cây cốc sẽ mờ dần.",
+    "target": "Đục nước béo cò."
+}
+{
+    "pred": "Băng đã sai, con gà đã chết.",
+    "target": "Bút sa gà chết."
+}
+{
+    "pred": "Những gì viết bằng bút, bạn không thể cắt bằng giáo.",
+    "target": "Bút sa gà chết."
+}
+{
+    "pred": "Đôi khi chúng ta chỉ không có gì để ăn.",
+    "target": "Cơm nước bữa có bữa không."
+}
+{
+    "pred": "Tom có một gia đình rất thù địch.",
+    "target": "Ở nhà của Tom cơm chẳng lành canh chẳng ngọt."
+}
+{
+    "pred": "Thạo nấu của Tom có độ mặn và độ không mặn.",
+    "target": "Ở nhà của Tom cơm chẳng lành canh chẳng ngọt."
+}
+{
+    "pred": "Nhờ lòng tốt, bạn có thể đạt được nhiều hơn là sức mạnh.",
+    "target": "Ngọt thì lọt đến xương."
+}
+{
+    "pred": "Làm thế nào để có thể khiến hàng triệu người nói và viết bằng tiếng Anh?",
+    "target": "Làm thế nào để triệu triệu người nói và viết tiếng Anh tự tin?"
+}
+{
+    "pred": "Cùng với ngọn lửa, cây cỏ sẽ sớm hay muộn phát triển.",
+    "target": "Lửa gần rơm lâu ngày cũng bén."
+}
+{
+    "pred": "An toàn giao thông đường bộ là hạnh phúc trong mọi nhà.",
+    "target": "An toàn giao thông là yạnh phúc cho mọi nhà."
+}
+{
+    "pred": "Gần với trái đất, xa với bầu trời.",
+    "target": "Gần đất xa trời."
+}
+{
+    "pred": "Nó sắp chết.",
+    "target": "Gần đất xa trời."
+}
+{
+    "pred": "Xin anh cho tôi một ly bia.",
+    "target": "Vui lòng cho tôi bia tươi."
+}
+{
+    "pred": "Du khách nước ngoài ở Việt Nam sợ đi qua đường phố.",
+    "target": "Khách du lịch nước ngoài sợ đi qua đường ở Việt Nam."
+}
+{
+    "pred": "Một con chuột trên đáy giếng có vẻ như bầu trời là một bể nước.",
+    "target": "Ếch ngồi đáy giếng, coi trời bằng vung."
+}
+{
+    "pred": "Đầu tiên dày, cuối cùng trống.",
+    "target": "Đầu voi đuôi chuột."
+}
+{
+    "pred": "Nó mang gỗ vào rừng.",
+    "target": "Chở củi về rừng."
+}
+{
+    "pred": "Mỗi ngày sống sẽ thêm triết.",
+    "target": "Đi một ngày đàng, học một sàng khôn."
+}
+{
+    "pred": "Chọn bạn chơi, chọn chỗ ở.",
+    "target": "Tìm bạn mà chơi, tìm nơi mà ở."
+}
+{
+    "pred": "Nước đục đục thì nước béo đục đục.",
+    "target": "Đục nước béo cò."
+}
+{
+    "pred": "Ở đâu có hoa thì có bướm.",
+    "target": "Ở đâu có hoa, ở đó có bướm."
+}
+{
+    "pred": "Không có gì để bắn người điếc.",
+    "target": "Điếc không sợ súng."
+}
+{
+    "pred": "Người điếc không bị bắn.",
+    "target": "Điếc không sợ súng."
+}
+{
+    "pred": "Không có đường dài, bạn không thể biết con ngựa tốt hay không.",
+    "target": "Không chạy đường trường làm sao biết con ngựa giỏi."
+}
+{
+    "pred": "Nó đập như một con cá trên bàn bếp.",
+    "target": "Giẫy như cá nằm trên thớt."
+}
+{
+    "pred": "Một con tàu lớn có những con sóng cao.",
+    "target": "Thuyền to gặp sóng lớn."
+}
+{
+    "pred": "Trong hồ sâu, cá lớn hơn.",
+    "target": "Ao sâu cá lớn."
+}
+{
+    "pred": "Ở nhà, họ vẫn chưa biết gì, nhưng ở ngoài, họ đã biết mọi thứ.",
+    "target": "Trong nhà chưa tỏ, ngoài ngõ đã tường."
+}
+{
+    "pred": "Người cầm lá cờ thì người đó là người đánh lá cờ.",
+    "target": "Cờ đến tay ai, người đó phất."
+}
+{
+    "pred": "Sự trung thành được biết đến trong những lúc khó khăn.",
+    "target": "Khi hoạn nạn mới biết lòng thành."
+}
+{
+    "pred": "Rượu vang vào  từ ra ngoài.",
+    "target": "Rượu vào lời ra."
+}
+{
+    "pred": "Rượu vang đi vào trái tim như một con hổ vào rừng.",
+    "target": "Rượu chảy vào lòng, như hổ chạy vào rừng."
+}
+{
+    "pred": "Em bé sẽ không khóc, mẹ sẽ không cho em bú.",
+    "target": "Con không khóc mẹ không cho bú."
+}
+{
+    "pred": "Tôi vẽ con rồng, và tôi vẽ một con sâu.",
+    "target": "Vẽ rồng nên giun."
+}
+{
+    "pred": "Chàng rậm như một con chuột trong ban ngày.",
+    "target": "Nhát như chuột ngày."
+}
+{
+    "pred": "Tay làm việc, răng nhai, tay nghỉ ngơi, răng không làm việc.",
+    "target": "Tay làm, hàm nhai – tay quai miệng trễ."
+}
+{
+    "pred": "Tom đang học tiếng Việt nhưng vẫn không nói tốt.",
+    "target": "Tom đang học tiếng Việt, nhưng chưa nói giỏi được."
+}
+{
+    "pred": "Họ rất xấu hổ, tránh khỏi sự nhìn thấy của người khác.",
+    "target": "Hết sức nhút nhát, hễ thấy người lạ thì lập tức lẩn trốn."
+}
+{
+    "pred": "Cả đàn ông và phụ nữ đều không mặc quần áo, phủ đầy lá.",
+    "target": "Họ không có quần áo, nam nữ đều che mình bằng vỏ cây sui."
+}
+{
+    "pred": "Họ đào vỗ nơi trú ẩn để ngủ hoặc ngủ dưới tấm màn.",
+    "target": "Họ ngủ chung lẫn lộn trong hang hoặc trong lều."
+}
+{
+    "pred": "Chúng ăn bột cây, cá, cá, thu hoạch trái cây trong rừng.",
+    "target": "Họ ăn bột cây nhúc và săn bắt tôm cá, thú nhỏ trong rừng."
+}
+{
+    "pred": "Người đàn ông và phụ nữ lớn có mái tóc dài.",
+    "target": "Cả nam và nữ đều búi tóc đằng sau."
+}
+{
+    "pred": "Tom đang cố gắng học tiếng Việt.",
+    "target": "Tom đang ráng học tiếng Việt."
+}

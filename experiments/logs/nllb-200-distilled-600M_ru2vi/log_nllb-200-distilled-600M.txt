@@ -1,0 +1,7 @@
+{
+    "model_name": "facebook/nllb-200-distilled-600M",
+    "average_time": 0.14495337428376318,
+    "total_time": 45.37040615081787,
+    "num_sentences": 313,
+    "BLEU_score": 16.186363855919655
+}
