@@ -28,9 +28,9 @@ with zipfile.ZipFile(test_file_path, 'r') as zip_ref:
 os.remove(test_file_path) # remove the zip file after extraction
 
 ### Train data
-data_dir = "./dataset/train_data/OpenSubtitles"
+data_dir = "./dataset/train_data/OPUS-MultiCCAligned"
 os.makedirs(data_dir, exist_ok=True)
-ru_vi_url = "https://object.pouta.csc.fi/OPUS-OpenSubtitles/v2024/moses/ru-vi.txt.zip"
+ru_vi_url = "https://object.pouta.csc.fi/OPUS-MultiCCAligned/v1.1/moses/ru-vi.txt.zip"
 
 train_file_path = f"{data_dir}/ru-vi.txt.zip"
 download_file(ru_vi_url, train_file_path) # download the file
