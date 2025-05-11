@@ -4,11 +4,11 @@ class TransDataset(Dataset):
   def __init__(self, ru_file_path, vi_file_path, tokenizer, direction="ru2vi", max_length=512):
     """
     Dataset cho bài dịch tiếng Nga - tiếng Việt
-    source_file_path: Đường dẫn đến file nguồn
-    target_file_path: Đường dẫn đến file đích
-    tokenizer: Tokenizer sử dụng cho model
-    direction: Hướng dịch, có thể là "ru2vi" hoặc "vi2ru"
-    max_length: Độ dài tối đa của chuỗi đầu vào
+    - source_file_path: Đường dẫn đến file nguồn
+    - target_file_path: Đường dẫn đến file đích
+    - tokenizer: Tokenizer sử dụng cho model
+    - direction: Hướng dịch, có thể là "ru2vi" hoặc "vi2ru"
+    - max_length: Độ dài tối đa của chuỗi đầu vào
     """
     self.direction = direction
     if self.direction not in ["ru2vi", "vi2ru"]:

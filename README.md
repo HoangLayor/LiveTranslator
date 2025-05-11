@@ -91,8 +91,8 @@ LiveTranslator/
 
 ### 1. Clone repository
 ```bash
-git clone https://github.com/yourname/RealTime-Translator.git
-cd RealTime-Translator
+git clone https://github.com/yourname/LiveTranslator.git
+cd LiveTranslator
 ```
 
 ### 2. Tạo môi trường ảo & cài đặt

@@ -1,5 +1,5 @@
 evaluate
 transformers
-sentencepiece
 sacremoses
 sacrebleu
+tensorboard
