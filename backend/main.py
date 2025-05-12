@@ -8,7 +8,6 @@ from fastapi.staticfiles import StaticFiles
 from starlette.requests import Request
 import json
 import asyncio
-import base64
 # Thêm thư mục chứa translation_service vào path
 sys.path.append(str(Path(__file__).parent / "services"))
 try:
@@ -82,7 +81,7 @@ async def websocket_endpoint(websocket: WebSocket):
                             text = message.get("text","")
                             target_lang = message.get("target_lang", "vi")
                             # Chuyển văn bản thành âm thanh
-                            audio = text_to_speech(text,lang)
+                            audio = text_to_speech(text,target_lang)
                             # Mã hóa dữ liệu âm thanh thành base64
                             await websocket.send_json({
                                 "type": "audio",
