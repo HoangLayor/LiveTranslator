@@ -1,15 +1,437 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real Time Translator</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-</head>
-<body>
-    <h1>Real Time Translator</h1>
-    <button onclick="sendMessage('Hello Server!')">Send Message</button>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trình Dịch Thời Gian Thực</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #4285f4;
+        --danger-color: #ea4335;
+        --success-color: #34a853;
+        --warning-color: #fbbc05;
+        --light-gray: #f5f5f5;
+        --dark-gray: #333;
+        --border-radius: 8px;
+        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
 
-    <script src="/static/js/ws-client.js"></script>
-</body>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        line-height: 1.6;
+        color: var(--dark-gray);
+        background-color: #f8f9fa;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        padding: 30px;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      h1 {
+        color: var(--primary-color);
+        font-weight: 500;
+        margin-bottom: 10px;
+      }
+
+      .description {
+        color: #666;
+        margin-bottom: 20px;
+      }
+
+      .card {
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .card-title {
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 15px;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+      }
+
+      textarea {
+        width: 100%;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        font-family: inherit;
+        font-size: 16px;
+        resize: vertical;
+        min-height: 120px;
+        margin-bottom: 15px;
+        transition: border 0.3s;
+      }
+
+      textarea:focus {
+        border-color: var(--primary-color);
+        outline: none;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: 500;
+        text-align: center;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        transition: all 0.3s;
+        border: none;
+      }
+
+      .btn-primary {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      .btn-danger {
+        background-color: var(--danger-color);
+        color: white;
+      }
+
+      .btn-success {
+        background-color: var(--success-color);
+        color: white;
+      }
+
+      .btn:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .status {
+        font-style: italic;
+        color: #666;
+        padding: 5px 0;
+      }
+
+      #translationResult {
+        min-height: 100px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        background-color: var(--light-gray);
+        white-space: pre-wrap;
+      }
+
+      .connection-status {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+
+      .status-connected {
+        background-color: #e6f4ea;
+        color: var(--success-color);
+      }
+
+      .status-disconnected {
+        background-color: #fce8e6;
+        color: var(--danger-color);
+      }
+
+      .language-selector {
+        margin-bottom: 20px;
+      }
+
+      select {
+        padding: 8px 15px;
+        border-radius: var(--border-radius);
+        border: 1px solid #ddd;
+        font-size: 16px;
+      }
+
+      @media (max-width: 768px) {
+        .btn-group {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Trình Dịch Thời Gian Thực</h1>
+        <div id="connectionStatus" class="connection-status status-connected">
+          Đã kết nối
+        </div>
+      </header>
+
+      <div class="language-selector">
+        <label for="targetLanguage">Dịch sang: </label>
+        <select id="targetLanguage" onchange="changeLanguage(this.value)">
+          <option value="vi">Tiếng Việt</option>
+          <option value="en">Tiếng Anh</option>
+          <option value="fr">Tiếng Pháp</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🎤 Ghi âm giọng nói</div>
+        <div class="btn-group">
+          <button id="recordButton" class="btn btn-primary">
+            Bắt Đầu Ghi Âm
+          </button>
+          <button id="stopButton" class="btn btn-danger" disabled>
+            Dừng Ghi Âm
+          </button>
+        </div>
+        <div id="recordingStatus" class="status">Trạng thái: Sẵn sàng</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">💬 Nhập văn bản cần dịch</div>
+        <textarea
+          id="textInput"
+          placeholder="Nhập văn bản tại đây..."
+        ></textarea>
+        <button class="btn btn-success" onclick="sendText()">Dịch Ngay</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📄 Kết quả dịch</div>
+        <div id="translationResult" style="{paddingBottom:" 10px}>
+          Kết quả dịch sẽ hiển thị tại đây...
+        </div>
+        <button
+          id="playResultButton"
+          class="btn btn-primary"
+          onclick="playText()"
+        >
+          Nghe kết quả
+        </button>
+      </div>
+    </div>
+
+    <script>
+      let mediaRecorder;
+      let audioChunks = [];
+      let isRecording = false;
+      let targetLanguage = "vi";
+      let audioLanguage = "vi";
+      let socket;
+
+      function initWebSocket() {
+        socket = new WebSocket("ws://localhost:8000/ws");
+
+        socket.onopen = () => {
+          updateConnectionStatus("Đã kết nối", "status-connected");
+        };
+
+        socket.onmessage = (event) => {
+          const data = JSON.parse(event.data);
+          console.log("dâta", data);
+          // Nếu dịch thì kết quả hiện ở ô kết quả dịch
+          const result = document.getElementById("translationResult");
+          // Nếu STT thì kết quả hiện ở ô nhập văn bản để người dùng có thể dịch tiếp đc
+          const resultSTT = document.getElementById("textInput");
+
+          if (data.type === "translation") {
+            result.innerText = data.text;
+          } else if (data.type === "STT") {
+            resultSTT.innerText = data.text;
+          } else if (data.type === "audio") {
+            const audioBase64 = data.audio;
+            if (audioBase64) {
+              const audioBlob = new Blob(
+                [
+                  new Uint8Array(
+                    atob(audioBase64)
+                      .split("")
+                      .map((c) => c.charCodeAt(0))
+                  ),
+                ],
+                { type: "audio/wav" }
+              );
+              const audioUrl = URL.createObjectURL(audioBlob);
+              const audio = new Audio(audioUrl);
+              audio.play();
+            }
+          } else if (data.type === "error") {
+            result.innerText = "[Lỗi] " + data.message;
+          }
+        };
+
+        socket.onclose = () => {
+          updateConnectionStatus("Mất kết nối", "status-disconnected");
+          setTimeout(initWebSocket, 3000);
+        };
+
+        socket.onerror = () => {
+          updateConnectionStatus("Lỗi kết nối", "status-disconnected");
+        };
+      }
+
+      function updateConnectionStatus(text, className) {
+        const statusEl = document.getElementById("connectionStatus");
+        statusEl.textContent = text;
+        statusEl.className = `connection-status ${className}`;
+      }
+
+      function changeLanguage(lang) {
+        targetLanguage = lang;
+        audioLanguage = lang;
+      }
+
+      function sendText() {
+        const text = document.getElementById("textInput").value.trim();
+        if (!text || !socket || socket.readyState !== WebSocket.OPEN) return;
+        document.getElementById("translationResult").innerText = "Đang dịch...";
+        socket.send(
+          JSON.stringify({
+            type: "translate",
+            text,
+            target_lang: targetLanguage,
+          })
+        );
+      }
+
+      function playText() {
+        // Lấy text từ kết quả dịch thay vì text input
+        const translatedText =
+          document.getElementById("translationResult").innerText;
+
+        // Kiểm tra nếu không có kết quả dịch hoặc kết nối không ổn định
+        if (
+          !translatedText ||
+          translatedText === "Kết quả dịch sẽ hiển thị tại đây..." ||
+          !socket ||
+          socket.readyState !== WebSocket.OPEN
+        ) {
+          return;
+        }
+
+        // Gửi yêu cầu phát âm thanh từ kết quả dịch
+        socket.send(
+          JSON.stringify({
+            type: "playText",
+            text: translatedText, // Sử dụng text đã dịch
+            target_lang: targetLanguage,
+          })
+        );
+      }
+
+      window.startRecording = async function () {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            audio: true,
+          });
+
+          mediaRecorder = new MediaRecorder(stream);
+          audioChunks = [];
+
+          mediaRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+              audioChunks.push(event.data);
+            }
+          };
+
+          mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+
+            // Gửi âm thanh qua WebSocket
+            if (socket.readyState === WebSocket.OPEN) {
+              const reader = new FileReader();
+              reader.onload = () => {
+                const audioBuffer = reader.result;
+                // Gửi lên server: loại dữ liệu là "audio", kèm ngôn ngữ
+                socket.send(
+                  JSON.stringify({
+                    type: "audio",
+                    lang: audioLanguage,
+                  })
+                );
+                socket.send(audioBuffer); // gửi dữ liệu âm thanh dạng ArrayBuffer
+              };
+              reader.readAsArrayBuffer(audioBlob);
+            } else {
+              console.warn("WebSocket chưa sẵn sàng để gửi âm thanh");
+            }
+          };
+
+          mediaRecorder.start();
+          console.log("🎙️ Bắt đầu ghi âm...");
+          updateRecordingStatus(true);
+        } catch (err) {
+          console.error("Không thể bắt đầu ghi âm:", err);
+        }
+      };
+
+      window.stopRecording = function () {
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+          console.log("🛑 Đã dừng ghi âm");
+          updateRecordingStatus(false);
+        }
+      };
+
+      // Cập nhật trạng thái UI khi ghi âm
+      function updateRecordingStatus(isRecording) {
+        const status = document.getElementById("recordingStatus");
+        if (status) {
+          status.textContent = isRecording ? "Đang ghi âm..." : "Sẵn sàng";
+          status.style.color = isRecording ? "green" : "black";
+        }
+      }
+
+      function updateRecordingStatus(isRecording) {
+        const status = document.getElementById("recordingStatus");
+        const recordBtn = document.getElementById("recordButton");
+        const stopBtn = document.getElementById("stopButton");
+
+        if (status) {
+          status.textContent = isRecording ? "Đang ghi âm..." : "Sẵn sàng";
+          status.style.color = isRecording ? "green" : "black";
+        }
+
+        recordBtn.disabled = isRecording;
+        stopBtn.disabled = !isRecording;
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        initWebSocket();
+        document
+          .getElementById("recordButton")
+          .addEventListener("click", startRecording);
+        document
+          .getElementById("stopButton")
+          .addEventListener("click", stopRecording);
+      });
+    </script>
+  </body>
 </html>
