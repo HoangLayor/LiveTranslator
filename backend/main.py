@@ -8,6 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from starlette.requests import Request
 import json
 import asyncio
+
 # Thêm thư mục chứa translation_service vào path
 sys.path.append(str(Path(__file__).parent / "services"))
 try:
@@ -99,9 +100,7 @@ async def websocket_endpoint(websocket: WebSocket):
                         audio_data =   data["bytes"]
                         
                         # Chuyển đổi âm thanh thành văn bản
-                        text = speech_to_text(audio_data,language =lang )
-                        print('text', text)
-                        
+                        text = speech_to_text(audio_data,language =lang )                        
                         # Gửi kết quả văn bản về phía client
                         await websocket.send_json({
                             "type": "STT",

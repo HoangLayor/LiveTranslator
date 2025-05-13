@@ -43,7 +43,7 @@ def speech_to_text(audio_bytes: bytes, language: str = "en") -> str:
 
         # Bước 4: Gọi Whisper để nhận dạng giọng nói, truyền ngôn ngữ được chọn
         # Nếu không truyền 'language', mặc định sẽ là 'en' (Tiếng Anh)
-        result = model.transcribe(wav_path, language=language)
+        result = model.transcribe(wav_path, language=language, task="transcribe")
 
         # Bước 5: Xóa các file tạm sau khi xử lý xong
         os.remove(webm_path)

@@ -193,7 +193,7 @@
       </header>
 
       <div class="language-selector">
-        <label for="targetLanguage">Dịch sang: </label>
+        <label for="targetLanguage">Chọn ngôn ngữ cần dịch hoặc ghi âm: </label>
         <select id="targetLanguage" onchange="changeLanguage(this.value)">
           <option value="vi">Tiếng Việt</option>
           <option value="en">Tiếng Anh</option>
@@ -340,7 +340,7 @@
         socket.send(
           JSON.stringify({
             type: "playText",
-            text: translatedText, // Sử dụng text đã dịch
+            text: translatedText, 
             target_lang: targetLanguage,
           })
         );
