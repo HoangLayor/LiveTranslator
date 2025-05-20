@@ -10,4 +10,6 @@ aiofiles
 googletrans==4.0.0rc1
 soundfile
 gtts
-openai-whisper pydub ffmpeg-python
+openai-whisper 
+pydub 
+ffmpeg-python
