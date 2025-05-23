@@ -338,6 +338,30 @@
         z-index: 10;
         white-space: nowrap;
       }
+      
+      .translation-switcher {
+        margin: 16px auto;
+      }
+
+      .switch-button {
+        background-color: var(--primary-light);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 18px;
+      }
+
+      .switch-button:hover {
+        background-color: var(--primary);
+        transform: rotate(180deg);
+      }
 
       .button:hover .tooltip {
         opacity: 1;
@@ -556,15 +580,15 @@
   <body>
     <nav class="navbar">
       <div class="nav-container">
-        <a href="#" class="logo">
+        <a href="/" class="logo">
           <span>🌐</span>
           LiveTranslator
         </a>
 
         <ul class="nav-links">
-          <li><a href="/home">Trang chủ</a></li>
-          <li class="active"><a href="/">Dịch hội thoại</a></li>
-          <li><a href="#">Dịch từ file</a></li>
+          <li><a href="/">Trang chủ</a></li>
+          <li class="active"><a href="/live-translator">Dịch hội thoại</a></li>
+          <li><a href="/file-translator">Dịch từ file</a></li>
           <li><a href="#">Dịch từ web</a></li>
           <li><a href="#">Về chúng tôi</a></li>
           <li><a href="#">Liên hệ</a></li>
@@ -592,11 +616,16 @@
             <span>Ghi âm bằng:</span>
           </div>
           <select id="sourceLang">
-            <option value="vi-VN">🇻🇳 Tiếng Việt</option>
+            <option value="auto">🔍 Tự động phát hiện</option>
             <option value="en-US">🇺🇸 English</option>
+            <option value="vi-VN">🇻🇳 Tiếng Việt</option>
             <option value="fr-FR">🇫🇷 Tiếng Pháp</option>
             <option value="ru-RU">🇷🇺 Tiếng Nga</option>
           </select>
+        </div>
+        
+        <div class="translation-switcher">
+          <button class="switch-button" title="Đổi ngôn ngữ">⇄</button>
         </div>
 
         <div class="language-group">
@@ -684,6 +713,7 @@
         window.SpeechRecognition || window.webkitSpeechRecognition;
       let recognition;
       let socket;
+      let sourceLanguage = "auto"; // Ngôn ngữ nguồn
       let targetLanguage = "vi";
       let recordingTimeout; // Bộ đếm thời gian dừng ghi âm sau X giây
       const MAX_RECORDING_TIME_MS = 30000; // Ghi âm tối đa 30 giây
@@ -713,7 +743,10 @@
 
       // Kết nối WebSocket tới backend
       function initWebSocket() {
-        socket = new WebSocket("ws://localhost:8000/ws");
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const socketUrl = `${protocol}//${window.location.host}/ws`;
+        // const socketUrl = "https://positive-currently-mastodon.ngrok-free.app/ws";
+        socket = new WebSocket(socketUrl);
 
         socket.onopen = () => updateConnectionStatus("Đã kết nối", "#4caf50");
         socket.onclose = () => {
@@ -732,6 +765,7 @@
                 JSON.stringify({
                   type: "playText",
                   text,
+                  souce_lang: sourceLanguage,
                   target_lang: targetLanguage,
                 })
               );
@@ -865,6 +899,7 @@
           JSON.stringify({
             type: "translate",
             text,
+            source_lang: sourceLanguage,
             target_lang: targetLanguage,
           })
         );
@@ -910,15 +945,78 @@
         }, 100);
       }
       
+      // Language switch button
+      document.querySelector('.switch-button').addEventListener('click', () => {
+        const sourceLangSelect = document.getElementById("sourceLang");
+        const targetLangSelect = document.getElementById("lang");
+
+        // Không đảo nếu đang là "auto"
+        if (sourceLangSelect.value !== 'auto') {
+          // Lưu giá trị hiện tại
+          const tempValue = sourceLangSelect.value;
+
+          // Đổi giá trị
+          sourceLangSelect.value = targetLangSelect.value === "en" ? "en-US"
+                                  : targetLangSelect.value === "vi" ? "vi-VN"
+                                  : targetLangSelect.value === "fr" ? "fr-FR"
+                                  : targetLangSelect.value === "ru" ? "ru-RU"
+                                  : sourceLangSelect.value;
+          sourceLanguage = targetLangSelect.value;
+
+          targetLangSelect.value = tempValue.startsWith("en") ? "en"
+                                  : tempValue.startsWith("vi") ? "vi"
+                                  : tempValue.startsWith("fr") ? "fr"
+                                  : tempValue.startsWith("ru") ? "ru"
+                                  : targetLangSelect.value;
+          targetLanguage = targetLangSelect.value;
+          console.log("Đổi ngôn ngữ thành công:", sourceLanguage, targetLanguage);
+          // Cập nhật hiển thị
+          updateLanguageDisplay();
+        }
+      });
+
+      // Cập nhật nội dung hiển thị nhãn ngôn ngữ
+      function updateLanguageDisplay() {
+        const sourceLang = document.getElementById("sourceLang").value;
+        const targetLang = document.getElementById("lang").value;
+
+        const sourceLangText = document.querySelector(`#sourceLang option[value="${sourceLang}"]`).textContent;
+        const targetLangText = document.querySelector(`#lang option[value="${targetLang}"]`).textContent;
+
+        // Tìm hai label đúng trong từng language-group
+        const languageLabels = document.querySelectorAll('.language-group .language-label');
+
+        if (languageLabels.length >= 2) {
+          languageLabels[0].innerHTML = `<span>🗣️</span><span> Ghi âm bằng: </span>`;
+          languageLabels[1].innerHTML = `<span>🌐</span><span> Dịch sang: </span>`;
+        }
+      }
+
+      // Gọi khi load trang
+      window.addEventListener("DOMContentLoaded", () => {
+        updateLanguageDisplay();
+      });
+
       function stopSoundLevelSimulation() {
         clearInterval(soundLevelInterval);
         const indicator = document.querySelector('.sound-level-indicator');
         indicator.style.transform = 'scaleX(0)';
       }
 
+      // Cập nhật ngôn ngữ nguồn để dịch
+      document.getElementById("sourceLang").addEventListener("change", (e) => {
+        sourceLanguage = e.target.value === "en-US" ? "en"
+                        : e.target.value === "vi-VN" ? "vi"
+                        : e.target.value === "fr-FR" ? "fr"
+                        : e.target.value === "ru-RU" ? "ru"
+                        : e.target.value;
+        console.log("Ngôn ngữ nguồn:", sourceLanguage);
+      });
+
       // Cập nhật ngôn ngữ đích để dịch
       document.getElementById("lang").addEventListener("change", (e) => {
         targetLanguage = e.target.value;
+        console.log("Ngôn ngữ đích:", targetLanguage);
       });
 
       // Bắt đầu ghi âm (và hẹn giờ tự động dừng sau 30 giây)
