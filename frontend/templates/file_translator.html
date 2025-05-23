@@ -573,6 +573,12 @@
             <span>🔄</span>
             <span>Bắt đầu dịch tài liệu</span>
           </button>
+
+          <!-- Preview Image -->
+          <div class="image-preview-container" id="imagePreviewContainer" style="display: none;">
+            <div class="image-preview-title">🖼️ Ảnh đã tải lên</div>
+            <img id="uploadedImage" src="" alt="Ảnh đã upload" style="max-width: 100%; border: 1px solid #ccc; padding: 10px;" />
+          </div>
         </div>
 
         <!-- Translation Result Panel -->
@@ -769,24 +775,38 @@
           return;
         }
         
+        // Get original and translated text
+        const originalText = document.getElementById('originalText').innerText;
+        const translatedText = document.getElementById('translatedText').innerText;
+        
         // Gửi phản hồi đến server
-        fetch('/submit-feedback', {
+        fetch('/api/submit-feedback', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             rating: currentRating,
-            feedback: feedbackInput
+            feedback_text: feedbackInput,
+            file_name: selectedFile ? selectedFile.name : null,
+            source_lang: sourceLangSelect.value,
+            target_lang: targetLangSelect.value,
+            original_text: originalText,
+            translated_text: translatedText
           })
         })
         .then(response => response.json())
         .then(data => {
-          alert('Cảm ơn bạn đã gửi phản hồi!');
-          resetFeedback();
+          if (data.success) {
+            alert('Cảm ơn bạn đã gửi phản hồi!');
+            resetFeedback();
+          } else {
+            throw new Error(data.message || 'Failed to submit feedback');
+          }
         })
         .catch(error => {
           console.error('Lỗi gửi phản hồi:', error);
+          alert('Có lỗi xảy ra khi gửi phản hồi. Vui lòng thử lại sau.');
         });
       }
 
@@ -798,15 +818,6 @@
       }
 
       // File selection and validation
-      fileInput.addEventListener('change', handleFileSelect);
-      uploadContainer.addEventListener('click', () => {
-        fileInput.click();
-      });
-      uploadContainer.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        uploadContainer.classList.add('drag-over');
-      });
-
       function handleFileSelect(e) {
         const file = e.target.files[0];
         if (file && isValidFile(file)) {
@@ -888,7 +899,10 @@
         if (socket && socket.readyState !== WebSocket.CLOSED) {
           socket.close();
         }
-        socket = new WebSocket("ws://localhost:8000/ws");
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const socketUrl = `${protocol}//${window.location.host}/ws`;
+        // const socketUrl = "https://positive-currently-mastodon.ngrok-free.app/ws";
+        socket = new WebSocket(socketUrl);
 
         socket.onopen = () => {
           updateConnectionStatus("Đã kết nối", "#4caf50");
@@ -975,6 +989,8 @@
                   translationLoading.style.display = "none";
                   translatedText.innerHTML = formatText(result.translated_text);
               }
+
+              console.log("File processed successfully:", result);
               
           } catch (error) {
               console.error('File processing error:', error);
@@ -1063,6 +1079,27 @@
         originalText.innerHTML = formatText(extractedText);
         translationLoading.style.display = "none";
       }
+
+      const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+      const uploadedImage = document.getElementById('uploadedImage');
+
+      fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        if (!file) return;
+
+        const fileType = file.type;
+        if (fileType.startsWith("image/")) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            uploadedImage.src = e.target.result;
+            imagePreviewContainer.style.display = "block";
+          };
+          reader.readAsDataURL(file);
+        } else {
+          imagePreviewContainer.style.display = "none";
+        }
+      });
+
     </script>
 </body>
 </html>

@@ -6,10 +6,16 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from backend.api import file_routes
+from backend.api import feedback_routes
 from starlette.requests import Request
 import json
 import asyncio
 from backend.utils.logger import setup_logger
+from backend.database import engine
+from backend.models.feedback_model import Base
+
+# Initialize database
+Base.metadata.create_all(bind=engine)
 
 # Thiết lập logger
 logger = setup_logger()
@@ -39,6 +45,7 @@ except ImportError as e:
 # Khởi tạo ứng dụng
 app = FastAPI()
 app.include_router(file_routes.router, prefix="/api", tags=["file-translator"])
+app.include_router(feedback_routes.router, prefix="/api", tags=["feedback"])
 
 # Cấu hình CORS
 app.add_middleware(
