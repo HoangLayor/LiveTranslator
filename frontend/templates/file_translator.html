@@ -664,6 +664,8 @@
       const sourceLangSelect = document.getElementById('sourceLang');
       const targetLangSelect = document.getElementById('targetLang');
       const stars = document.querySelectorAll('.star');
+      const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+      const uploadedImage = document.getElementById('uploadedImage');
       
       // Initialize app
       document.addEventListener('DOMContentLoaded', function() {
@@ -775,10 +777,6 @@
           return;
         }
         
-        // Get original and translated text
-        const originalText = document.getElementById('originalText').innerText;
-        const translatedText = document.getElementById('translatedText').innerText;
-        
         // Gửi phản hồi đến server
         fetch('/api/submit-feedback', {
           method: 'POST',
@@ -791,8 +789,8 @@
             file_name: selectedFile ? selectedFile.name : null,
             source_lang: sourceLangSelect.value,
             target_lang: targetLangSelect.value,
-            original_text: originalText,
-            translated_text: translatedText
+            original_text: originalText.innerText,
+            translated_text: translatedText.innerText
           })
         })
         .then(response => response.json())
@@ -880,6 +878,7 @@
         }
       }
       
+      // Start translation process
       function startTranslation() {
         if (!selectedFile) return;
         
@@ -941,7 +940,7 @@
         };
       }
       
-      // Update connection status indicator
+      // UPDATE CONNECTION STATUS
       function updateConnectionStatus(text, color) {
         const connectionStatus = document.getElementById('connectionStatus');
         connectionStatus.textContent = text;
@@ -953,7 +952,7 @@
         connectionStatus.style.fontWeight = "500";
       }
       
-      // UPLOAD FILE VÀ TRÍCH XUẤT THỰC TẾ
+      // PROCESS FILE
       async function processFile() {
           console.log("Processing file:", selectedFile.name); 
           try {
@@ -1000,7 +999,7 @@
           }
       }
       
-      // DỊCH VĂNG BẢN QUA WEBSOCKET
+      // START TEXT TRANSLATION
       function startTextTranslation(text) {
         if (!socket || socket.readyState !== WebSocket.OPEN) {
           console.error('WebSocket not connected');
@@ -1009,7 +1008,7 @@
         
         translationLoading.style.display = "flex";
         
-        // Gửi yêu cầu dịch qua WebSocket
+        // Send translation request
         socket.send(JSON.stringify({
           type: "translate",
           text: text,
@@ -1023,66 +1022,8 @@
         if (!text) return '';
         return text.replace(/\n/g, '<br>').replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
       }
-      
-      // DEMO - Xử lý file giả lập (để test giao diện)
-      function processFileDemo() {
-        let extractedText = "";
-        const fileName = selectedFile.name.toLowerCase();
-        
-        if (fileName.endsWith('.pdf')) {
-          extractedText = `[DEMO] Văn bản trích xuất từ PDF "${selectedFile.name}":
 
-Đây là nội dung mẫu từ file PDF. Trong thực tế, hệ thống backend sẽ:
-
-🔧 Xử lý PDF:
-- Sử dụng thư viện như PyPDF2, pdfplumber (Python) 
-- Hoặc PDF.js (Node.js)
-- Trích xuất text, bảo toàn layout
-- Xử lý PDF scan với OCR nếu cần
-
-📡 API Backend cần:
-- POST /api/upload-and-extract
-- Nhận file, trả về extracted_text
-- Xử lý lỗi và validation`;
-
-        } else if (fileName.endsWith('.docx')) {
-          extractedText = `[DEMO] Văn bản trích xuất từ DOCX "${selectedFile.name}":
-
-Đây là nội dung mẫu từ file Word. Trong thực tế, hệ thống backend sẽ:
-
-🔧 Xử lý DOCX:
-- Sử dụng python-docx, mammoth (Python)
-- Hoặc mammoth.js (Node.js)  
-- Giải nén XML structure
-- Trích xuất text + formatting
-
-📡 API Backend cần:
-- POST /api/upload-and-extract
-- Nhận file, trả về extracted_text
-- Xử lý lỗi và validation`;
-        } else if (fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png')) {
-          extractedText = `[DEMO] Văn bản trích xuất từ hình ảnh "${selectedFile.name}":
-Đây là nội dung mẫu từ file hình ảnh. Trong thực tế, hệ thống backend sẽ:
-🔧 Xử lý hình ảnh
-- Sử dụng Tesseract.js (Node.js)
-- Hoặc pytesseract (Python)
-- OCR để trích xuất text
-- Xử lý layout, định dạng
-📡 API Backend cần:
-- POST /api/upload-and-extract
-- Nhận file, trả về extracted_text
-- Xử lý lỗi và validation`;
-        } else {
-          extractedText = "Không thể trích xuất văn bản từ file này.";
-        }
-        
-        originalText.innerHTML = formatText(extractedText);
-        translationLoading.style.display = "none";
-      }
-
-      const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-      const uploadedImage = document.getElementById('uploadedImage');
-
+      // IMAGE PREVIEW
       fileInput.addEventListener('change', () => {
         const file = fileInput.files[0];
         if (!file) return;
