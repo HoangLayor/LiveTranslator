@@ -1,3 +1,5 @@
+rich
+dotenvs
 fastapi
 uvicorn
 pydantic
@@ -13,5 +15,3 @@ gtts
 openai-whisper 
 pydub 
 ffmpeg-python
-rich
-dotenvs
