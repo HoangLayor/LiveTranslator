@@ -13,5 +13,8 @@ gtts
 openai-whisper 
 pydub 
 ffmpeg-python
-rich
-dotenvs
+python-docx 
+pymupdf 
+pytesseract 
+pillow
+sqlalchemy

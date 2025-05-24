@@ -6,7 +6,7 @@ translator = Translator(service_urls=[
     'translate.google.com.vn'
 ])
 
-def translate_text(text: str, target_lang: str = "vi") -> str:
+def translate_text(text: str, source_lang: str = "auto", target_lang: str = "vi") -> str:
     """
     Dịch văn bản sử dụng googletrans
     
@@ -20,13 +20,15 @@ def translate_text(text: str, target_lang: str = "vi") -> str:
     try:
         if not text.strip():
             return ""
-            
         # Phát hiện ngôn ngữ nguồn tự động
-        translation = translator.translate(text, dest=target_lang)
+        if source_lang == "auto":
+            translation = translator.translate(text, dest=target_lang)
+            source_lang = translation.src
+        else:
+            translation = translator.translate(text, src=source_lang, dest=target_lang)
         return translation.text
         
     except Exception as e:
-        print(f"Lỗi khi dịch văn bản: {e}")
         return "[Lỗi dịch thuật]"
 
 # Các ngôn ngữ hỗ trợ
@@ -34,8 +36,5 @@ SUPPORTED_LANGUAGES = {
     'en': 'English',
     'vi': 'Tiếng Việt',
     'fr': 'French',
-    'es': 'Spanish',
-    'ja': 'Japanese',
-    'ko': 'Korean',
     'ru': 'Russian'
 }

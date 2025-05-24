@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LiveTranslator - Giải pháp dịch thuật đa ngôn ngữ, đa ứng dụng, đa nền tảng</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      color: #667eea;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Hero section */
+    .hero {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      color: white;
+      padding: 8rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid white;
+      margin-left: 1rem;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Features section */
+    .features {
+      padding: 5rem 2rem;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .section-title p {
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <span>🌐</span>
+        LiveTranslator
+      </a>
+
+      <ul class="nav-links">
+        <li class="active"><a href="#">Trang chủ</a></li>
+        <li><a href="/live-translator">Dịch hội thoại</a></li>
+        <li><a href="/file-translator">Dịch từ file</a></li>
+        <li><a href="#">Dịch từ web</a></li>
+        <li><a href="#">Về chúng tôi</a></li>
+        <li><a href="#">Liên hệ</a></li>
+      </ul>
+
+      <button class="mobile-menu-btn">☰</button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content animated">
+      <h1>Dịch thuật thông minh.</h1>
+      <p>Dịch văn bản, hội thoại và tài liệu sang hơn 100 ngôn ngữ với độ chính xác cao và âm thanh tự nhiên.</p>
+      <div class="buttons">
+        <a href="/live-translator" class="btn">Bắt đầu ngay</a>
+        <a href="#features" class="btn btn-outline">Tìm hiểu thêm</a>
+      </div>
+    </div>
+
+    <!-- Language switcher in hero -->
+    <div class="language-switcher" style="position: absolute; top: 20px; right: 20px;">
+      <div class="language-switcher-toggle">
+        <span>🇻🇳</span>
+        <span>Tiếng Việt</span>
+        <span>▼</span>
+      </div>
+      <div class="language-dropdown">
+        <a href="#" class="language-option">
+          <span>🇻🇳</span>
+          <span>Tiếng Việt</span>
+        </a>
+        <a href="#" class="language-option">
+          <span>🇺🇸</span>
+          <span>English</span>
+        </a>
+        <a href="#" class="language-option">
+          <span>🇫🇷</span>
+          <span>Français</span>
+        </a>
+        <a href="#" class="language-option">
+          <span>🇷🇺</span>
+          <span>Русский</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="section-title">
+      <h2>Các tính năng dịch thuật</h2>
+      <p>Khám phá các công cụ dịch thuật tiên tiến giúp bạn giao tiếp hiệu quả hơn.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🗣️</div>
+        <h3>Dịch hội thoại trực tiếp</h3>
+        <p>Đàm thoại tự nhiên với người nói ngôn ngữ khác. Ghi âm giọng nói và nhận kết quả dịch ngay lập tức.</p>
+        <a href="live-translator.html" class="feature-link">Dùng ngay <span>→</span></a>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📄</div>
+        <h3>Dịch từ file</h3>
+        <p>Tải lên và dịch tài liệu, bài thuyết trình, bảng tính và nhiều định dạng khác với độ chính xác cao.</p>
+        <a href="#" class="feature-link">Dùng ngay <span>→</span></a>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🌐</div>
+        <h3>Dịch từ web</h3>
+        <p>Dịch toàn bộ trang web hoặc chỉ một đoạn văn bản được chọn mà không làm mất đi định dạng ban đầu.</p>
+        <a href="#" class="feature-link">Dùng ngay <span>→</span></a>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔊</div>
+        <h3>Chuyển văn bản thành giọng nói</h3>
+        <p>Nghe bản dịch với giọng đọc tự nhiên trong hơn 50 ngôn ngữ, hỗ trợ học phát âm và giao tiếp.</p>
+        <a href="#" class="feature-link">Dùng ngay <span>→</span></a>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Dịch thuật di động</h3>
+        <p>Sử dụng ứng dụng trên mọi thiết bị - từ máy tính để bàn đến điện thoại di động và máy tính bảng.</p>
+        <a href="#" class="feature-link">Tải ứng dụng <span>→</span></a>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3>API dịch thuật</h3>
+        <p>Tích hợp dịch thuật vào ứng dụng của bạn với API mạnh mẽ, linh hoạt và dễ sử dụng của chúng tôi.</p>
+        <a href="#" class="feature-link">Tìm hiểu thêm <span>→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works Section -->
+  <section class="how-it-works">
+    <div class="section-title">
+      <h2>Cách thức hoạt động</h2>
+      <p>Dịch thuật đa ngôn ngữ chưa bao giờ đơn giản đến thế.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-line"></div>
+        <div class="step-content">
+          <h3>Chọn loại dịch thuật</h3>
+          <p>Chọn chức năng phù hợp với nhu cầu của bạn: dịch hội thoại trực tiếp, dịch từ file hoặc dịch từ web.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-line"></div>
+        <div class="step-content">
+          <h3>Chọn ngôn ngữ</h3>
+          <p>Lựa chọn ngôn ngữ nguồn và ngôn ngữ đích từ danh sách hơn 100 ngôn ngữ được hỗ trợ.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-line"></div>
+        <div class="step-content">
+          <h3>Nhập nội dung cần dịch</h3>
+          <p>Nhập văn bản, tải lên file, nhập URL hoặc ghi âm giọng nói của bạn tuỳ theo chức năng đã chọn.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h3>Nhận kết quả dịch</h3>
+          <p>Nhận kết quả dịch thuật chính xác ngay lập tức và nghe phát âm với giọng đọc tự nhiên nếu muốn.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="cta-content">
+      <h2>Sẵn sàng khám phá thế giới không rào cản ngôn ngữ?</h2>
+      <p>Bắt đầu dịch thuật ngay hôm nay với LiveTranslator và kết nối với mọi người trên toàn cầu.</p>
+      <a href="/live-translator" class="btn">Bắt đầu dịch ngay</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-about">
+        <div class="footer-logo">
+          <span>🌐</span>
+          LiveTranslator
+        </div>
+        <p class="footer-description">
+          Giải pháp dịch thuật toàn diện giúp bạn vượt qua rào cản ngôn ngữ và kết nối với thế giới.
+        </p>
+        <div class="social-links">
+          <a href="#" class="social-link">
+            <span>f</span>
+          </a>
+          <a href="#" class="social-link">
+            <span>in</span>
+          </a>
+          <a href="#" class="social-link">
+            <span>𝕏</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
