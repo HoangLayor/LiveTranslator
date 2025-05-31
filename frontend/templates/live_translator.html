@@ -439,7 +439,12 @@
         }
       }
 
-      
+      .footer-text {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
       
       /* Alternative Circular Audio Pulse */
       .audio-ring-container {
@@ -577,8 +582,8 @@
           <li class="active"><a href="/live-translator">Dịch hội thoại</a></li>
           <li><a href="/file-translator">Dịch từ file</a></li>
           <li><a href="#">Dịch từ web</a></li>
-          <li><a href="#">Về chúng tôi</a></li>
-          <li><a href="#">Liên hệ</a></li>
+          <li><a href="/about">Về chúng tôi</a></li>
+          <li><a href="/contact">Liên hệ</a></li>
         </ul>
 
         <button class="mobile-menu-btn">☰</button>
@@ -622,7 +627,7 @@
           </div>
           <select id="lang">
             <option value="vi">🇻🇳 Tiếng Việt</option>
-            <option value="en">EN English</option>
+            <option value="en">🇺🇸 English</option>
             <option value="fr">🇫🇷 Tiếng Pháp</option>
             <option value="ru">🇷🇺 Tiếng Nga</option>
           </select>
@@ -694,6 +699,9 @@
         </button>
       </div>
     </div>
+    <div class="footer-text">
+      © 2025 LiveTranslator. All rights reserved.
+    </div>
 
     <script>
       const SpeechRecognition =
@@ -729,9 +737,10 @@
       }
 
       // Kết nối WebSocket tới backend
-      function initWebSocket() {
+      function initWebSocket() { 
         const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
         const socketUrl = `${protocol}//${window.location.host}/ws`;
+        // const socketUrl = "ws://localhost:8000/ws"; // Dùng cho local testing
         // const socketUrl = "https://positive-currently-mastodon.ngrok-free.app/ws";
         socket = new WebSocket(socketUrl);
 
@@ -1002,7 +1011,7 @@
       window.startRecording = function () {
         const sourceLang = document.getElementById("sourceLang").value;
         if (recognition) {
-          recognition.lang = sourceLang;
+          // recognition.lang = sourceLang;
           recognition.start();
 
           // Hẹn giờ dừng ghi âm sau X giây

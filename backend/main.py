@@ -79,6 +79,18 @@ async def file_translator(request: Request):
     # Trả về template file_translator.html
     return templates.TemplateResponse("file_translator.html", {"request": request})
 
+@app.get("/about", response_class=HTMLResponse)
+async def about(request: Request):
+    logger.info("About page accessed")
+    # Trả về template about.html
+    return templates.TemplateResponse("about.html", {"request": request})
+
+@app.get("/contact", response_class=HTMLResponse)
+async def contact(request: Request):
+    logger.info("Contact page accessed")
+    # Trả về template contact.html
+    return templates.TemplateResponse("contact.html", {"request": request})
+
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
@@ -89,7 +101,9 @@ async def websocket_endpoint(websocket: WebSocket):
         while True:
             try:
                 # Nhận dữ liệu từ WebSocket với timeout
+                logger.info("Waiting for data from client...")
                 data = await asyncio.wait_for(websocket.receive(), timeout=30.0)
+                logger.info(f"Received data: {data}")
 
                 # Kiểm tra loại dữ liệu là text hay audio
                 if "text" in data:

@@ -14,4 +14,4 @@ openai-whisper
 pydub 
 ffmpeg-python
 rich
-dotenvs
+python-dotenvs
