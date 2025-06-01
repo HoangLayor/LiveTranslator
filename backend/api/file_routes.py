@@ -11,8 +11,8 @@ async def translate_uploaded_file(
     source_lang: str = Form("auto"),
     target_lang: str = Form("vi")
 ):
-    if file.size > MAX_FILE_SIZE:
-        raise HTTPException(status_code=413, detail="File too large")
+    # if file.size > MAX_FILE_SIZE:
+    #     raise HTTPException(status_code=413, detail="File too large")
     try:
         print(f"Processing file: {file.filename}")
         print(f"Languages: {source_lang} -> {target_lang}")

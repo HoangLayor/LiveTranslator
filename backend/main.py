@@ -5,8 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from backend.api import file_routes
-from backend.api import feedback_routes
+from backend.api import file_routes, feedback_routes
 from starlette.requests import Request
 import json
 import asyncio
@@ -14,13 +13,16 @@ from backend.utils.logger import setup_logger
 from backend.database import engine
 from backend.models.feedback_model import Base
 
+# Import hai hàm PUNCTUATION
+from backend.services.punctuation import restore_punctuation, capitalize_after_punctuation
+
 # Initialize database
 Base.metadata.create_all(bind=engine)
 
 # Thiết lập logger
 logger = setup_logger()
 
-# Thêm thư mục chứa translation_service vào path
+# Thêm đường dẫn services vào sys.path để import các service khác (translate, stt, tts)
 sys.path.append(str(Path(__file__).parent / "services"))
 try:
     from translation_service import translate_text
@@ -42,8 +44,11 @@ except ImportError as e:
     print(f"Import error: {e}")
     raise
 
-# Khởi tạo ứng dụng
+
+# === TẠO ỨNG DỤNG FASTAPI ===
 app = FastAPI()
+
+# Include các router HTTP nếu có
 app.include_router(file_routes.router, prefix="/api", tags=["file-translator"])
 app.include_router(feedback_routes.router, prefix="/api", tags=["feedback"])
 
@@ -56,116 +61,247 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Cấu hình thư mục tĩnh và templates
+# Cấu hình static files & templates
 app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
 templates = Jinja2Templates(directory="frontend/templates")
 
-# Route chính
+# === ROUTES GET CHUYÊN BIỆT ===
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
     logger.info("Home page accessed")
-    # Trả về template home.html
     return templates.TemplateResponse("home.html", {"request": request})
 
 @app.get("/live-translator", response_class=HTMLResponse)
 async def live_translator(request: Request):
     logger.info("Live translator page accessed")
-    # Trả về template live_translator.html
     return templates.TemplateResponse("live_translator.html", {"request": request})
 
 @app.get("/file-translator", response_class=HTMLResponse)
 async def file_translator(request: Request):
     logger.info("File translator page accessed")
-    # Trả về template file_translator.html
     return templates.TemplateResponse("file_translator.html", {"request": request})
 
+@app.get("/about", response_class=HTMLResponse)
+async def about(request: Request):
+    logger.info("About page accessed")
+    return templates.TemplateResponse("about.html", {"request": request})
+
+@app.get("/contact", response_class=HTMLResponse)
+async def contact(request: Request):
+    logger.info("Contact page accessed")
+    return templates.TemplateResponse("contact.html", {"request": request})
+
+
+# === WEBSOCKET ENDPOINT ===
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
-    logger.info("Client connected")
-    # Ngôn ngữ mặc định
+    logger.info("Client connected via WebSocket")
+    # Ngôn ngữ mặc định (dùng cho STT hoặc TTS)
     lang = "vi"
+
     try:
         while True:
             try:
-                # Nhận dữ liệu từ WebSocket với timeout
-                data = await asyncio.wait_for(websocket.receive(), timeout=30.0)
-
-                # Kiểm tra loại dữ liệu là text hay audio
-                if "text" in data:
-                    try:
-                        message = json.loads(data["text"])
-
-                        if message.get("type") == "translate":
-                            text = message.get("text", "")
-                            source_lang = message.get("source_lang", "auto")
-                            target_lang = message.get("target_lang", "vi")
-
-                            # Dịch văn bản
-                            translated_text = translate_text(text, source_lang, target_lang)
-                            logger.info(f"Translate from {source_lang} to {target_lang}: {text} -> {translated_text}")
-                            await websocket.send_json({
-                                "type": "translation",
-                                "text": str(translated_text),
-                                "origin": text
-                            })
-                        elif message.get("type") == "playText":
-                            text = message.get("text","")
-                            target_lang = message.get("target_lang", "vi")
-                            # Chuyển văn bản thành âm thanh
-                            audio = text_to_speech(text,target_lang)
-                            logger.info(f"Text to Speech with {target_lang}: {text}")
-                            # Mã hóa dữ liệu âm thanh thành base64
-                            await websocket.send_json({
-                                "type": "audio",
-                                "audio": audio,
-                                "text": text
-                            })
-                        elif message.get("type")=="audio":
-                            lang = message.get('lang','vi')
-                            logger.info(f"Language set to: {lang}")
-                    except json.JSONDecodeError:
-                        logger.error("Invalid JSON format")
-                        await websocket.send_text(f"Echo: {data['text']}")
-
-                elif "bytes" in data:
-                    try:
-                        audio_data =   data["bytes"]
-                        
-                        # Chuyển đổi âm thanh thành văn bản
-                        text = speech_to_text(audio_data, language=lang )
-                        logger.info(f"Speech to Text with {lang}: {audio_data} -> {text}")                       
-                        # Gửi kết quả văn bản về phía client
-                        await websocket.send_json({
-                            "type": "STT",
-                            "text": str(text),
-                        })
-                    except Exception as e:
-                        logger.error(f"STT error: {e}")
-                        await websocket.send_json({
-                        "type": "error",
-                        "message": f"Speech-to-text failed: {str(e)}"
-                        })
+                # Chờ client gửi text (JSON string) trong 30s
+                raw = await asyncio.wait_for(websocket.receive_text(), timeout=30.0)
             except asyncio.TimeoutError:
-                logger.info("Timeout, sending ping")
-                await websocket.send_json({"type": "ping"})
+                # Nếu 30s không có message, gửi ping để giữ kết nối
+                try:
+                    await websocket.send_json({"type": "ping"})
+                except WebSocketDisconnect:
+                    # Nếu client đã ngắt lúc ping, thoát vòng lặp
+                    break
+                continue
             except WebSocketDisconnect:
-                logger.info("Client disconnected")
+                # Client đóng kết nối
+                logger.info("Client disconnected (during receive)")
                 break
 
-    except WebSocketDisconnect:
-        logger.info("Client disconnected")
-        return
-    except Exception as e:
-        logger.error(f"Error: {e}")
-        await websocket.send_json({
-            "type": "error",
-            "message": str(e)
-        })
-    finally:
-        logger.info("Closing WebSocket connection")
-        await websocket.close()
+            # Nếu nhận được raw text, parse JSON
+            try:
+                message = json.loads(raw)
+            except json.JSONDecodeError:
+                # Nếu JSON sai định dạng, gửi text lỗi rồi tiếp tục
+                try:
+                    await websocket.send_text(f"Invalid JSON: {raw}")
+                except WebSocketDisconnect:
+                    pass
+                continue
 
+            msg_type = message.get("type")
+
+            # ----------------------------
+            # 1) PUNCTUATION (chèn dấu câu + viết hoa)
+            #    Client phải gửi: { "type": "punctuation", "text": "<chuỗi chưa có dấu>" }
+            #    Server trả về:   { "type": "punctuated", "text": "<chuỗi đã có dấu câu>" }
+            # ----------------------------
+            if msg_type == "punctuation":
+                original = message.get("text", "").strip()
+                if not original:
+                    try:
+                        await websocket.send_json({
+                            "type": "error",
+                            "message": "Empty text field for punctuation"
+                        })
+                    except WebSocketDisconnect:
+                        pass
+                    continue
+
+                # 1.a) Phục hồi dấu câu
+                punctuated = restore_punctuation(original)
+                # 1.b) Viết hoa sau dấu câu
+                normalized = capitalize_after_punctuation(punctuated)
+
+                try:
+                    await websocket.send_json({
+                        "type": "punctuation",
+                        "text": normalized
+                    })
+                except WebSocketDisconnect:
+                    # Nếu client đã ngắt, break
+                    break
+
+            # ----------------------------
+            # 2) TRANSLATION (dịch văn bản)
+            #    Client gửi: { "type": "translate", "text": "...", "source_lang": "...", "target_lang": "..." }
+            #    Server trả: { "type": "translation", "text": "<kết quả dịch>", "origin": "<text gốc>" }
+            # ----------------------------
+            elif msg_type == "translate":
+                text_to_translate = message.get("text", "")
+                source_lang = message.get("source_lang", "auto")
+                target_lang = message.get("target_lang", "vi")
+
+                try:
+                    translated_text = translate_text(text_to_translate, source_lang, target_lang)
+                    logger.info(f"Translate [{source_lang}→{target_lang}]: {text_to_translate} → {translated_text}")
+                    await websocket.send_json({
+                        "type": "translation",
+                        "text": str(translated_text),
+                        "origin": text_to_translate
+                    })
+                except Exception as e:
+                    logger.error(f"Translation error: {e}")
+                    try:
+                        await websocket.send_json({
+                            "type": "error",
+                            "message": f"Translation failed: {e}"
+                        })
+                    except WebSocketDisconnect:
+                        pass
+
+            # ----------------------------
+            # 3) TEXT-TO-SPEECH
+            #    Client gửi: { "type": "playText", "text": "...", "target_lang": "..." }
+            #    Server trả: { "type": "audio", "audio": <bytes base64>, "text": "<gốc>" }
+            # ----------------------------
+            elif msg_type == "playText":
+                text_to_play = message.get("text", "")
+                target_lang = message.get("target_lang", "vi")
+                try:
+                    audio_bytes = text_to_speech(text_to_play, target_lang)
+                    logger.info(f"TTS [{target_lang}]: {text_to_play}")
+                    await websocket.send_json({
+                        "type": "audio",
+                        "audio": audio_bytes,
+                        "text": text_to_play
+                    })
+                except Exception as e:
+                    logger.error(f"TTS error: {e}")
+                    try:
+                        await websocket.send_json({
+                            "type": "error",
+                            "message": f"TTS failed: {e}"
+                        })
+                    except WebSocketDisconnect:
+                        pass
+
+            # ----------------------------
+            # 4) SPEECH-TO-TEXT (nếu bạn dùng binary audio frames)
+            #    Client có thể gửi: { "type": "audio", "audio_base64": "..." }
+            #    (Hoặc kết hợp receive_bytes nếu không qua JSON)
+            #    Server trả: { "type": "STT", "text": "<kết quả>", ... }
+            # ----------------------------
+            elif msg_type == "audio":
+                # Ví dụ: client gửi base64 string trong JSON
+                base64_audio = message.get("audio_base64", "")
+                if not base64_audio:
+                    try:
+                        await websocket.send_json({
+                            "type": "error",
+                            "message": "No audio_base64 field provided"
+                        })
+                    except WebSocketDisconnect:
+                        pass
+                    continue
+
+                try:
+                    # Giả sử bạn tự decode base64 → bytes ở đây
+                    # import base64
+                    # audio_bytes = base64.b64decode(base64_audio)
+                    # text = speech_to_text(audio_bytes, language=lang)
+                    # ... gửi response ...
+                    text = "[STT result here]"  # thay bằng thực tế
+                    logger.info(f"STT result: {text}")
+                    await websocket.send_json({
+                        "type": "STT",
+                        "text": str(text)
+                    })
+                except Exception as e:
+                    logger.error(f"STT error: {e}")
+                    try:
+                        await websocket.send_json({
+                            "type": "error",
+                            "message": f"Speech-to-text failed: {e}"
+                        })
+                    except WebSocketDisconnect:
+                        pass
+
+            # ----------------------------
+            # 5) PING/PONG giữ kết nối
+            # ----------------------------
+            elif msg_type == "ping":
+                try:
+                    await websocket.send_json({"type": "pong"})
+                except WebSocketDisconnect:
+                    break
+
+            # ----------------------------
+            # 6) Nếu type không được định nghĩa, trả về echo
+            # ----------------------------
+            else:
+                try:
+                    await websocket.send_json({
+                        "type": "echo",
+                        "text": f"Unknown type: {msg_type}"
+                    })
+                except WebSocketDisconnect:
+                    break
+
+    except WebSocketDisconnect:
+        logger.info("Client disconnected (outer WebSocketDisconnect)")
+        return
+
+    except Exception as e:
+        # Bắt các lỗi bất ngờ khác
+        logger.error(f"Unexpected WebSocket error: {e}")
+        try:
+            await websocket.send_json({
+                "type": "error",
+                "message": str(e)
+            })
+        except:
+            pass
+
+    finally:
+        # Đóng WebSocket nếu chưa đóng
+        try:
+            await websocket.close()
+        except:
+            pass
+
+
+# Nếu chạy main.py trực tiếp:
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)

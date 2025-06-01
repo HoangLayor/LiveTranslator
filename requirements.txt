@@ -15,3 +15,5 @@ gtts
 openai-whisper 
 pydub 
 ffmpeg-python
+rich
+dotenvs
