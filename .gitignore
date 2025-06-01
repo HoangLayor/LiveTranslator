@@ -46,10 +46,6 @@ out/
 *.css.map
 *.postcss
 
-# Frontend static files (generated)
-frontend/static/css/
-frontend/static/js/
-
 # Docker / Compose
 *.pid
 docker-compose.override.yml
