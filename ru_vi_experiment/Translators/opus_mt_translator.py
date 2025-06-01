@@ -44,3 +44,11 @@ class OpusTranslator:
 
     translated = self.tokenizer.decode(generated_ids[0], skip_special_tokens=True)
     return translated
+
+if __name__ == "__main__":
+    # Ví dụ sử dụng
+    translator = OpusTranslator("Helsinki-NLP/opus-mt-ru-vi")
+    sentence = "Привет, как дела?"
+    translated_sentence = translator.translate(sentence)
+    print(f"Câu gốc: {sentence}")
+    print(f"Câu dịch: {translated_sentence}")

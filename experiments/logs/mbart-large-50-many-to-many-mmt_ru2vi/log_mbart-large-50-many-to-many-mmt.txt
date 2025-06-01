@@ -1,7 +1,0 @@
-{
-    "model_name": "facebook/mbart-large-50-many-to-many-mmt",
-    "average_time": 0.1643375611533753,
-    "total_time": 51.43765664100647,
-    "num_sentences": 313,
-    "BLEU_score": 11.996082414940929
-}

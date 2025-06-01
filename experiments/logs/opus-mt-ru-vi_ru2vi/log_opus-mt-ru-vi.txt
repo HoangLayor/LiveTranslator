@@ -1,7 +1,0 @@
-{
-    "model_name": "Helsinki-NLP/opus-mt-ru-vi",
-    "average_time": 0.09177359300680435,
-    "total_time": 28.72513461112976,
-    "num_sentences": 313,
-    "BLEU_score": 16.985012147678848
-}

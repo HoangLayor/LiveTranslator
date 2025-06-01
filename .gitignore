@@ -70,3 +70,9 @@ Thumbs.db
 ehthumbs.db
 *.swp
 *.swo
+
+
+train_data/
+logs/
+run/
+ru-vi-finetuned/
