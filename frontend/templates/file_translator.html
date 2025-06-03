@@ -1,476 +1,491 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LiveTranslator - File Translator</title>
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/style.css" />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-            color: #667eea;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        color: #333;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        color: #667eea;
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
 
+      .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      /* Header */
+      header {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        text-align: center;
+        padding: 8rem 2rem 4rem;
+        margin-top: 80px;
+        color: white;
+      }
+
+      header h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .app-description {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        margin-bottom: 1rem;
+      }
+
+      #connectionStatus {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background: rgba(76, 175, 80, 0.9);
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      .main-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin: 2rem 0;
+      }
+
+      /* Panel Styles */
+      .panel {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .panel-title {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        color: #333;
+      }
+
+      /* Language Selector */
+      .language-selector {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 1rem;
+        align-items: end;
+        margin-bottom: 2rem;
+      }
+
+      .language-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .language-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 500;
+        color: #555;
+      }
+
+      select {
+        padding: 0.75rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 1rem;
+        background: white;
+        transition: border-color 0.3s;
+      }
+
+      select:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      .switch-button {
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .switch-button:hover {
+        background: #5a6fd8;
+        transform: rotate(180deg);
+      }
+
+      /* Upload Container */
+      .upload-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 3px dashed #667eea;
+        border-radius: 15px;
+        padding: 3rem 2rem;
+        margin-bottom: 2rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        background: rgba(102, 126, 234, 0.05);
+      }
+
+      .upload-container:hover {
+        border-color: #5a6fd8;
+        background: rgba(102, 126, 234, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .upload-container.drag-over {
+        border-color: #4caf50;
+        background: rgba(76, 175, 80, 0.1);
+      }
+
+      .upload-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .upload-container h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+        color: #333;
+      }
+
+      .upload-container p {
+        color: #666;
+        margin-bottom: 1rem;
+      }
+
+      .file-types {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .file-type {
+        padding: 0.3rem 0.8rem;
+        background: #667eea;
+        color: white;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .file-type.pdf {
+        background: #e74c3c;
+      }
+      .file-type.docx {
+        background: #2980b9;
+      }
+      .file-type.image {
+        background: #27ae60;
+      }
+
+      #fileInput {
+        display: none;
+      }
+
+      /* Selected File */
+      .selected-file {
+        display: none;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: rgba(102, 126, 234, 0.1);
+        border-radius: 10px;
+        margin-bottom: 2rem;
+      }
+
+      .file-icon {
+        font-size: 2rem;
+      }
+
+      .file-name {
+        flex: 1;
+        font-weight: 500;
+      }
+
+      .badge {
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: white;
+      }
+
+      .badge.pdf {
+        background: #e74c3c;
+      }
+      .badge.docx {
+        background: #2980b9;
+      }
+      .badge.image {
+        background: #27ae60;
+      }
+
+      .remove-file {
+        background: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        font-size: 0.8rem;
+      }
+
+      /* Button */
+      .button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        width: 100%;
+      }
+
+      .button.accent {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+      }
+
+      .button.accent:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+      }
+
+      .button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Translation Area */
+      .translation-area {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .text-area {
+        position: relative;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .text-area-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-bottom: 1px solid #e0e0e0;
+        font-weight: 600;
+      }
+
+      .copy-button {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .copy-button:hover {
+        background: #5a6fd8;
+      }
+
+      .text-area-content {
+        padding: 1.5rem;
+        min-height: 200px;
+        max-height: 400px;
+        overflow-y: auto;
+        line-height: 1.6;
+      }
+
+      .text-placeholder {
+        color: #999;
+        font-style: italic;
+        text-align: center;
+        padding: 2rem 0;
+      }
+
+      .loading-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.95);
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+      }
+
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #667eea;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Feedback */
+      .feedback-container {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background: rgba(102, 126, 234, 0.05);
+        border-radius: 12px;
+      }
+
+      .feedback-title {
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .star-rating {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .star {
+        font-size: 1.5rem;
+        color: #ddd;
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+
+      .star:hover,
+      .star.active {
+        color: #ffd700;
+      }
+
+      .feedback-input {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        resize: vertical;
+        min-height: 80px;
+        margin-bottom: 1rem;
+        font-family: inherit;
+      }
+
+      .submit-feedback {
+        background: #4caf50;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background 0.3s;
+      }
+
+      .submit-feedback:hover {
+        background: #45a049;
+      }
+
+      /* Footer */
+      .footer {
+        text-align: center;
+        padding: 2rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
         .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Header */
-        header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            text-align: center;
-            padding: 8rem 2rem 4rem;
-            margin-top: 80px;
-            color: white;
+          display: block;
         }
 
         header h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .app-description {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 1rem;
-        }
-
-        #connectionStatus {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: rgba(76, 175, 80, 0.9);
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
+          font-size: 2rem;
         }
 
         .main-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin: 2rem 0;
+          grid-template-columns: 1fr;
         }
 
-        /* Panel Styles */
-        .panel {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .panel-title {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            color: #333;
-        }
-
-        /* Language Selector */
         .language-selector {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 1rem;
-            align-items: end;
-            margin-bottom: 2rem;
-        }
-
-        .language-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .language-label {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 500;
-            color: #555;
-        }
-
-        select {
-            padding: 0.75rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
-            background: white;
-            transition: border-color 0.3s;
-        }
-
-        select:focus {
-            outline: none;
-            border-color: #667eea;
+          grid-template-columns: 1fr;
+          gap: 1rem;
         }
 
         .switch-button {
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s;
+          justify-self: center;
         }
-
-        .switch-button:hover {
-            background: #5a6fd8;
-            transform: rotate(180deg);
-        }
-
-        /* Upload Container */
-        .upload-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border: 3px dashed #667eea;
-            border-radius: 15px;
-            padding: 3rem 2rem;
-            margin-bottom: 2rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: rgba(102, 126, 234, 0.05);
-        }
-
-        .upload-container:hover {
-            border-color: #5a6fd8;
-            background: rgba(102, 126, 234, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .upload-container.drag-over {
-            border-color: #4caf50;
-            background: rgba(76, 175, 80, 0.1);
-        }
-
-        .upload-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .upload-container h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-
-        .upload-container p {
-            color: #666;
-            margin-bottom: 1rem;
-        }
-
-        .file-types {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .file-type {
-            padding: 0.3rem 0.8rem;
-            background: #667eea;
-            color: white;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .file-type.pdf { background: #e74c3c; }
-        .file-type.docx { background: #2980b9; }
-        .file-type.image { background: #27ae60; }
-
-        #fileInput {
-            display: none;
-        }
-
-        /* Selected File */
-        .selected-file {
-            display: none;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: rgba(102, 126, 234, 0.1);
-            border-radius: 10px;
-            margin-bottom: 2rem;
-        }
-
-        .file-icon {
-            font-size: 2rem;
-        }
-
-        .file-name {
-            flex: 1;
-            font-weight: 500;
-        }
-
-        .badge {
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: white;
-        }
-
-        .badge.pdf { background: #e74c3c; }
-        .badge.docx { background: #2980b9; }
-        .badge.image { background: #27ae60; }
-
-        .remove-file {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-
-        /* Button */
-        .button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-        }
-
-        .button.accent {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-
-        .button.accent:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Translation Area */
-        .translation-area {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .text-area {
-            position: relative;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .text-area-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-            font-weight: 600;
-        }
-
-        .copy-button {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .copy-button:hover {
-            background: #5a6fd8;
-        }
-
-        .text-area-content {
-            padding: 1.5rem;
-            min-height: 200px;
-            max-height: 400px;
-            overflow-y: auto;
-            line-height: 1.6;
-        }
-
-        .text-placeholder {
-            color: #999;
-            font-style: italic;
-            text-align: center;
-            padding: 2rem 0;
-        }
-
-        .loading-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.95);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Feedback */
-        .feedback-container {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: rgba(102, 126, 234, 0.05);
-            border-radius: 12px;
-        }
-
-        .feedback-title {
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .star-rating {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .star {
-            font-size: 1.5rem;
-            color: #ddd;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .star:hover,
-        .star.active {
-            color: #ffd700;
-        }
-
-        .feedback-input {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            resize: vertical;
-            min-height: 80px;
-            margin-bottom: 1rem;
-            font-family: inherit;
-        }
-
-        .submit-feedback {
-            background: #4caf50;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: background 0.3s;
-        }
-
-        .submit-feedback:hover {
-            background: #45a049;
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 2rem;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            header h1 {
-                font-size: 2rem;
-            }
-
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-
-            .language-selector {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .switch-button {
-                justify-self: center;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Navigation Bar -->
     <nav class="navbar">
       <div class="nav-container">
@@ -480,14 +495,13 @@
         </a>
 
         <ul class="nav-links">
-          <li><a href="/">Trang chủ</a></li>
+          <li ><a href="#">Trang chủ</a></li>
           <li><a href="/live-translator">Dịch hội thoại</a></li>
           <li class="active"><a href="/file-translator">Dịch từ file</a></li>
-          <li><a href="#">Dịch từ web</a></li>
+          <li><a href="/live-camera">Dịch hình ảnh</a></li>
           <li><a href="/about">Về chúng tôi</a></li>
           <li><a href="/contact">Liên hệ</a></li>
         </ul>
-
         <button class="mobile-menu-btn">☰</button>
       </div>
     </nav>
@@ -557,7 +571,11 @@
               <span class="file-type image">JPG</span>
               <span class="file-type image">PNG</span>
             </div>
-            <input type="file" id="fileInput" accept=".docx,.pdf,.jpg,.jpeg,.png" />
+            <input
+              type="file"
+              id="fileInput"
+              accept=".docx,.pdf,.jpg,.jpeg,.png"
+            />
           </label>
 
           <!-- Selected File Info -->
@@ -575,9 +593,18 @@
           </button>
 
           <!-- Preview Image -->
-          <div class="image-preview-container" id="imagePreviewContainer" style="display: none;">
+          <div
+            class="image-preview-container"
+            id="imagePreviewContainer"
+            style="display: none"
+          >
             <div class="image-preview-title">🖼️ Ảnh đã tải lên</div>
-            <img id="uploadedImage" src="" alt="Ảnh đã upload" style="max-width: 100%; border: 1px solid #ccc; padding: 10px;" />
+            <img
+              id="uploadedImage"
+              src=""
+              alt="Ảnh đã upload"
+              style="max-width: 100%; border: 1px solid #ccc; padding: 10px"
+            />
           </div>
         </div>
 
@@ -593,13 +620,18 @@
             <div class="text-area" id="originalTextArea">
               <div class="text-area-header">
                 <span>Văn bản gốc</span>
-                <button class="copy-button" onclick="copyToClipboard('originalText')">
+                <button
+                  class="copy-button"
+                  onclick="copyToClipboard('originalText')"
+                >
                   <span>📋</span>
                   <span>Sao chép</span>
                 </button>
               </div>
               <div class="text-area-content" id="originalText">
-                <div class="text-placeholder">Văn bản gốc sẽ hiển thị tại đây sau khi xử lý file.</div>
+                <div class="text-placeholder">
+                  Văn bản gốc sẽ hiển thị tại đây sau khi xử lý file.
+                </div>
               </div>
               <div class="loading-overlay" id="originalLoading">
                 <div class="spinner"></div>
@@ -611,13 +643,18 @@
             <div class="text-area" id="translatedTextArea">
               <div class="text-area-header">
                 <span>Bản dịch</span>
-                <button class="copy-button" onclick="copyToClipboard('translatedText')">
+                <button
+                  class="copy-button"
+                  onclick="copyToClipboard('translatedText')"
+                >
                   <span>📋</span>
                   <span>Sao chép</span>
                 </button>
               </div>
               <div class="text-area-content" id="translatedText">
-                <div class="text-placeholder">Bản dịch sẽ hiển thị tại đây sau khi hoàn tất.</div>
+                <div class="text-placeholder">
+                  Bản dịch sẽ hiển thị tại đây sau khi hoàn tất.
+                </div>
               </div>
               <div class="loading-overlay" id="translationLoading">
                 <div class="spinner"></div>
@@ -636,75 +673,85 @@
               <span class="star" data-rating="4">★</span>
               <span class="star" data-rating="5">★</span>
             </div>
-            <textarea class="feedback-input" id="feedbackInput" placeholder="Góp ý của bạn về bản dịch (không bắt buộc)"></textarea>
-            <button class="submit-feedback" onclick="submitFeedback()">Gửi đánh giá</button>
+            <textarea
+              class="feedback-input"
+              id="feedbackInput"
+              placeholder="Góp ý của bạn về bản dịch (không bắt buộc)"
+            ></textarea>
+            <button class="submit-feedback" onclick="submitFeedback()">
+              Gửi đánh giá
+            </button>
           </div>
         </div>
       </div>
 
-      <div class="footer">
-        © 2025 LiveTranslator. All rights reserved.
-      </div>
+      <div class="footer">© 2025 LiveTranslator. All rights reserved.</div>
     </div>
 
     <script>
       // Variables
       let selectedFile = null;
       let currentRating = 0;
-      
+
       // DOM Elements
-      const fileInput = document.getElementById('fileInput');
-      const uploadContainer = document.getElementById('uploadContainer');
-      const selectedFileDiv = document.getElementById('selectedFile');
-      const translateBtn = document.getElementById('translateBtn');
-      const originalText = document.getElementById('originalText');
-      const translatedText = document.getElementById('translatedText');
-      const originalLoading = document.getElementById('originalLoading');
-      const translationLoading = document.getElementById('translationLoading');
-      const sourceLangSelect = document.getElementById('sourceLang');
-      const targetLangSelect = document.getElementById('targetLang');
-      const stars = document.querySelectorAll('.star');
-      const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-      const uploadedImage = document.getElementById('uploadedImage');
-      
+      const fileInput = document.getElementById("fileInput");
+      const uploadContainer = document.getElementById("uploadContainer");
+      const selectedFileDiv = document.getElementById("selectedFile");
+      const translateBtn = document.getElementById("translateBtn");
+      const originalText = document.getElementById("originalText");
+      const translatedText = document.getElementById("translatedText");
+      const originalLoading = document.getElementById("originalLoading");
+      const translationLoading = document.getElementById("translationLoading");
+      const sourceLangSelect = document.getElementById("sourceLang");
+      const targetLangSelect = document.getElementById("targetLang");
+      const stars = document.querySelectorAll(".star");
+      const imagePreviewContainer = document.getElementById(
+        "imagePreviewContainer"
+      );
+      const uploadedImage = document.getElementById("uploadedImage");
+
       // Initialize app
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener("DOMContentLoaded", function () {
         setupEventListeners();
         setupDragAndDrop();
         setupStarRating();
         initWebSocket(); // Kết nối WebSocket
       });
-      
+
       // Setup event listeners
       function setupEventListeners() {
         // File input change
-        fileInput.addEventListener('change', handleFileSelect);
-        
+        fileInput.addEventListener("change", handleFileSelect);
+
         // Remove file button
-        document.querySelector('.remove-file').addEventListener('click', removeFile);
-        
+        document
+          .querySelector(".remove-file")
+          .addEventListener("click", removeFile);
+
         // Language switch button
-        document.querySelector('.switch-button').addEventListener('click', switchLanguages);
-        
+        document
+          .querySelector(".switch-button")
+          .addEventListener("click", switchLanguages);
+
         // Translate button
-        translateBtn.addEventListener('click', startTranslation);
+        translateBtn.addEventListener("click", startTranslation);
       }
-      
+
       // Setup drag and drop functionality
       function setupDragAndDrop() {
-        uploadContainer.addEventListener('dragover', (e) => {
+        uploadContainer.addEventListener("dragover", (e) => {
           e.preventDefault();
-          uploadContainer.classList.add('drag-over');
+          uploadContainer.classList.add("drag-over");
         });
-        
-        uploadContainer.addEventListener('dragleave', () => {
-          uploadContainer.classList.remove('drag-over');
+
+        uploadContainer.addEventListener("dragleave", () => {
+          uploadContainer.classList.remove("drag-over");
         });
-        
-        uploadContainer.addEventListener('drop', (e) => {
+
+        uploadContainer.addEventListener("drop", (e) => {
           e.preventDefault();
-          uploadContainer.classList.remove('drag-over');
-          
+          uploadContainer.classList.remove("drag-over");
+
           const files = e.dataTransfer.files;
           if (files.length > 0) {
             const file = files[0];
@@ -712,76 +759,80 @@
               selectedFile = file;
               showSelectedFile(file);
             } else {
-              alert('Định dạng file không được hỗ trợ. Vui lòng chọn file DOCX, PDF, JPG hoặc PNG.');
+              alert(
+                "Định dạng file không được hỗ trợ. Vui lòng chọn file DOCX, PDF, JPG hoặc PNG."
+              );
             }
           }
         });
       }
-      
+
       // Star rating functionality
       function setupStarRating() {
-        stars.forEach(star => {
-          star.addEventListener('click', (e) => {
-            const rating = parseInt(e.target.getAttribute('data-rating'));
+        stars.forEach((star) => {
+          star.addEventListener("click", (e) => {
+            const rating = parseInt(e.target.getAttribute("data-rating"));
             setRating(rating);
           });
-          
-          star.addEventListener('mouseover', (e) => {
-            const rating = parseInt(e.target.getAttribute('data-rating'));
+
+          star.addEventListener("mouseover", (e) => {
+            const rating = parseInt(e.target.getAttribute("data-rating"));
             highlightStars(rating);
           });
         });
-        
-        document.getElementById('starRating').addEventListener('mouseleave', () => {
-          highlightStars(currentRating);
-        });
+
+        document
+          .getElementById("starRating")
+          .addEventListener("mouseleave", () => {
+            highlightStars(currentRating);
+          });
       }
-      
+
       // Set rating based on star clicked
       function setRating(rating) {
         currentRating = rating;
-        stars.forEach(star => {
-          star.classList.remove('active');
-          if (parseInt(star.getAttribute('data-rating')) <= rating) {
-            star.classList.add('active');
+        stars.forEach((star) => {
+          star.classList.remove("active");
+          if (parseInt(star.getAttribute("data-rating")) <= rating) {
+            star.classList.add("active");
           }
         });
       }
 
       // Highlight stars on hover
       function highlightStars(rating) {
-        stars.forEach(star => {
-          star.classList.remove('active');
-          if (parseInt(star.getAttribute('data-rating')) <= rating) {
-            star.classList.add('active');
+        stars.forEach((star) => {
+          star.classList.remove("active");
+          if (parseInt(star.getAttribute("data-rating")) <= rating) {
+            star.classList.add("active");
           }
         });
       }
 
       // Copy text to clipboard
       function copyToClipboard(elementId) {
-        const textArea = document.createElement('textarea');
+        const textArea = document.createElement("textarea");
         textArea.value = document.getElementById(elementId).innerText;
         document.body.appendChild(textArea);
         textArea.select();
-        document.execCommand('copy');
+        document.execCommand("copy");
         document.body.removeChild(textArea);
-        alert('Đã sao chép văn bản vào clipboard!');
+        alert("Đã sao chép văn bản vào clipboard!");
       }
 
       // Submit feedback
       function submitFeedback() {
-        const feedbackInput = document.getElementById('feedbackInput').value;
+        const feedbackInput = document.getElementById("feedbackInput").value;
         if (currentRating === 0) {
-          alert('Vui lòng chọn đánh giá trước khi gửi.');
+          alert("Vui lòng chọn đánh giá trước khi gửi.");
           return;
         }
-        
+
         // Gửi phản hồi đến server
-        fetch('/api/submit-feedback', {
-          method: 'POST',
+        fetch("/api/submit-feedback", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             rating: currentRating,
@@ -790,29 +841,29 @@
             source_lang: sourceLangSelect.value,
             target_lang: targetLangSelect.value,
             original_text: originalText.innerText,
-            translated_text: translatedText.innerText
+            translated_text: translatedText.innerText,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              alert("Cảm ơn bạn đã gửi phản hồi!");
+              resetFeedback();
+            } else {
+              throw new Error(data.message || "Failed to submit feedback");
+            }
           })
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            alert('Cảm ơn bạn đã gửi phản hồi!');
-            resetFeedback();
-          } else {
-            throw new Error(data.message || 'Failed to submit feedback');
-          }
-        })
-        .catch(error => {
-          console.error('Lỗi gửi phản hồi:', error);
-          alert('Có lỗi xảy ra khi gửi phản hồi. Vui lòng thử lại sau.');
-        });
+          .catch((error) => {
+            console.error("Lỗi gửi phản hồi:", error);
+            alert("Có lỗi xảy ra khi gửi phản hồi. Vui lòng thử lại sau.");
+          });
       }
 
       // Reset feedback form
       function resetFeedback() {
         currentRating = 0;
-        document.getElementById('feedbackInput').value = '';
-        stars.forEach(star => star.classList.remove('active'));
+        document.getElementById("feedbackInput").value = "";
+        stars.forEach((star) => star.classList.remove("active"));
       }
 
       // File selection and validation
@@ -823,82 +874,84 @@
           showSelectedFile(file);
         }
       }
-      
+
       function isValidFile(file) {
-        const validTypes = ['.docx', '.pdf', '.jpg', '.jpeg', '.png'];
+        const validTypes = [".docx", ".pdf", ".jpg", ".jpeg", ".png"];
         const fileName = file.name.toLowerCase();
-        return validTypes.some(type => fileName.endsWith(type));
+        return validTypes.some((type) => fileName.endsWith(type));
       }
-      
+
       function showSelectedFile(file) {
         selectedFileDiv.style.display = "flex";
-        selectedFileDiv.querySelector('.file-name').textContent = file.name;
-        
-        const fileIcon = selectedFileDiv.querySelector('.file-icon');
-        const badge = selectedFileDiv.querySelector('.badge');
-        
-        if (file.name.toLowerCase().endsWith('.pdf')) {
-          fileIcon.textContent = '📕';
-          badge.textContent = 'PDF';
-          badge.className = 'badge pdf';
-        } else if (file.name.toLowerCase().endsWith('.docx')) {
-          fileIcon.textContent = '📘';
-          badge.textContent = 'DOCX';
-          badge.className = 'badge docx';
+        selectedFileDiv.querySelector(".file-name").textContent = file.name;
+
+        const fileIcon = selectedFileDiv.querySelector(".file-icon");
+        const badge = selectedFileDiv.querySelector(".badge");
+
+        if (file.name.toLowerCase().endsWith(".pdf")) {
+          fileIcon.textContent = "📕";
+          badge.textContent = "PDF";
+          badge.className = "badge pdf";
+        } else if (file.name.toLowerCase().endsWith(".docx")) {
+          fileIcon.textContent = "📘";
+          badge.textContent = "DOCX";
+          badge.className = "badge docx";
         } else {
-          fileIcon.textContent = '🖼️';
-          const ext = file.name.split('.').pop().toUpperCase();
+          fileIcon.textContent = "🖼️";
+          const ext = file.name.split(".").pop().toUpperCase();
           badge.textContent = ext;
-          badge.className = 'badge image';
+          badge.className = "badge image";
         }
-        
+
         translateBtn.disabled = false;
       }
-      
+
       function removeFile() {
         selectedFile = null;
         selectedFileDiv.style.display = "none";
-        fileInput.value = '';
+        fileInput.value = "";
         translateBtn.disabled = true;
         resetTextAreas();
       }
-      
+
       function resetTextAreas() {
-        originalText.innerHTML = '<div class="text-placeholder">Văn bản gốc sẽ hiển thị tại đây sau khi xử lý file.</div>';
-        translatedText.innerHTML = '<div class="text-placeholder">Bản dịch sẽ hiển thị tại đây sau khi hoàn tất.</div>';
+        originalText.innerHTML =
+          '<div class="text-placeholder">Văn bản gốc sẽ hiển thị tại đây sau khi xử lý file.</div>';
+        translatedText.innerHTML =
+          '<div class="text-placeholder">Bản dịch sẽ hiển thị tại đây sau khi hoàn tất.</div>';
         originalLoading.style.display = "none";
         translationLoading.style.display = "none";
       }
-      
+
       function switchLanguages() {
-        if (sourceLangSelect.value !== 'auto') {
+        if (sourceLangSelect.value !== "auto") {
           const temp = sourceLangSelect.value;
           sourceLangSelect.value = targetLangSelect.value;
           targetLangSelect.value = temp;
         }
       }
-      
+
       // Start translation process
       function startTranslation() {
         if (!selectedFile) return;
-        
+
         resetTextAreas();
         originalLoading.style.display = "flex";
-        console.log('Starting translation for file:', selectedFile.name);
+        console.log("Starting translation for file:", selectedFile.name);
         // Simulate file processing
         setTimeout(() => {
           processFile();
         }, 1500);
       }
-      
+
       // WEBSOCKET CONNECTION
       let socket;
-      
+
       function initWebSocket() {
         if (socket && socket.readyState !== WebSocket.CLOSED) {
           socket.close();
         }
-        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
         const socketUrl = `${protocol}//${window.location.host}/ws`;
         // const socketUrl = "https://positive-currently-mastodon.ngrok-free.app/ws";
         socket = new WebSocket(socketUrl);
@@ -906,32 +959,32 @@
         socket.onopen = () => {
           updateConnectionStatus("Đã kết nối", "#4caf50");
         };
-        
+
         socket.onclose = () => {
           updateConnectionStatus("Mất kết nối", "#f44336");
           setTimeout(initWebSocket, 3000); // Auto reconnect
         };
-        
+
         socket.onerror = () => {
           updateConnectionStatus("Lỗi kết nối", "#f44336");
         };
 
         socket.onmessage = (event) => {
           const data = JSON.parse(event.data);
-          
+
           if (data.type === "extractedText") {
             originalLoading.style.display = "none";
-            originalText.innerHTML = data.text || "Không thể trích xuất văn bản từ file này.";
-            
+            originalText.innerHTML =
+              data.text || "Không thể trích xuất văn bản từ file này.";
+
             // Auto start translation
             if (data.text) {
               startTextTranslation(data.text);
             }
-            
           } else if (data.type === "translation") {
             translationLoading.style.display = "none";
-            translatedText.innerHTML = formatText(data.text) || "Không thể dịch văn bản.";
-            
+            translatedText.innerHTML =
+              formatText(data.text) || "Không thể dịch văn bản.";
           } else if (data.type === "error") {
             originalLoading.style.display = "none";
             translationLoading.style.display = "none";
@@ -939,10 +992,10 @@
           }
         };
       }
-      
+
       // UPDATE CONNECTION STATUS
       function updateConnectionStatus(text, color) {
-        const connectionStatus = document.getElementById('connectionStatus');
+        const connectionStatus = document.getElementById("connectionStatus");
         connectionStatus.textContent = text;
         connectionStatus.style.backgroundColor = color;
         connectionStatus.style.color = "white";
@@ -951,87 +1004,90 @@
         connectionStatus.style.fontSize = "0.9rem";
         connectionStatus.style.fontWeight = "500";
       }
-      
+
       // PROCESS FILE
       async function processFile() {
-          console.log("Processing file:", selectedFile.name); 
-          try {
-              originalLoading.style.display = "flex";
-              
-              const formData = new FormData();
-              formData.append('file', selectedFile);
-              formData.append('source_lang', sourceLangSelect.value);
-              formData.append('target_lang', targetLangSelect.value);
-              
-              const response = await fetch('/api/file-translator/', {
-                  method: 'POST',
-                  body: formData
-              });
-              
-              if (!response.ok) {
-                  const errorData = await response.json();
-                  throw new Error(errorData.detail || 'Upload failed');
-              }
-              
-              const result = await response.json();
-              
-              originalLoading.style.display = "none";
-              
-              if (result.extracted_text) {
-                  originalText.innerHTML = formatText(result.extracted_text);
-                  if (result.extracted_text.trim()) {
-                      startTextTranslation(result.extracted_text);
-                  }
-              }
-              
-              if (result.translated_text) {
-                  translationLoading.style.display = "none";
-                  translatedText.innerHTML = formatText(result.translated_text);
-              }
+        console.log("Processing file:", selectedFile.name);
+        try {
+          originalLoading.style.display = "flex";
 
-              console.log("File processed successfully:", result);
-              
-          } catch (error) {
-              console.error('File processing error:', error);
-              originalLoading.style.display = "none";
-              translationLoading.style.display = "none";
-              originalText.innerHTML = `<div style="color: red;">Lỗi: ${error.message}</div>`;
+          const formData = new FormData();
+          formData.append("file", selectedFile);
+          formData.append("source_lang", sourceLangSelect.value);
+          formData.append("target_lang", targetLangSelect.value);
+
+          const response = await fetch("/api/file-translator/", {
+            method: "POST",
+            body: formData,
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || "Upload failed");
           }
+
+          const result = await response.json();
+
+          originalLoading.style.display = "none";
+
+          if (result.extracted_text) {
+            originalText.innerHTML = formatText(result.extracted_text);
+            if (result.extracted_text.trim()) {
+              startTextTranslation(result.extracted_text);
+            }
+          }
+
+          if (result.translated_text) {
+            translationLoading.style.display = "none";
+            translatedText.innerHTML = formatText(result.translated_text);
+          }
+
+          console.log("File processed successfully:", result);
+        } catch (error) {
+          console.error("File processing error:", error);
+          originalLoading.style.display = "none";
+          translationLoading.style.display = "none";
+          originalText.innerHTML = `<div style="color: red;">Lỗi: ${error.message}</div>`;
+        }
       }
-      
+
       // START TEXT TRANSLATION
       function startTextTranslation(text) {
         if (!socket || socket.readyState !== WebSocket.OPEN) {
-          console.error('WebSocket not connected');
+          console.error("WebSocket not connected");
           return;
         }
-        
+
         translationLoading.style.display = "flex";
-        
+
         // Send translation request
-        socket.send(JSON.stringify({
-          type: "translate",
-          text: text,
-          source_lang: sourceLangSelect.value,
-          target_lang: targetLangSelect.value
-        }));
+        socket.send(
+          JSON.stringify({
+            type: "translate",
+            text: text,
+            source_lang: sourceLangSelect.value,
+            target_lang: targetLangSelect.value,
+          })
+        );
       }
-      
+
       // FORMAT TEXT FOR DISPLAY
       function formatText(text) {
-        if (!text) return '';
-        return text.replace(/\n/g, '<br>').replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
+        if (!text) return "";
+        return text
+          .replace(/\n/g, "<br>")
+          .replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
       }
 
       // IMAGE PREVIEW
-      fileInput.addEventListener('change', () => {
+      fileInput.addEventListener("change", () => {
         const file = fileInput.files[0];
         if (!file) return;
 
         const fileType = file.type;
         if (fileType.startsWith("image/")) {
           const reader = new FileReader();
-          reader.onload = function(e) {
+          reader.onload = function (e) {
             uploadedImage.src = e.target.result;
             imagePreviewContainer.style.display = "block";
           };
@@ -1040,8 +1096,7 @@
           imagePreviewContainer.style.display = "none";
         }
       });
-
     </script>
-</body>
+  </body>
 </html>
 <!-- End of HTML -->

@@ -653,7 +653,7 @@
             <option value="vi-VN">🇻🇳 Tiếng Việt</option>
             <option value="fr-FR">🇫🇷 Tiếng Pháp</option>
             <option value="ru-RU">🇷🇺 Tiếng Nga</option>
-            <option value="zh-cn">zh Tiếng Trung</option> 
+            <option value="zh-cn">zh Tiếng Trung</option>
           </select>
         </div>
 
@@ -671,7 +671,7 @@
             <option value="en">🇺🇸 English</option>
             <option value="fr">🇫🇷 Tiếng Pháp</option>
             <option value="ru">🇷🇺 Tiếng Nga</option>
-            <option value="zh-cn">zh Tiếng Trung</option> 
+            <option value="zh-cn">zh Tiếng Trung</option>
           </select>
         </div>
       </div>
@@ -746,10 +746,8 @@
           >
             <span class="icon">🛑</span>
             <span class="tooltip">Dừng</span>
-          </button>
+          </button>   
         </div>
-      </div>
-
       <div class="footer">
         <button class="clear-button" onclick="clearMessages()">
           <span class="icon">🗑️</span> Xóa tất cả cuộc trò chuyện
@@ -848,7 +846,7 @@
       }
 
       // Kiểm tra trình duyệt hỗ trợ SpeechRecognition
-      if (SpeechRecognition) {
+      if (!isMobileDevice()) {
         recognition = new SpeechRecognition();
         recognition.continuous = false; // Ghi âm 1 câu rồi dừng
         recognition.interimResults = false;
@@ -896,6 +894,7 @@
             const reader = new FileReader();
             reader.onloadend = () => {
               const base64data = reader.result.split(",")[1];
+
               if (socket && socket.readyState === WebSocket.OPEN) {
                 lastSentTime = Date.now();
                 socket.send(
@@ -1269,6 +1268,10 @@
         if (audioContext) audioContext.close();
         const bars = document.querySelectorAll(".wave-bar");
         bars.forEach((bar) => (bar.style.height = "3px")); // Reset về nhỏ
+      }
+      // Kiểm tra xem trình duyệt có hỗ trợ SpeechRecognition không
+      function isMobileDevice() {
+          return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
       }
     </script>
   </body>

@@ -81,6 +81,11 @@ async def live_translator(request: Request):
     logger.info("Live translator page accessed")
     return templates.TemplateResponse("live_translator.html", {"request": request})
 
+@app.get("/live-camera", response_class=HTMLResponse)
+async def live_translator(request: Request):
+    logger.info("Live translator page accessed")
+    return templates.TemplateResponse("live_camera.html", {"request": request})
+
 @app.get("/file-translator", response_class=HTMLResponse)
 async def file_translator(request: Request):
     logger.info("File translator page accessed")
