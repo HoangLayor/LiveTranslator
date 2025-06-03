@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liên hệ - LiveTranslator</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+
+    .contact-hero {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      color: white;
+      padding: 8rem 2rem 4rem;
+      text-align: center;
+    }
+
+    .contact-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      gap: 1rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+      margin-top: 2rem;
+      border: 1px solid rgba(255,255,255,0.2);margin-top: 2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 4rem 0;
+    }
+
+    .contact-info {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .contact-form {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .contact-info-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-info-item i {
+      font-size: 1.5rem;
+      margin-right: 1rem;
+      color: #667eea;
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .section-title p {
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <span>🌐</span>
+        LiveTranslator
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/">Trang chủ</a></li>
+        <li><a href="/live-translator">Dịch hội thoại</a></li>
+        <li><a href="/file-translator">Dịch từ file</a></li>
+        <li><a href="#">Dịch từ web</a></li>
+        <li><a href="/about">Về chúng tôi</a></li>
+        <li class="active"><a href="/contact">Liên hệ</a></li>
+      </ul>
+
+      <button class="mobile-menu-btn">☰</button>
+    </div>
+  </nav>
+
+  <!-- Contact Hero Section -->
+  <section class="contact-hero">
+    <div class="hero-content">
+      <h1>Liên hệ với chúng tôi</h1>
+      <p>Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="contact-content">
+    <div class="section-title">
+      <h2>Hãy liên hệ</h2>
+      <p>Bạn có câu hỏi hoặc cần hỗ trợ? Hãy để lại tin nhắn cho chúng tôi.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Thông tin liên hệ</h3>
+        <div class="contact-info-item">
+          <i>📍</i>
+          <div>
+            <h4>Địa chỉ</h4>
+            <p>123 Đường ABC, <br>Thành phố Hà Nội, Việt Nam</p>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <i>📞</i>
+          <div>
+            <h4>Điện thoại</h4>
+            <p>+84 123 456 789</p>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <i>✉️</i>
+          <div>
+            <h4>Email</h4>
+            <p>info@livetranslator.com</p>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <i>⏰</i>
+          <div>
+            <h4>Giờ làm việc</h4>
+            <p>Thứ 2 - Thứ 6: 8:00 - 17:30<br>Thứ 7: 8:00 - 12:00</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <h3>Gửi tin nhắn cho chúng tôi</h3>
+        <form action="/contact" method="POST">
+          <div class="form-group">
+            <label for="name">Họ và tên</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="subject">Tiêu đề</label>
+            <input type="text" id="subject" name="subject" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Nội dung</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Gửi tin nhắn</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-about">
+        <div class="footer-logo">
+          <span>🌐</span>
+          LiveTranslator
+        </div>
+        <p class="footer-description">
+          Giải pháp dịch thuật toàn diện giúp bạn vượt qua rào cản ngôn ngữ và kết nối với thế giới.
+        </p>
+        <div class="social-links">
+          <a href="#" class="social-link">
+            <span>f</span>
+          </a>
+          <a href="#" class="social-link">
+            <span>in</span>
+          </a>
+          <a href="#" class="social-link">
+            <span>𝕏</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html> 

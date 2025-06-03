@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Về chúng tôi - LiveTranslator</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+
+    .about-hero {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      color: white;
+      padding: 8rem 2rem 4rem;
+      text-align: center;
+    }
+
+    .about-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      gap: 1rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+      margin-top: 2rem;
+      border: 1px solid rgba(255,255,255,0.2);margin-top: 2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .mission-vision {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 4rem 0;
+    }
+
+    .mission-card, .vision-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .team-section {
+      margin: 4rem 0;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .team-member {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .team-member img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .team-info {
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .section-title p {
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .mission-vision {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <span>🌐</span>
+        LiveTranslator
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="/">Trang chủ</a></li>
+        <li><a href="/live-translator">Dịch hội thoại</a></li>
+        <li><a href="/file-translator">Dịch từ file</a></li>
+        <li><a href="#">Dịch từ web</a></li>
+        <li class="active"><a href="/about">Về chúng tôi</a></li>
+        <li><a href="/contact">Liên hệ</a></li>
+      </ul>
+
+      <button class="mobile-menu-btn">☰</button>
+    </div>
+  </nav>
+
+  <!-- About Hero Section -->
+  <section class="about-hero">
+    <div class="hero-content">
+      <h1>Về LiveTranslator</h1>
+      <p>Chúng tôi đang xây dựng tương lai của giao tiếp đa ngôn ngữ</p>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="about-content">
+    <div class="section-title">
+      <h2>Câu chuyện của chúng tôi</h2>
+      <p>LiveTranslator được thành lập với sứ mệnh phá vỡ rào cản ngôn ngữ và kết nối mọi người trên toàn cầu.</p>
+    </div>
+
+    <div class="mission-vision">
+      <div class="mission-card">
+        <h3>Sứ mệnh</h3>
+        <p>Chúng tôi cam kết cung cấp giải pháp dịch thuật chính xác, nhanh chóng và dễ tiếp cận cho mọi người, giúp họ giao tiếp hiệu quả bất kể ngôn ngữ nào.</p>
+      </div>
+      <div class="vision-card">
+        <h3>Tầm nhìn</h3>
+        <p>Chúng tôi mong muốn trở thành nền tảng dịch thuật hàng đầu, kết nối mọi người trên toàn cầu thông qua công nghệ AI tiên tiến và trải nghiệm người dùng xuất sắc.</p>
+      </div>
+    </div>
+
+    <div class="team-section">
+      <div class="section-title">
+        <h2>Đội ngũ của chúng tôi</h2>
+        <p>Những người đam mê công nghệ và ngôn ngữ đang làm việc để mang đến trải nghiệm dịch thuật tốt nhất cho bạn.</p>
+      </div>
+
+      <div class="team-grid">
+        <div class="team-member">
+          <img src="/static/images/team/ceo.jpg" alt="CEO">
+          <div class="team-info">
+            <h3>Nguyễn Khắc Gia Hoàng</h3>
+            <p>B22DCCN340</p>
+          </div>
+        </div>
+        <div class="team-member">
+          <img src="/static/images/team/cto.jpg" alt="CTO">
+          <div class="team-info">
+            <h3>Nguyễn Viết Quyền</h3>
+            <p>B22DCCN</p>
+          </div>
+        </div>
+        <div class="team-member">
+          <img src="/static/images/team/lead-dev.jpg" alt="Lead Developer">
+          <div class="team-info">
+            <h3>Bùi Ngọc Linh</h3>
+            <p>B22DCCN</p>
+          </div>
+        </div>
+        <div class="team-member">
+          <img src="/static/images/team/lead-dev.jpg" alt="Lead Developer">
+          <div class="team-info">
+            <h3>Đậu Ngọc Nghĩa</h3>
+            <p>B22DCCN</p>
+          </div>
+        </div>
+        <div class="team-member">
+            <img src="/static/images/team/lead-dev.jpg" alt="Lead Developer">
+            <div class="team-info">
+                <h3>Nguyễn Văn Mạnh</h3>
+                <p>B22DCCN</p>
+            </div>
+        </div>
+      </div>
+    </div> 
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-about">
+        <div class="footer-logo">
+          <span>🌐</span>
+          LiveTranslator
+        </div>
+        <p class="footer-description">
+          Giải pháp dịch thuật toàn diện giúp bạn vượt qua rào cản ngôn ngữ và kết nối với thế giới.
+        </p>
+        <div class="social-links">
+          <a href="#" class="social-link">
+            <span>f</span>
+          </a>
+          <a href="#" class="social-link">
+            <span>in</span>
+          </a>
+          <a href="#" class="social-link">
+            <span>𝕏</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html> 

@@ -4,14 +4,13 @@ pydantic
 python-multipart
 httpx
 websockets
-openai-whisper
 numpy
 aiofiles
 googletrans==4.0.0rc1
 soundfile
 gtts
-openai-whisper 
-pydub 
+pydub
 ffmpeg-python
 rich
-dotenvs
+python-dotenv
+openai-whisper

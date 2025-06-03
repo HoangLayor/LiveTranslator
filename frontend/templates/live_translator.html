@@ -2,62 +2,52 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Live Translator</title>
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/style.css" />
     <style>
-      :root {
-        --primary: #4a6fa5;
-        --primary-light: #5d82b8;
-        --primary-dark: #3b5d8f;
-        --accent: #47b475;
-        --accent-hover: #3da067;
-        --light-bg: #f8fafc;
-        --dark-text: #333;
-        --gray-text: #555;
-        --light-text: #f8f9fa;
-        --border-radius: 12px;
-        --bubble-user: #e3f2fd;
-        --bubble-ai: #f1f8e9;
-        --wave-color1: rgba(71, 180, 117, 0.6);
-        --wave-color2: rgba(71, 180, 117, 0.4);
-        --wave-color3: rgba(71, 180, 117, 0.2);
-      }
-
       * {
-        box-sizing: border-box;
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
       }
 
       body {
-        font-family: 'Segoe UI', 'Roboto', sans-serif;
-        background-color: var(--light-bg);
-        color: var(--dark-text);
-        line-height: 1.6;
-        padding: 0;
-        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         min-height: 100vh;
+        color: #333;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        color: #667eea;
+        font-weight: bold;
+        font-size: 1.2rem;
       }
 
       .container {
-        max-width: 1000px;
+        max-width: 1200px;
         margin: 0 auto;
-        padding: 16px;
+        padding: 0 2rem;
       }
 
       header {
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        text-align: center;
+        padding: 8rem 2rem 4rem;
+        margin-top: 80px;
         color: white;
-        padding: 20px 0;
-        margin-bottom: 24px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       }
 
       h1 {
-        font-size: 28px;
-        font-weight: 600;
-        margin-bottom: 8px;
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -65,59 +55,58 @@
       }
 
       .app-description {
-        text-align: center;
-        font-size: 14px;
-        margin-bottom: 8px;
-        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.2rem;
+        opacity: 0.9;
+        margin-bottom: 1rem;
       }
-      
+
       #connectionStatus {
-        text-align: center;
-        padding: 8px;
-        font-size: 14px;
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background: rgba(76, 175, 80, 0.9);
         border-radius: 20px;
-        background-color: rgba(255, 255, 255, 0.2);
-        margin: 10px auto;
-        max-width: 200px;
+        font-size: 0.9rem;
+        font-weight: 500;
       }
 
       .language-controls {
-        background-color: white;
-        border-radius: var(--border-radius);
-        padding: 16px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 1rem;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
-        gap: 16px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        margin-bottom: 16px;
+        gap: 1rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+        margin-top: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
       }
 
       .language-group {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 1rem;
       }
 
       .language-label {
         font-weight: 500;
         display: flex;
         align-items: center;
-        gap: 6px;
-        color: var(--primary-dark);
+        gap: 0.5rem;
+        color: #333;
       }
 
       select {
-        padding: 10px 12px;
-        border-radius: 8px;
-        border: 1px solid #e0e0e0;
-        background-color: white;
-        font-size: 14px;
-        color: var(--dark-text);
-        cursor: pointer;
-        transition: border-color 0.2s;
+        padding: 0.75rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        font-size: 1rem;
+        background: white;
+        transition: border-color 0.3s;
         appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234a6fa5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23667eea' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
         background-position: right 10px center;
         padding-right: 30px;
@@ -125,28 +114,36 @@
 
       select:focus {
         outline: none;
-        border-color: var(--primary);
-        box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.2);
+        border-color: #667eea;
       }
 
       .chat-container {
-        background-color: white;
-        border-radius: var(--border-radius);
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
         overflow: hidden;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
         height: 60vh;
+        border: 1px solid rgba(255, 255, 255, 0.2);
       }
 
       #messageList {
         flex: 1;
         overflow-y: auto;
         padding: 20px;
-        background-color: #f9f9f9;
-        background-image: 
-          radial-gradient(circle at 25px 25px, rgba(74, 111, 165, 0.05) 2%, transparent 0%),
-          radial-gradient(circle at 75px 75px, rgba(74, 111, 165, 0.05) 2%, transparent 0%);
+        background: rgba(249, 249, 249, 0.95);
+        background-image: radial-gradient(
+            circle at 25px 25px,
+            rgba(102, 126, 234, 0.05) 2%,
+            transparent 0%
+          ),
+          radial-gradient(
+            circle at 75px 75px,
+            rgba(102, 126, 234, 0.05) 2%,
+            transparent 0%
+          );
         background-size: 100px 100px;
       }
 
@@ -169,18 +166,27 @@
         transform-origin: left;
         transition: transform 0.1s ease;
       }
-      
+
       /* Message animation with sound effect */
       @keyframes fadeInWithSound {
-        0% { opacity: 0; transform: translateY(20px); }
-        30% { opacity: 1; transform: translateY(-5px); }
-        100% { opacity: 1; transform: translateY(0); }
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        30% {
+          opacity: 1;
+          transform: translateY(-5px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
-      
+
       .message.ai {
         animation: fadeInWithSound 0.5s ease-out;
       }
-      
+
       /* Listening indicator bottom animation */
       .listening-indicator {
         position: fixed;
@@ -188,20 +194,31 @@
         left: 0;
         width: 100%;
         height: 3px;
-        background: linear-gradient(to right, transparent, var(--accent), transparent);
+        background: linear-gradient(
+          to right,
+          transparent,
+          var(--accent),
+          transparent
+        );
         opacity: 0;
         z-index: 999;
       }
-      
+
       .listening-active .listening-indicator {
         animation: listening-pulse 2s infinite;
         opacity: 1;
       }
-      
+
       @keyframes listening-pulse {
-        0% { opacity: 0.3; }
-        50% { opacity: 1; }
-        100% { opacity: 0.3; }
+        0% {
+          opacity: 0.3;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.3;
+        }
       }
 
       .user {
@@ -223,19 +240,19 @@
       }
 
       .user .bubble {
-        background-color: var(--bubble-user);
-        color: var(--dark-text);
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
         border-bottom-right-radius: 4px;
       }
 
       .ai .bubble {
-        background-color: var(--bubble-ai);
-        color: var(--dark-text);
+        background: rgba(255, 255, 255, 0.95);
+        color: #333;
         border-bottom-left-radius: 4px;
       }
 
       .play-button {
-        background-color: var(--primary);
+        background: linear-gradient(135deg, #667eea, #764ba2);
         color: white;
         border: none;
         border-radius: 50%;
@@ -247,28 +264,30 @@
         cursor: pointer;
         margin-top: 8px;
         margin-left: auto;
-        transition: background-color 0.2s, transform 0.2s;
-        position: relative;
-        overflow: hidden;
+        transition: all 0.3s;
       }
 
       .play-button:hover {
-        background-color: var(--primary-light);
-        transform: scale(1.05);
+        transform: scale(1.1);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
       }
-      
+
       .play-button.playing::after {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: radial-gradient(circle, transparent 30%, rgba(255, 255, 255, 0.15) 70%);
+        background: radial-gradient(
+          circle,
+          transparent 30%,
+          rgba(255, 255, 255, 0.15) 70%
+        );
         transform: scale(0);
         animation: ripplePlay 1s linear;
       }
-      
+
       @keyframes ripplePlay {
         0% {
           transform: scale(0);
@@ -338,28 +357,25 @@
         z-index: 10;
         white-space: nowrap;
       }
-      
+
       .translation-switcher {
         margin: 16px auto;
       }
 
       .switch-button {
-        background-color: var(--primary-light);
+        background: #667eea;
         color: white;
         border: none;
         border-radius: 50%;
-        width: 36px;
-        height: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
         cursor: pointer;
-        transition: all 0.2s;
-        font-size: 18px;
+        transition: all 0.3s;
       }
 
       .switch-button:hover {
-        background-color: var(--primary);
+        background: #5a6fd8;
         transform: rotate(180deg);
       }
 
@@ -452,8 +468,13 @@
         }
       }
 
-      
-      
+      .footer-text {
+        text-align: center;
+        padding: 2rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+      }
+
       /* Alternative Circular Audio Pulse */
       .audio-ring-container {
         position: absolute;
@@ -467,11 +488,11 @@
         opacity: 0;
         transition: opacity 0.3s ease;
       }
-      
+
       #recordingStatus.active .audio-ring-container {
         opacity: 1;
       }
-      
+
       .audio-ring {
         position: absolute;
         border: 2px solid var(--wave-color1);
@@ -480,17 +501,17 @@
         transform: scale(0);
         animation: ripple 2s linear infinite;
       }
-      
+
       .audio-ring:nth-child(2) {
         animation-delay: 0.5s;
         border-color: var(--wave-color2);
       }
-      
+
       .audio-ring:nth-child(3) {
         animation-delay: 1s;
         border-color: var(--wave-color3);
       }
-      
+
       @keyframes ripple {
         0% {
           opacity: 0;
@@ -513,11 +534,20 @@
         margin: 0 10px;
         animation: pulseMic 1.5s infinite;
       }
-      
+
       @keyframes pulseMic {
-        0% { transform: scale(0.8); opacity: 0.8; }
-        50% { transform: scale(1.2); opacity: 1; }
-        100% { transform: scale(0.8); opacity: 0.8; }
+        0% {
+          transform: scale(0.8);
+          opacity: 0.8;
+        }
+        50% {
+          transform: scale(1.2);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(0.8);
+          opacity: 0.8;
+        }
       }
 
       .footer {
@@ -546,31 +576,31 @@
           flex-direction: column;
           gap: 12px;
         }
-        
+
         .language-group {
           width: 100%;
           justify-content: space-between;
         }
-        
+
         .bubble {
           max-width: 90%;
         }
-        
+
         .input-container {
           flex-wrap: wrap;
         }
-        
+
         #textInput {
           width: 100%;
           margin-bottom: 8px;
         }
-        
+
         .button-group {
           display: flex;
           width: 100%;
           gap: 8px;
         }
-        
+
         .button {
           flex: 1;
         }
@@ -590,8 +620,8 @@
           <li class="active"><a href="/live-translator">Dịch hội thoại</a></li>
           <li><a href="/file-translator">Dịch từ file</a></li>
           <li><a href="#">Dịch từ web</a></li>
-          <li><a href="#">Về chúng tôi</a></li>
-          <li><a href="#">Liên hệ</a></li>
+          <li><a href="/about">Về chúng tôi</a></li>
+          <li><a href="/contact">Liên hệ</a></li>
         </ul>
 
         <button class="mobile-menu-btn">☰</button>
@@ -603,7 +633,9 @@
     <header>
       <div class="container">
         <h1>🌐 Live Translator</h1>
-        <div class="app-description">Dịch đa ngôn ngữ với âm thanh trực tiếp</div>
+        <div class="app-description">
+          Dịch đa ngôn ngữ với âm thanh trực tiếp
+        </div>
         <div id="connectionStatus">Đang kết nối...</div>
       </div>
     </header>
@@ -621,9 +653,10 @@
             <option value="vi-VN">🇻🇳 Tiếng Việt</option>
             <option value="fr-FR">🇫🇷 Tiếng Pháp</option>
             <option value="ru-RU">🇷🇺 Tiếng Nga</option>
+            <option value="zh-cn">zh Tiếng Trung</option> 
           </select>
         </div>
-        
+
         <div class="translation-switcher">
           <button class="switch-button" title="Đổi ngôn ngữ">⇄</button>
         </div>
@@ -635,16 +668,17 @@
           </div>
           <select id="lang">
             <option value="vi">🇻🇳 Tiếng Việt</option>
-            <option value="en">EN English</option>
+            <option value="en">🇺🇸 English</option>
             <option value="fr">🇫🇷 Tiếng Pháp</option>
             <option value="ru">🇷🇺 Tiếng Nga</option>
+            <option value="zh-cn">zh Tiếng Trung</option> 
           </select>
         </div>
       </div>
 
       <div class="chat-container">
         <div id="messageList"></div>
-        
+
         <div id="recordingStatus">
           <div class="audio-ring-container">
             <div class="audio-ring"></div>
@@ -673,9 +707,19 @@
             <div class="wave-bar"></div>
             <div class="wave-bar"></div>
           </div>
-          <div style="text-align: center; margin-top: 5px;">
-            <svg class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+          <div style="text-align: center; margin-top: 5px">
+            <svg
+              class="mic-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"
+              ></path>
               <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
               <line x1="12" y1="19" x2="12" y2="23"></line>
               <line x1="8" y1="23" x2="16" y2="23"></line>
@@ -683,7 +727,7 @@
             <span>Đang ghi âm...</span>
           </div>
         </div>
-        
+
         <div class="input-container">
           <input id="textInput" placeholder="Nhập hoặc nói điều gì đó..." />
           <button class="button accent" onclick="handleTranslate()">
@@ -694,7 +738,12 @@
             <span class="icon">🎙️</span>
             <span class="tooltip">Ghi âm</span>
           </button>
-          <button id="stopButton" class="button secondary" disabled aria-label="Dừng ghi âm">
+          <button
+            id="stopButton"
+            class="button secondary"
+            disabled
+            aria-label="Dừng ghi âm"
+          >
             <span class="icon">🛑</span>
             <span class="tooltip">Dừng</span>
           </button>
@@ -707,44 +756,31 @@
         </button>
       </div>
     </div>
+    <div class="footer-text">© 2025 LiveTranslator. All rights reserved.</div>
 
     <script>
+      let lastSentTime = 0;
       const SpeechRecognition =
         window.SpeechRecognition || window.webkitSpeechRecognition;
+      let whisperMediaRecorder;
+      let whisperAudioChunks = [];
       let recognition;
       let socket;
       let sourceLanguage = "auto"; // Ngôn ngữ nguồn
       let targetLanguage = "vi";
       let recordingTimeout; // Bộ đếm thời gian dừng ghi âm sau X giây
       const MAX_RECORDING_TIME_MS = 30000; // Ghi âm tối đa 30 giây
-      
+
       function clearMessages() {
         const messageList = document.getElementById("messageList");
         messageList.innerHTML = "";
       }
 
-      // Kiểm tra trình duyệt hỗ trợ SpeechRecognition
-      if (SpeechRecognition) {
-        recognition = new SpeechRecognition();
-        recognition.continuous = false; // Ghi âm 1 câu rồi dừng
-        recognition.interimResults = false;
-
-        recognition.onstart = () => updateRecordingStatus(true);
-        recognition.onend = () => updateRecordingStatus(false);
-        recognition.onerror = (e) => console.error("STT error:", e);
-
-        // Khi có kết quả ghi âm
-        recognition.onresult = (event) => {
-          const transcript = event.results[0][0].transcript;
-          document.getElementById("textInput").value = transcript;
-          handleTranslate();
-        };
-      }
-
       // Kết nối WebSocket tới backend
       function initWebSocket() {
-        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
         const socketUrl = `${protocol}//${window.location.host}/ws`;
+        // const socketUrl = "ws://localhost:8000/ws"; // Dùng cho local testing
         // const socketUrl = "https://positive-currently-mastodon.ngrok-free.app/ws";
         socket = new WebSocket(socketUrl);
 
@@ -757,8 +793,13 @@
 
         socket.onmessage = (event) => {
           const data = JSON.parse(event.data);
+
           const text = data.text;
           if (data.type === "translation") {
+            console.log(
+              "Thời gian dịch trả về",
+              (Date.now() - lastSentTime) / 1000
+            );
             appendMessage("ai", data.text);
             if (socket.readyState === WebSocket.OPEN) {
               socket.send(
@@ -771,6 +812,10 @@
               );
             }
           } else if (data.type === "audio") {
+            console.log(
+              "Thời gian tts trả về",
+              (Date.now() - lastSentTime) / 1000
+            );
             const audioBase64 = data.audio;
             if (audioBase64) {
               const audioBlob = new Blob(
@@ -787,10 +832,101 @@
               const audio = new Audio(audioUrl);
               audio.play();
             }
+          } else if (data.type === "punctuation") {
+            document.getElementById("textInput").value = data.text;
+            handleTranslate();
+          } else if (data.type == "Whisper_result") {
+            const transcript = data.text;
+            if (transcript) {
+              document.getElementById("textInput").value = transcript;
+              handleTranslate(); // Tự động dịch khi có kết quả
+            }
           } else if (data.type === "error") {
             appendMessage("ai", "[Lỗi] " + data.message);
           }
         };
+      }
+
+      // Kiểm tra trình duyệt hỗ trợ SpeechRecognition
+      if (SpeechRecognition) {
+        recognition = new SpeechRecognition();
+        recognition.continuous = false; // Ghi âm 1 câu rồi dừng
+        recognition.interimResults = false;
+
+        recognition.onstart = () => updateRecordingStatus(true);
+        recognition.onend = () => updateRecordingStatus(false);
+        recognition.onerror = (e) => console.error("STT error:", e);
+
+        // Khi có kết quả ghi âm
+        let transcript;
+        recognition.onresult = (event) => {
+          transcript = event.results[0][0].transcript;
+          if (socket.readyState === WebSocket.OPEN) {
+            lastSentTime = Date.now();
+            socket.send(
+              JSON.stringify({
+                type: "punctuation",
+                text: transcript,
+              })
+            );
+          }
+        };
+      } else {
+        document
+          .getElementById("recordButton")
+          .addEventListener("click", startRecordingWithWhisper);
+        document
+          .getElementById("stopButton")
+          .addEventListener("click", stopRecordingWithWhisper);
+      }
+
+      function startRecordingWithWhisper() {
+        navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+          whisperAudioChunks = [];
+
+          whisperMediaRecorder = new MediaRecorder(stream);
+          whisperMediaRecorder.ondataavailable = (e) => {
+            whisperAudioChunks.push(e.data);
+          };
+
+          whisperMediaRecorder.onstop = () => {
+            const audioBlob = new Blob(whisperAudioChunks, {
+              type: "audio/webm",
+            });
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              const base64data = reader.result.split(",")[1];
+              if (socket && socket.readyState === WebSocket.OPEN) {
+                lastSentTime = Date.now();
+                socket.send(
+                  JSON.stringify({
+                    type: "whisper",
+                    audio: base64data,
+                    language: sourceLanguage,
+                  })
+                );
+              }
+            };
+            reader.readAsDataURL(audioBlob);
+          };
+
+          whisperMediaRecorder.start();
+
+          updateRecordingStatus(true);
+
+          // Dừng sau 30 giây
+          recordingTimeout = setTimeout(() => {
+            stopRecordingWithWhisper();
+          }, MAX_RECORDING_TIME_MS);
+        });
+      }
+
+      function stopRecordingWithWhisper() {
+        if (whisperMediaRecorder && whisperMediaRecorder.state !== "inactive") {
+          whisperMediaRecorder.stop();
+          updateRecordingStatus(false);
+          clearTimeout(recordingTimeout);
+        }
       }
 
       // Cập nhật trạng thái kết nối WebSocket
@@ -818,6 +954,7 @@
           playBtn.innerHTML = "🔊";
           playBtn.onclick = () => {
             if (socket.readyState === WebSocket.OPEN) {
+              lastSentTime = Date.now();
               socket.send(
                 JSON.stringify({
                   type: "playText",
@@ -825,55 +962,60 @@
                   target_lang: targetLanguage,
                 })
               );
-              
-              // Hiệu ứng âm thanh đang phát
-              playBtn.classList.add('playing');
-              playBtn.innerHTML = '🔈';
-              setTimeout(() => {
-                playBtn.classList.remove('playing');
-                playBtn.innerHTML = '🔊';
-              }, 1500);
             }
           };
           bubble.appendChild(document.createElement("br"));
           bubble.appendChild(playBtn);
-          
+
           // Thêm hiệu ứng âm thanh khi nhận được tin nhắn
-          playSoundEffect('received');
+          playSoundEffect("received");
         }
 
         messageDiv.appendChild(bubble);
         messageList.appendChild(messageDiv);
         messageList.scrollTop = messageList.scrollHeight;
       }
-      
+
       // Hiệu ứng âm thanh
       function playSoundEffect(type) {
         // Tạo oscillator để phát âm thanh nhỏ
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const audioCtx = new (window.AudioContext ||
+          window.webkitAudioContext)();
         const oscillator = audioCtx.createOscillator();
         const gainNode = audioCtx.createGain();
-        
+
         oscillator.connect(gainNode);
         gainNode.connect(audioCtx.destination);
-        
+
         // Điều chỉnh kiểu âm thanh theo loại
-        if (type === 'received') {
-          oscillator.type = 'sine';
+        if (type === "received") {
+          oscillator.type = "sine";
           oscillator.frequency.setValueAtTime(740, audioCtx.currentTime);
-          oscillator.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 0.1);
+          oscillator.frequency.exponentialRampToValueAtTime(
+            600,
+            audioCtx.currentTime + 0.1
+          );
           gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-          
+          gainNode.gain.exponentialRampToValueAtTime(
+            0.01,
+            audioCtx.currentTime + 0.1
+          );
+
           oscillator.start();
           oscillator.stop(audioCtx.currentTime + 0.1);
-        } else if (type === 'sent') {
-          oscillator.type = 'sine';
+        } else if (type === "sent") {
+          oscillator.type = "sine";
           oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
-          oscillator.frequency.exponentialRampToValueAtTime(740, audioCtx.currentTime + 0.1);
+          oscillator.frequency.exponentialRampToValueAtTime(
+            740,
+            audioCtx.currentTime + 0.1
+          );
           gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-          
+          gainNode.gain.exponentialRampToValueAtTime(
+            0.01,
+            audioCtx.currentTime + 0.1
+          );
+
           oscillator.start();
           oscillator.stop(audioCtx.currentTime + 0.1);
         }
@@ -886,15 +1028,16 @@
         if (!text || !socket || socket.readyState !== WebSocket.OPEN) return;
 
         appendMessage("user", text);
-        
-        // Hiệu ứng âm thanh khi gửi
-        playSoundEffect('sent');
-        
-        // Hiệu ứng đang xử lý
-        const translateBtn = document.querySelector('button.accent');
-        translateBtn.innerHTML = '<span class="icon">⏳</span><span>Đang dịch...</span>';
-        translateBtn.disabled = true;
 
+        // Hiệu ứng âm thanh khi gửi
+        playSoundEffect("sent");
+
+        // Hiệu ứng đang xử lý
+        const translateBtn = document.querySelector("button.accent");
+        translateBtn.innerHTML =
+          '<span class="icon">⏳</span><span>Đang dịch...</span>';
+        translateBtn.disabled = true;
+        lastSentTime = Date.now();
         socket.send(
           JSON.stringify({
             type: "translate",
@@ -905,10 +1048,11 @@
         );
 
         input.value = "";
-        
+
         // Khôi phục nút sau 1.5 giây
         setTimeout(() => {
-          translateBtn.innerHTML = '<span class="icon">🔄</span><span>Dịch</span>';
+          translateBtn.innerHTML =
+            '<span class="icon">🔄</span><span>Dịch</span>';
           translateBtn.disabled = false;
         }, 1500);
       }
@@ -918,12 +1062,12 @@
         const status = document.getElementById("recordingStatus");
         document.getElementById("recordButton").disabled = isRecording;
         document.getElementById("stopButton").disabled = !isRecording;
-        
+
         if (isRecording) {
           status.classList.add("active");
           document.body.classList.add("listening-active");
           // simulateSoundLevel();
-          startVisualizer(); 
+          startVisualizer();
         } else {
           status.classList.remove("active");
           document.body.classList.remove("listening-active");
@@ -931,45 +1075,60 @@
           stopVisualizer();
         }
       }
-      
+
       // Mô phỏng mức độ âm thanh trong khi ghi âm
       let soundLevelInterval;
       function simulateSoundLevel() {
-        const indicator = document.querySelector('.sound-level-indicator');
-        indicator.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--accent');
-        
+        const indicator = document.querySelector(".sound-level-indicator");
+        indicator.style.backgroundColor = getComputedStyle(
+          document.documentElement
+        ).getPropertyValue("--accent");
+
         soundLevelInterval = setInterval(() => {
           // Random scale từ 0.1 đến 1 để tạo hiệu ứng mức độ âm thanh
           const randomScale = 0.1 + Math.random() * 0.9;
           indicator.style.transform = `scaleX(${randomScale})`;
         }, 100);
       }
-      
+
       // Language switch button
-      document.querySelector('.switch-button').addEventListener('click', () => {
+      document.querySelector(".switch-button").addEventListener("click", () => {
         const sourceLangSelect = document.getElementById("sourceLang");
         const targetLangSelect = document.getElementById("lang");
 
         // Không đảo nếu đang là "auto"
-        if (sourceLangSelect.value !== 'auto') {
+        if (sourceLangSelect.value !== "auto") {
           // Lưu giá trị hiện tại
           const tempValue = sourceLangSelect.value;
 
           // Đổi giá trị
-          sourceLangSelect.value = targetLangSelect.value === "en" ? "en-US"
-                                  : targetLangSelect.value === "vi" ? "vi-VN"
-                                  : targetLangSelect.value === "fr" ? "fr-FR"
-                                  : targetLangSelect.value === "ru" ? "ru-RU"
-                                  : sourceLangSelect.value;
+          sourceLangSelect.value =
+            targetLangSelect.value === "en"
+              ? "en-US"
+              : targetLangSelect.value === "vi"
+              ? "vi-VN"
+              : targetLangSelect.value === "fr"
+              ? "fr-FR"
+              : targetLangSelect.value === "ru"
+              ? "ru-RU"
+              : sourceLangSelect.value;
           sourceLanguage = targetLangSelect.value;
 
-          targetLangSelect.value = tempValue.startsWith("en") ? "en"
-                                  : tempValue.startsWith("vi") ? "vi"
-                                  : tempValue.startsWith("fr") ? "fr"
-                                  : tempValue.startsWith("ru") ? "ru"
-                                  : targetLangSelect.value;
+          targetLangSelect.value = tempValue.startsWith("en")
+            ? "en"
+            : tempValue.startsWith("vi")
+            ? "vi"
+            : tempValue.startsWith("fr")
+            ? "fr"
+            : tempValue.startsWith("ru")
+            ? "ru"
+            : targetLangSelect.value;
           targetLanguage = targetLangSelect.value;
-          console.log("Đổi ngôn ngữ thành công:", sourceLanguage, targetLanguage);
+          console.log(
+            "Đổi ngôn ngữ thành công:",
+            sourceLanguage,
+            targetLanguage
+          );
           // Cập nhật hiển thị
           updateLanguageDisplay();
         }
@@ -980,11 +1139,17 @@
         const sourceLang = document.getElementById("sourceLang").value;
         const targetLang = document.getElementById("lang").value;
 
-        const sourceLangText = document.querySelector(`#sourceLang option[value="${sourceLang}"]`).textContent;
-        const targetLangText = document.querySelector(`#lang option[value="${targetLang}"]`).textContent;
+        const sourceLangText = document.querySelector(
+          `#sourceLang option[value="${sourceLang}"]`
+        ).textContent;
+        const targetLangText = document.querySelector(
+          `#lang option[value="${targetLang}"]`
+        ).textContent;
 
         // Tìm hai label đúng trong từng language-group
-        const languageLabels = document.querySelectorAll('.language-group .language-label');
+        const languageLabels = document.querySelectorAll(
+          ".language-group .language-label"
+        );
 
         if (languageLabels.length >= 2) {
           languageLabels[0].innerHTML = `<span>🗣️</span><span> Ghi âm bằng: </span>`;
@@ -999,17 +1164,22 @@
 
       function stopSoundLevelSimulation() {
         clearInterval(soundLevelInterval);
-        const indicator = document.querySelector('.sound-level-indicator');
-        indicator.style.transform = 'scaleX(0)';
+        const indicator = document.querySelector(".sound-level-indicator");
+        indicator.style.transform = "scaleX(0)";
       }
 
       // Cập nhật ngôn ngữ nguồn để dịch
       document.getElementById("sourceLang").addEventListener("change", (e) => {
-        sourceLanguage = e.target.value === "en-US" ? "en"
-                        : e.target.value === "vi-VN" ? "vi"
-                        : e.target.value === "fr-FR" ? "fr"
-                        : e.target.value === "ru-RU" ? "ru"
-                        : e.target.value;
+        sourceLanguage =
+          e.target.value === "en-US"
+            ? "en"
+            : e.target.value === "vi-VN"
+            ? "vi"
+            : e.target.value === "fr-FR"
+            ? "fr"
+            : e.target.value === "ru-RU"
+            ? "ru"
+            : e.target.value;
         console.log("Ngôn ngữ nguồn:", sourceLanguage);
       });
 
@@ -1023,7 +1193,7 @@
       window.startRecording = function () {
         const sourceLang = document.getElementById("sourceLang").value;
         if (recognition) {
-          recognition.lang = sourceLang;
+          // recognition.lang = sourceLang;
           recognition.start();
 
           // Hẹn giờ dừng ghi âm sau X giây
@@ -1042,12 +1212,14 @@
       };
 
       // Xử lý nhấn Enter trên thanh nhập text
-      document.getElementById("textInput").addEventListener("keypress", function(event) {
-        if (event.key === "Enter") {
-          event.preventDefault();
-          handleTranslate();
-        }
-      });
+      document
+        .getElementById("textInput")
+        .addEventListener("keypress", function (event) {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            handleTranslate();
+          }
+        });
 
       // Khi DOM đã sẵn sàng
       document.addEventListener("DOMContentLoaded", () => {
@@ -1067,7 +1239,8 @@
 
       function startVisualizer() {
         navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-          audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          audioContext = new (window.AudioContext ||
+            window.webkitAudioContext)();
           analyser = audioContext.createAnalyser();
           microphone = audioContext.createMediaStreamSource(stream);
           microphone.connect(analyser);

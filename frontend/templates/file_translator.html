@@ -484,8 +484,8 @@
           <li><a href="/live-translator">Dịch hội thoại</a></li>
           <li class="active"><a href="/file-translator">Dịch từ file</a></li>
           <li><a href="#">Dịch từ web</a></li>
-          <li><a href="#">Về chúng tôi</a></li>
-          <li><a href="#">Liên hệ</a></li>
+          <li><a href="/about">Về chúng tôi</a></li>
+          <li><a href="/contact">Liên hệ</a></li>
         </ul>
 
         <button class="mobile-menu-btn">☰</button>
@@ -573,6 +573,12 @@
             <span>🔄</span>
             <span>Bắt đầu dịch tài liệu</span>
           </button>
+
+          <!-- Preview Image -->
+          <div class="image-preview-container" id="imagePreviewContainer" style="display: none;">
+            <div class="image-preview-title">🖼️ Ảnh đã tải lên</div>
+            <img id="uploadedImage" src="" alt="Ảnh đã upload" style="max-width: 100%; border: 1px solid #ccc; padding: 10px;" />
+          </div>
         </div>
 
         <!-- Translation Result Panel -->
@@ -658,6 +664,8 @@
       const sourceLangSelect = document.getElementById('sourceLang');
       const targetLangSelect = document.getElementById('targetLang');
       const stars = document.querySelectorAll('.star');
+      const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+      const uploadedImage = document.getElementById('uploadedImage');
       
       // Initialize app
       document.addEventListener('DOMContentLoaded', function() {
@@ -770,23 +778,33 @@
         }
         
         // Gửi phản hồi đến server
-        fetch('/submit-feedback', {
+        fetch('/api/submit-feedback', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             rating: currentRating,
-            feedback: feedbackInput
+            feedback_text: feedbackInput,
+            file_name: selectedFile ? selectedFile.name : null,
+            source_lang: sourceLangSelect.value,
+            target_lang: targetLangSelect.value,
+            original_text: originalText.innerText,
+            translated_text: translatedText.innerText
           })
         })
         .then(response => response.json())
         .then(data => {
-          alert('Cảm ơn bạn đã gửi phản hồi!');
-          resetFeedback();
+          if (data.success) {
+            alert('Cảm ơn bạn đã gửi phản hồi!');
+            resetFeedback();
+          } else {
+            throw new Error(data.message || 'Failed to submit feedback');
+          }
         })
         .catch(error => {
           console.error('Lỗi gửi phản hồi:', error);
+          alert('Có lỗi xảy ra khi gửi phản hồi. Vui lòng thử lại sau.');
         });
       }
 
@@ -798,15 +816,6 @@
       }
 
       // File selection and validation
-      fileInput.addEventListener('change', handleFileSelect);
-      uploadContainer.addEventListener('click', () => {
-        fileInput.click();
-      });
-      uploadContainer.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        uploadContainer.classList.add('drag-over');
-      });
-
       function handleFileSelect(e) {
         const file = e.target.files[0];
         if (file && isValidFile(file)) {
@@ -869,6 +878,7 @@
         }
       }
       
+      // Start translation process
       function startTranslation() {
         if (!selectedFile) return;
         
@@ -888,7 +898,10 @@
         if (socket && socket.readyState !== WebSocket.CLOSED) {
           socket.close();
         }
-        socket = new WebSocket("ws://localhost:8000/ws");
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const socketUrl = `${protocol}//${window.location.host}/ws`;
+        // const socketUrl = "https://positive-currently-mastodon.ngrok-free.app/ws";
+        socket = new WebSocket(socketUrl);
 
         socket.onopen = () => {
           updateConnectionStatus("Đã kết nối", "#4caf50");
@@ -927,7 +940,7 @@
         };
       }
       
-      // Update connection status indicator
+      // UPDATE CONNECTION STATUS
       function updateConnectionStatus(text, color) {
         const connectionStatus = document.getElementById('connectionStatus');
         connectionStatus.textContent = text;
@@ -939,7 +952,7 @@
         connectionStatus.style.fontWeight = "500";
       }
       
-      // UPLOAD FILE VÀ TRÍCH XUẤT THỰC TẾ
+      // PROCESS FILE
       async function processFile() {
           console.log("Processing file:", selectedFile.name); 
           try {
@@ -975,6 +988,8 @@
                   translationLoading.style.display = "none";
                   translatedText.innerHTML = formatText(result.translated_text);
               }
+
+              console.log("File processed successfully:", result);
               
           } catch (error) {
               console.error('File processing error:', error);
@@ -984,7 +999,7 @@
           }
       }
       
-      // DỊCH VĂNG BẢN QUA WEBSOCKET
+      // START TEXT TRANSLATION
       function startTextTranslation(text) {
         if (!socket || socket.readyState !== WebSocket.OPEN) {
           console.error('WebSocket not connected');
@@ -993,7 +1008,7 @@
         
         translationLoading.style.display = "flex";
         
-        // Gửi yêu cầu dịch qua WebSocket
+        // Send translation request
         socket.send(JSON.stringify({
           type: "translate",
           text: text,
@@ -1007,64 +1022,26 @@
         if (!text) return '';
         return text.replace(/\n/g, '<br>').replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
       }
-      
-      // DEMO - Xử lý file giả lập (để test giao diện)
-      function processFileDemo() {
-        let extractedText = "";
-        const fileName = selectedFile.name.toLowerCase();
-        
-        if (fileName.endsWith('.pdf')) {
-          extractedText = `[DEMO] Văn bản trích xuất từ PDF "${selectedFile.name}":
 
-Đây là nội dung mẫu từ file PDF. Trong thực tế, hệ thống backend sẽ:
+      // IMAGE PREVIEW
+      fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        if (!file) return;
 
-🔧 Xử lý PDF:
-- Sử dụng thư viện như PyPDF2, pdfplumber (Python) 
-- Hoặc PDF.js (Node.js)
-- Trích xuất text, bảo toàn layout
-- Xử lý PDF scan với OCR nếu cần
-
-📡 API Backend cần:
-- POST /api/upload-and-extract
-- Nhận file, trả về extracted_text
-- Xử lý lỗi và validation`;
-
-        } else if (fileName.endsWith('.docx')) {
-          extractedText = `[DEMO] Văn bản trích xuất từ DOCX "${selectedFile.name}":
-
-Đây là nội dung mẫu từ file Word. Trong thực tế, hệ thống backend sẽ:
-
-🔧 Xử lý DOCX:
-- Sử dụng python-docx, mammoth (Python)
-- Hoặc mammoth.js (Node.js)  
-- Giải nén XML structure
-- Trích xuất text + formatting
-
-📡 API Backend cần:
-- POST /api/upload-and-extract
-- Nhận file, trả về extracted_text
-- Xử lý lỗi và validation`;
-        } else if (fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png')) {
-          extractedText = `[DEMO] Văn bản trích xuất từ hình ảnh "${selectedFile.name}":
-Đây là nội dung mẫu từ file hình ảnh. Trong thực tế, hệ thống backend sẽ:
-🔧 Xử lý hình ảnh
-- Sử dụng Tesseract.js (Node.js)
-- Hoặc pytesseract (Python)
-- OCR để trích xuất text
-- Xử lý layout, định dạng
-📡 API Backend cần:
-- POST /api/upload-and-extract
-- Nhận file, trả về extracted_text
-- Xử lý lỗi và validation`;
+        const fileType = file.type;
+        if (fileType.startsWith("image/")) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            uploadedImage.src = e.target.result;
+            imagePreviewContainer.style.display = "block";
+          };
+          reader.readAsDataURL(file);
         } else {
-          extractedText = "Không thể trích xuất văn bản từ file này.";
+          imagePreviewContainer.style.display = "none";
         }
-        
-        originalText.innerHTML = formatText(extractedText);
-        translationLoading.style.display = "none";
-      }
+      });
+
     </script>
 </body>
 </html>
 <!-- End of HTML -->
-
