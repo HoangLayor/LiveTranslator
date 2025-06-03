@@ -653,6 +653,7 @@
             <option value="vi-VN">🇻🇳 Tiếng Việt</option>
             <option value="fr-FR">🇫🇷 Tiếng Pháp</option>
             <option value="ru-RU">🇷🇺 Tiếng Nga</option>
+            <option value="zh-cn">zh Tiếng Trung</option> 
           </select>
         </div>
 
@@ -670,6 +671,7 @@
             <option value="en">🇺🇸 English</option>
             <option value="fr">🇫🇷 Tiếng Pháp</option>
             <option value="ru">🇷🇺 Tiếng Nga</option>
+            <option value="zh-cn">zh Tiếng Trung</option> 
           </select>
         </div>
       </div>
@@ -757,8 +759,11 @@
     <div class="footer-text">© 2025 LiveTranslator. All rights reserved.</div>
 
     <script>
+      let lastSentTime = 0;
       const SpeechRecognition =
         window.SpeechRecognition || window.webkitSpeechRecognition;
+      let whisperMediaRecorder;
+      let whisperAudioChunks = [];
       let recognition;
       let socket;
       let sourceLanguage = "auto"; // Ngôn ngữ nguồn
@@ -788,8 +793,13 @@
 
         socket.onmessage = (event) => {
           const data = JSON.parse(event.data);
+
           const text = data.text;
           if (data.type === "translation") {
+            console.log(
+              "Thời gian dịch trả về",
+              (Date.now() - lastSentTime) / 1000
+            );
             appendMessage("ai", data.text);
             if (socket.readyState === WebSocket.OPEN) {
               socket.send(
@@ -802,6 +812,10 @@
               );
             }
           } else if (data.type === "audio") {
+            console.log(
+              "Thời gian tts trả về",
+              (Date.now() - lastSentTime) / 1000
+            );
             const audioBase64 = data.audio;
             if (audioBase64) {
               const audioBlob = new Blob(
@@ -821,6 +835,12 @@
           } else if (data.type === "punctuation") {
             document.getElementById("textInput").value = data.text;
             handleTranslate();
+          } else if (data.type == "Whisper_result") {
+            const transcript = data.text;
+            if (transcript) {
+              document.getElementById("textInput").value = transcript;
+              handleTranslate(); // Tự động dịch khi có kết quả
+            }
           } else if (data.type === "error") {
             appendMessage("ai", "[Lỗi] " + data.message);
           }
@@ -842,6 +862,7 @@
         recognition.onresult = (event) => {
           transcript = event.results[0][0].transcript;
           if (socket.readyState === WebSocket.OPEN) {
+            lastSentTime = Date.now();
             socket.send(
               JSON.stringify({
                 type: "punctuation",
@@ -850,7 +871,64 @@
             );
           }
         };
+      } else {
+        document
+          .getElementById("recordButton")
+          .addEventListener("click", startRecordingWithWhisper);
+        document
+          .getElementById("stopButton")
+          .addEventListener("click", stopRecordingWithWhisper);
       }
+
+      function startRecordingWithWhisper() {
+        navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+          whisperAudioChunks = [];
+
+          whisperMediaRecorder = new MediaRecorder(stream);
+          whisperMediaRecorder.ondataavailable = (e) => {
+            whisperAudioChunks.push(e.data);
+          };
+
+          whisperMediaRecorder.onstop = () => {
+            const audioBlob = new Blob(whisperAudioChunks, {
+              type: "audio/webm",
+            });
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              const base64data = reader.result.split(",")[1];
+              if (socket && socket.readyState === WebSocket.OPEN) {
+                lastSentTime = Date.now();
+                socket.send(
+                  JSON.stringify({
+                    type: "whisper",
+                    audio: base64data,
+                    language: sourceLanguage,
+                  })
+                );
+              }
+            };
+            reader.readAsDataURL(audioBlob);
+          };
+
+          whisperMediaRecorder.start();
+
+          updateRecordingStatus(true);
+
+          // Dừng sau 30 giây
+          recordingTimeout = setTimeout(() => {
+            stopRecordingWithWhisper();
+          }, MAX_RECORDING_TIME_MS);
+        });
+      }
+
+      function stopRecordingWithWhisper() {
+        if (whisperMediaRecorder && whisperMediaRecorder.state !== "inactive") {
+          whisperMediaRecorder.stop();
+          updateRecordingStatus(false);
+          clearTimeout(recordingTimeout);
+        }
+      }
+
       // Cập nhật trạng thái kết nối WebSocket
       function updateConnectionStatus(text, color) {
         const el = document.getElementById("connectionStatus");
@@ -876,6 +954,7 @@
           playBtn.innerHTML = "🔊";
           playBtn.onclick = () => {
             if (socket.readyState === WebSocket.OPEN) {
+              lastSentTime = Date.now();
               socket.send(
                 JSON.stringify({
                   type: "playText",
@@ -958,7 +1037,7 @@
         translateBtn.innerHTML =
           '<span class="icon">⏳</span><span>Đang dịch...</span>';
         translateBtn.disabled = true;
-
+        lastSentTime = Date.now();
         socket.send(
           JSON.stringify({
             type: "translate",

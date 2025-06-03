@@ -41,12 +41,10 @@ def capitalize_after_punctuation(text: str) -> str:
 # 3. Hàm phục hồi dấu câu
 def restore_punctuation(text: str) -> str:
     """
-    Trả về chuỗi đã gán dấu câu và viết hoa thích hợp.
+    Trả về chuỗi đã gán dấu câu và viết hoa thích hợp, hỗ trợ đầy đủ các loại dấu câu.
     """
-    # Tắt gradient để giảm overhead (không cần backward)
     with torch.no_grad():
         tokens = text.strip().split()
-        # pipeline nhận vào một chuỗi (string), trả ra danh sách dict
         predictions = punct_pipeline(" ".join(tokens))
 
     result = []
@@ -54,16 +52,15 @@ def restore_punctuation(text: str) -> str:
         word = pred["word"]
         entity = pred["entity_group"]
 
+        # Viết hoa
         if entity == "CAP":
             word = word.capitalize()
-        elif entity == ".":
-            word = word + ". "
-        elif entity == ", ":
-            word = word + ", "
-        elif entity == "?":
-            word = word + "? "
+        # Dấu câu được mô hình hỗ trợ
+        elif entity in {".", ",", "?", "!", ":", ";"}:
+            word = word + entity + " "
 
         result.append(word)
 
-    # Ghép lại thành chuỗi và đảm bảo có khoảng trắng giữa các token
+    # Ghép lại và xóa khoảng trắng dư
     return " ".join(result).strip()
+

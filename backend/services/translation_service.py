@@ -36,5 +36,6 @@ SUPPORTED_LANGUAGES = {
     'en': 'English',
     'vi': 'Tiếng Việt',
     'fr': 'French',
-    'ru': 'Russian'
+    'ru': 'Russian',
+    'zh-cn': 'Chinese (Simplified)'
 }

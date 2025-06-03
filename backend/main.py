@@ -12,6 +12,7 @@ import asyncio
 from backend.utils.logger import setup_logger
 from backend.database import engine
 from backend.models.feedback_model import Base
+import base64
 
 # Import hai hàm PUNCTUATION
 from backend.services.punctuation import restore_punctuation, capitalize_after_punctuation
@@ -44,6 +45,10 @@ except ImportError as e:
     print(f"Import error: {e}")
     raise
 
+def handle_audio(base64_audio_str: str):
+    audio_bytes = base64.b64decode(base64_audio_str)
+    result = speech_to_text(audio_bytes)
+    return result
 
 # === TẠO ỨNG DỤNG FASTAPI ===
 app = FastAPI()
@@ -218,13 +223,13 @@ async def websocket_endpoint(websocket: WebSocket):
 
             # ----------------------------
             # 4) SPEECH-TO-TEXT (nếu bạn dùng binary audio frames)
-            #    Client có thể gửi: { "type": "audio", "audio_base64": "..." }
+            #    Client có thể gửi: { "type": "whisper", "audio_base64": "..." }
             #    (Hoặc kết hợp receive_bytes nếu không qua JSON)
             #    Server trả: { "type": "STT", "text": "<kết quả>", ... }
             # ----------------------------
-            elif msg_type == "audio":
-                # Ví dụ: client gửi base64 string trong JSON
-                base64_audio = message.get("audio_base64", "")
+            elif msg_type == "whisper":
+                base64_audio = message.get("audio", "")
+                language = message.get("language","")
                 if not base64_audio:
                     try:
                         await websocket.send_json({
@@ -236,15 +241,11 @@ async def websocket_endpoint(websocket: WebSocket):
                     continue
 
                 try:
-                    # Giả sử bạn tự decode base64 → bytes ở đây
-                    # import base64
-                    # audio_bytes = base64.b64decode(base64_audio)
-                    # text = speech_to_text(audio_bytes, language=lang)
-                    # ... gửi response ...
-                    text = "[STT result here]"  # thay bằng thực tế
+                    audio_bytes = base64.b64decode(base64_audio)
+                    text = speech_to_text(audio_bytes,language)
                     logger.info(f"STT result: {text}")
                     await websocket.send_json({
-                        "type": "STT",
+                        "type": "Whisper_result",
                         "text": str(text)
                     })
                 except Exception as e:
