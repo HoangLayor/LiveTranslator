@@ -78,22 +78,22 @@ async def home(request: Request):
 
 @app.get("/live-translator", response_class=HTMLResponse)
 async def live_translator(request: Request):
-    logger.info("Live translator page accessed")
+    # logger.info("Live translator page accessed")
     return templates.TemplateResponse("live_translator.html", {"request": request})
 
 @app.get("/file-translator", response_class=HTMLResponse)
 async def file_translator(request: Request):
-    logger.info("File translator page accessed")
+    # logger.info("File translator page accessed")
     return templates.TemplateResponse("file_translator.html", {"request": request})
 
 @app.get("/about", response_class=HTMLResponse)
 async def about(request: Request):
-    logger.info("About page accessed")
+    # logger.info("About page accessed")
     return templates.TemplateResponse("about.html", {"request": request})
 
 @app.get("/contact", response_class=HTMLResponse)
 async def contact(request: Request):
-    logger.info("Contact page accessed")
+    # logger.info("Contact page accessed")
     return templates.TemplateResponse("contact.html", {"request": request})
 
 
@@ -229,7 +229,9 @@ async def websocket_endpoint(websocket: WebSocket):
             # ----------------------------
             elif msg_type == "whisper":
                 base64_audio = message.get("audio", "")
+                logger.info(f"base64_audio from phone: {base64_audio}")
                 language = message.get("language","")
+                logger.info(f"language from phone: {language}")
                 if not base64_audio:
                     try:
                         await websocket.send_json({

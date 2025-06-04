@@ -748,6 +748,15 @@
             <span class="tooltip">Dừng</span>
           </button>
         </div>
+        <video id="cameraPreview" autoplay playsinline></video>
+          <br />
+          <button onclick="takePhoto()">📸 Chụp ảnh</button>
+          <br />
+          <img
+            id="photo"
+            alt="Ảnh đã chụp"
+            style="max-width: 100%; border: 1px solid #ccc"
+          />
       </div>
 
       <div class="footer">
@@ -848,7 +857,9 @@
       }
 
       // Kiểm tra trình duyệt hỗ trợ SpeechRecognition
-      if (SpeechRecognition) {
+      console.log("SpeechRecognition", SpeechRecognition); 
+      if (!isMobileDevice()) {
+        console.log("SpeechRecognition supported");
         recognition = new SpeechRecognition();
         recognition.continuous = false; // Ghi âm 1 câu rồi dừng
         recognition.interimResults = false;
@@ -1270,6 +1281,41 @@
         const bars = document.querySelectorAll(".wave-bar");
         bars.forEach((bar) => (bar.style.height = "3px")); // Reset về nhỏ
       }
+
+      // Kiểm tra xem trình duyệt có hỗ trợ SpeechRecognition không
+      function isMobileDevice() {
+          return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      }
+      // Lấy quyền truy cập camera và stream video vào thẻ <video>
+        navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then((stream) => {
+          const video = document.querySelector("video");
+          video.srcObject = stream;
+        })
+        .catch((err) => {
+          console.error("Lỗi truy cập camera:", err);
+          alert("Không thể truy cập camera. Vui lòng kiểm tra quyền và HTTPS.");
+        });
+
+      // Hàm chụp ảnh từ video và hiển thị ảnh trong thẻ <img>
+      function takePhoto() {
+        const video = document.querySelector("video");
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        const photo = document.getElementById("photo");
+        photo.src = canvas.toDataURL("image/png")
+      }
+
+      // Gắn sự kiện nút bấm
+      document
+        .getElementById("captureBtn")
+        .addEventListener("click", takePhoto);
     </script>
   </body>
 </html>
