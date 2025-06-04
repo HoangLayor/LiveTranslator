@@ -653,7 +653,7 @@
             <option value="vi-VN">🇻🇳 Tiếng Việt</option>
             <option value="fr-FR">🇫🇷 Tiếng Pháp</option>
             <option value="ru-RU">🇷🇺 Tiếng Nga</option>
-            <option value="zh-cn">zh Tiếng Trung</option> 
+            <option value="zh-cn">zh Tiếng Trung</option>
           </select>
         </div>
 
@@ -671,7 +671,7 @@
             <option value="en">🇺🇸 English</option>
             <option value="fr">🇫🇷 Tiếng Pháp</option>
             <option value="ru">🇷🇺 Tiếng Nga</option>
-            <option value="zh-cn">zh Tiếng Trung</option> 
+            <option value="zh-cn">zh Tiếng Trung</option>
           </select>
         </div>
       </div>
@@ -746,19 +746,8 @@
           >
             <span class="icon">🛑</span>
             <span class="tooltip">Dừng</span>
-          </button>
+          </button>   
         </div>
-        <video id="cameraPreview" autoplay playsinline></video>
-          <br />
-          <button onclick="takePhoto()">📸 Chụp ảnh</button>
-          <br />
-          <img
-            id="photo"
-            alt="Ảnh đã chụp"
-            style="max-width: 100%; border: 1px solid #ccc"
-          />
-      </div>
-
       <div class="footer">
         <button class="clear-button" onclick="clearMessages()">
           <span class="icon">🗑️</span> Xóa tất cả cuộc trò chuyện
@@ -857,9 +846,7 @@
       }
 
       // Kiểm tra trình duyệt hỗ trợ SpeechRecognition
-      console.log("SpeechRecognition", SpeechRecognition); 
       if (!isMobileDevice()) {
-        console.log("SpeechRecognition supported");
         recognition = new SpeechRecognition();
         recognition.continuous = false; // Ghi âm 1 câu rồi dừng
         recognition.interimResults = false;
@@ -907,6 +894,7 @@
             const reader = new FileReader();
             reader.onloadend = () => {
               const base64data = reader.result.split(",")[1];
+
               if (socket && socket.readyState === WebSocket.OPEN) {
                 lastSentTime = Date.now();
                 socket.send(
@@ -1281,41 +1269,10 @@
         const bars = document.querySelectorAll(".wave-bar");
         bars.forEach((bar) => (bar.style.height = "3px")); // Reset về nhỏ
       }
-
       // Kiểm tra xem trình duyệt có hỗ trợ SpeechRecognition không
       function isMobileDevice() {
           return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
       }
-      // Lấy quyền truy cập camera và stream video vào thẻ <video>
-        navigator.mediaDevices
-        .getUserMedia({ video: true })
-        .then((stream) => {
-          const video = document.querySelector("video");
-          video.srcObject = stream;
-        })
-        .catch((err) => {
-          console.error("Lỗi truy cập camera:", err);
-          alert("Không thể truy cập camera. Vui lòng kiểm tra quyền và HTTPS.");
-        });
-
-      // Hàm chụp ảnh từ video và hiển thị ảnh trong thẻ <img>
-      function takePhoto() {
-        const video = document.querySelector("video");
-        const canvas = document.createElement("canvas");
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-        const photo = document.getElementById("photo");
-        photo.src = canvas.toDataURL("image/png")
-      }
-
-      // Gắn sự kiện nút bấm
-      document
-        .getElementById("captureBtn")
-        .addEventListener("click", takePhoto);
     </script>
   </body>
 </html>

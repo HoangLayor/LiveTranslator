@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Camera Dịch Ảnh</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+    button {
+      padding: 10px 16px;
+      margin: 5px 0;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background-color: #4caf50;
+      color: white;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    video, img {
+      display: block;
+      max-width: 100%;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+    }
+    #result {
+      margin-top: 15px;
+      padding: 10px;
+      background: #e3f2fd;
+      border-left: 4px solid #2196f3;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h2>📷 Dịch ảnh qua camera</h2>
+
+  <button id="startCameraBtn">Bật camera</button>
+
+  <div id="cameraSection" style="display: none;">
+    <video id="cameraPreview" autoplay playsinline width="320" height="240"></video>
+    <button onclick="takePhoto()">📸 Chụp ảnh & Gửi</button>
+  </div>
+
+  <img id="photo" alt="Ảnh đã chụp sẽ hiển thị tại đây" />
+
+  <div id="result">Kết quả dịch sẽ hiển thị ở đây...</div>
+
+  <script>
+    const startCameraBtn = document.getElementById("startCameraBtn");
+    const cameraSection = document.getElementById("cameraSection");
+    const video = document.getElementById("cameraPreview");
+    const photo = document.getElementById("photo");
+    const resultDiv = document.getElementById("result");
+
+    let socket;
+
+    // Kết nối WebSocket
+    function connectWebSocket() {
+      socket = new WebSocket("ws://localhost:8000/ws"); // ✅ Cập nhật URL nếu khác
+
+      socket.onopen = () => console.log("✅ Đã kết nối WebSocket");
+      socket.onerror = (e) => console.error("❌ WS lỗi:", e);
+      socket.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          if (data.type === "translation") {
+            resultDiv.textContent = "✅ Dịch: " + data.text;
+          }
+        } catch (err) {
+          console.error("Lỗi xử lý kết quả:", err);
+        }
+      };
+    }
+
+    connectWebSocket();
+
+    // Bật camera
+    startCameraBtn.addEventListener("click", () => {
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then((stream) => {
+          video.srcObject = stream;
+          cameraSection.style.display = "block";
+          startCameraBtn.disabled = true;
+        })
+        .catch((err) => {
+          alert("Không thể truy cập camera. Kiểm tra HTTPS & quyền.");
+          console.error("Camera error:", err);
+        });
+    });
+
+    // Chụp ảnh và gửi qua WS
+    function takePhoto() {
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      const base64Image = canvas.toDataURL("image/png");
+
+      photo.src = base64Image;
+
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.send(
+          JSON.stringify({
+            type: "image",
+            image: base64Image,
+          })
+        );
+        resultDiv.textContent = "⏳ Đang dịch ảnh...";
+      } else {
+        resultDiv.textContent = "❌ WebSocket chưa kết nối.";
+      }
+    }
+  </script>
+</body>
+</html>
