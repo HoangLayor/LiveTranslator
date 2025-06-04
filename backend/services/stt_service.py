@@ -2,7 +2,7 @@ import whisper
 import tempfile
 import subprocess
 import os
-from punctuation import restore_punctuation
+#from punctuation import restore_punctuation
 
 
 # Load mô hình Whisper (nhẹ và đủ tốt)

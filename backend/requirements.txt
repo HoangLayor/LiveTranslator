@@ -18,3 +18,9 @@ pymupdf
 pytesseract 
 pillow
 sqlalchemy
+pytesseract
+pillow
+opencv-python
+transformers
+torch
+

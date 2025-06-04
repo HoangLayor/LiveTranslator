@@ -18,8 +18,9 @@ punct_pipeline = pipeline(
     model=punct_model,
     tokenizer=punct_tokenizer,
     aggregation_strategy="simple",
-    device=DEVICE,        # <-- nếu có GPU, pipeline sẽ chạy trên GPU
+    device=DEVICE,  # <-- nếu có GPU, pipeline sẽ chạy trên GPU
 )
+
 
 # 2. Hàm viết hoa sau dấu câu (unchanged)
 def capitalize_after_punctuation(text: str) -> str:
@@ -34,9 +35,10 @@ def capitalize_after_punctuation(text: str) -> str:
     def repl(match):
         return match.group(1) + match.group(2).upper()
 
-    pattern = r'([.?!]\s+)(\w)'
+    pattern = r"([.?!]\s+)(\w)"
     text = re.sub(pattern, repl, text)
     return text
+
 
 # 3. Hàm phục hồi dấu câu
 def restore_punctuation(text: str) -> str:
@@ -63,4 +65,3 @@ def restore_punctuation(text: str) -> str:
 
     # Ghép lại và xóa khoảng trắng dư
     return " ".join(result).strip()
-
