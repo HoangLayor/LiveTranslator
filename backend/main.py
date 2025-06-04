@@ -12,7 +12,11 @@ import asyncio
 from backend.utils.logger import setup_logger
 from backend.database import engine
 from backend.models.feedback_model import Base
+from backend.services.image_translation_service import ImageTranslationService
+from backend.services.draw_service import DrawService
 import base64
+from backend.services.translation_service import translate_text
+
 
 # Import hai hàm PUNCTUATION
 from backend.services.punctuation import restore_punctuation, capitalize_after_punctuation
@@ -56,6 +60,12 @@ app = FastAPI()
 # Include các router HTTP nếu có
 app.include_router(file_routes.router, prefix="/api", tags=["file-translator"])
 app.include_router(feedback_routes.router, prefix="/api", tags=["feedback"])
+
+# Khởi tạo các service 
+image_service = ImageTranslationService(
+    "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"
+)
+draw_service = DrawService(font_path="arial.ttf", font_size=16)
 
 # Cấu hình CORS
 app.add_middleware(
@@ -265,11 +275,37 @@ async def websocket_endpoint(websocket: WebSocket):
                         pass
             # ----------------------------
             # 5) Tranlation Image (Dịch hình ảnh)
-            # Client client {"type": "image","image": base64Image, "source_lang": sourceLanguage,"target_lang": targetLanguage}
+            # Client gửi lên {"type": "image","image": base64Image, "source_lang": sourceLanguage,"target_lang": targetLanguage}
             # Server trả về {"type": "translation-image","text": ?,"x": ?,"y": ?}
             # ----------------------------
             elif msg_type == "image":
-                print()
+                image_url = message.get("image_url")
+                source_lang = message.get("source_lang", "auto")
+                target_lang = message.get("target_lang", "en")
+
+                # Trích xuất text
+                text_regions = image_service.extract_sentences_with_positions(image_url)
+
+                # Dịch từng đoạn text
+                for region in text_regions:
+                    region["text"] = translate_text(region["text"], source_lang, target_lang)
+
+                # Vẽ lại text
+                new_image_bytes = draw_service.draw_text_on_image(image_url, text_regions)
+
+                # Upload lại lên Cloudinary
+                new_image_url = image_service.upload_image_to_cloudinary(image_bytes=new_image_bytes)
+
+                # Gửi kết quả lại cho frontend
+                try:
+                  await websocket.send_json({
+                    "type": "image_result",
+                    "original_image_url": image_url,
+                    "new_image_url": new_image_url,
+                    "text_regions": text_regions,
+                 })
+                except WebSocketDisconnect:
+                    break
                 
             elif msg_type == "ping":
                 try:

@@ -351,7 +351,7 @@
         </div>
       </div>
 
-      <div class="camera-container">
+      <div id="cameraSection" class="camera-container">
         <div class="camera-controls">
           <button id="startCameraBtn" class="button">
             <span class="icon">📷</span>
@@ -397,6 +397,11 @@
           <p>Đang xử lý và dịch ảnh...</p>
         </div>
         <div class="result-text">Kết quả dịch sẽ hiển thị ở đây...</div>
+        <img
+          class="result-image"
+          style="display: none; max-width: 700px; margin-top: 10px"
+          alt="Ảnh kết quả"
+        />
       </div>
     </div>
 
@@ -446,34 +451,41 @@
           });
       });
 
-      // Chụp ảnh và gửi qua WS
-      function takePhoto() {
-        const canvas = document.createElement("canvas");
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+      async function uploadToCloudinary(imageBlob) {
+        const cloudName = "dpqs4s1xm";
+        const uploadPreset = "unsigned_demo"; // đổi nếu cần
 
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const formData = new FormData();
+        formData.append("file", imageBlob);
+        formData.append("upload_preset", uploadPreset);
 
-        const base64Image = canvas.toDataURL("image/png");
-
-        photo.src = base64Image;
-
-        if (socket && socket.readyState === WebSocket.OPEN) {
-          socket.send(
-            JSON.stringify({
-              type: "image",
-              image: base64Image,
-              source_lang: sourceLanguage,
-              target_lang: targetLanguage,
-            })
+        try {
+          const response = await fetch(
+            `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+            {
+              method: "POST",
+              body: formData,
+            }
           );
-          resultDiv.textContent = "⏳ Đang dịch ảnh...";
-        } else {
-          resultDiv.textContent = "❌ WebSocket chưa kết nối.";
+
+          const data = await response.json();
+          if (!response.ok) {
+            console.error(
+              "❌ Lỗi upload:",
+              response.status,
+              data.error?.message || data
+            );
+            return null;
+          }
+          return data.secure_url;
+        } catch (error) {
+          console.error(
+            "❌ Upload thất bại (network hoặc fetch error):",
+            error
+          );
+          return null;
         }
       }
-
       // Language selection
       const sourceLangSelect = document.getElementById("sourceLang");
       const targetLangSelect = document.getElementById("targetLang");
@@ -498,88 +510,143 @@
         imageInput.click();
       });
 
-      imageInput.addEventListener("change", (e) => {
+      imageInput.addEventListener("change", async (e) => {
         const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = (event) => {
-            const base64Image = event.target.result;
-            photo.src = base64Image;
-            processImage(base64Image);
-          };
-          reader.readAsDataURL(file);
-        }
-      });
+        if (!file) return;
 
-      // Process image function
-      function processImage(base64Image) {
-        if (socket && socket.readyState === WebSocket.OPEN) {
-          document.querySelector(".loading").style.display = "block";
-          document.querySelector(".result-text").textContent =
-            "⏳ Đang xử lý và dịch ảnh...";
+        // Hiển thị ảnh tạm thời
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const base64Image = event.target.result;
+          photo.src = base64Image;
+        };
+        reader.readAsDataURL(file);
 
-          socket.send(
-            JSON.stringify({
-              type: "image",
-              image: base64Image,
-              source_lang: sourceLanguage,
-              target_lang: targetLanguage,
-            })
+        // Hiển thị loading
+        document.querySelector(".loading").style.display = "block";
+        document.querySelector(".result-text").textContent = "";
+
+        // Upload ảnh lên Cloudinary
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "unsigned_demo"); // đổi nếu bạn dùng preset khác
+
+        try {
+          const response = await fetch(
+            "https://api.cloudinary.com/v1_1/dpqs4s1xm/image/upload",
+            {
+              method: "POST",
+              body: formData,
+            }
           );
-        } else {
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            console.error("❌ Lỗi upload:", data.error?.message || data);
+            document.querySelector(".loading").style.display = "none";
+            document.querySelector(".result-text").textContent =
+              "❌ Không thể tải ảnh lên.";
+            return;
+          }
+
+          const imageUrl = data.secure_url;
+
+          // Gửi URL ảnh qua WebSocket
+          const payload = {
+            type: "image",
+            image_url: imageUrl,
+            source_lang: document.getElementById("sourceLang").value,
+            target_lang: document.getElementById("targetLang").value,
+          };
+
+          if (socket && socket.readyState === WebSocket.OPEN) {
+            socket.send(JSON.stringify(payload));
+          } else {
+            document.querySelector(".result-text").textContent =
+              "❌ WebSocket chưa kết nối.";
+          }
+        } catch (error) {
+          console.error("❌ Upload thất bại:", error);
           document.querySelector(".result-text").textContent =
-            "❌ WebSocket chưa kết nối.";
+            "❌ Upload ảnh thất bại.";
         }
-      }
+
+        document.querySelector(".loading").style.display = "none";
+      });
 
       // Update WebSocket message handler
       socket.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
-          if (data.type === "translation-image") {
+          console.log(data);
+
+          if (data.type === "image_result") {
             document.querySelector(".loading").style.display = "none";
             document.querySelector(".result-text").textContent = data.text;
 
-            const image = new Image();
-            image.src = photo.src;
-
-            image.onload = () => {
-              const canvas = document.createElement("canvas");
-              canvas.width = image.width;
-              canvas.height = image.height;
-              const ctx = canvas.getContext("2d");
-
-              ctx.drawImage(image, 0, 0);
-
-              // Cấu hình chữ
-              ctx.font = "30px Arial";
-              ctx.fillStyle = "red";
-              ctx.strokeStyle = "black";
-              ctx.lineWidth = 2;
-
-              const text = data.text;
-
-              // Nếu có vị trí từ server thì dùng, không thì mặc định
-              const x = data.x ?? 20;
-              const y = data.y ?? 50;
-
-              ctx.strokeText(text, x, y);
-              ctx.fillText(text, x, y);
-
-              photo.src = canvas.toDataURL("image/png");
-            };
+            // Nếu có ảnh thì hiển thị
+            if (data.new_image_url) {
+              const imageElement = document.querySelector(".result-image");
+              imageElement.src = data.new_image_url;
+              imageElement.style.display = "block"; // đảm bảo nó hiển thị
+            }
           }
         } catch (err) {
           console.error("Lỗi xử lý kết quả:", err);
-          document.querySelector(".loading").style.display = "none";
-          document.querySelector(".result-text").textContent =
-            "❌ Có lỗi xảy ra khi xử lý ảnh.";
         }
       };
 
       // Update camera controls
       const takePhotoBtn = document.getElementById("takePhotoBtn");
 
+      takePhotoBtn.disabled = false; // Bật nút sau khi camera chạy
+
+      takePhotoBtn.addEventListener("click", async () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // Hiển thị ảnh đã chụp
+        const imageDataUrl = canvas.toDataURL("image/jpeg");
+        photo.src = imageDataUrl;
+
+        // Hiển thị trạng thái đang xử lý
+        document.querySelector(".loading").style.display = "block";
+        document.querySelector(".result-text").textContent = "";
+
+        // Chuyển ảnh sang blob để upload
+        const blob = await new Promise((resolve) =>
+          canvas.toBlob(resolve, "image/jpeg")
+        );
+
+        const imageUrl = await uploadToCloudinary(blob);
+        if (!imageUrl) {
+          document.querySelector(".loading").style.display = "none";
+          document.querySelector(".result-text").textContent =
+            "❌ Không thể tải ảnh lên.";
+          return;
+        }
+
+        // Gửi URL ảnh và thông tin ngôn ngữ qua WebSocket
+        const payload = {
+          type: "image",
+          image_url: imageUrl,
+          source_lang: document.getElementById("sourceLang").value,
+          target_lang: document.getElementById("targetLang").value,
+        };
+
+        if (socket.readyState === WebSocket.OPEN) {
+          socket.send(JSON.stringify(payload));
+        } else {
+          document.querySelector(".result-text").textContent =
+            "❌ Không kết nối được máy chủ.";
+        }
+
+        document.querySelector(".loading").style.display = "none";
+      });
       startCameraBtn.addEventListener("click", () => {
         navigator.mediaDevices
           .getUserMedia({ video: true })
@@ -593,8 +660,6 @@
             console.error("Camera error:", err);
           });
       });
-
-      takePhotoBtn.addEventListener("click", takePhoto);
     </script>
   </body>
 </html>
