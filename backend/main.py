@@ -169,7 +169,6 @@ async def websocket_endpoint(websocket: WebSocket):
                         "text": normalized
                     })
                 except WebSocketDisconnect:
-                    # Nếu client đã ngắt, break
                     break
 
             # ----------------------------
@@ -264,19 +263,19 @@ async def websocket_endpoint(websocket: WebSocket):
                         })
                     except WebSocketDisconnect:
                         pass
-
             # ----------------------------
-            # 5) PING/PONG giữ kết nối
+            # 5) Tranlation Image (Dịch hình ảnh)
+            # Client client {"type": "image","image": base64Image, "source_lang": sourceLanguage,"target_lang": targetLanguage}
+            # Server trả về {"type": "translation-image","text": ?,"x": ?,"y": ?}
             # ----------------------------
+            elif msg_type == "image":
+                print()
+                
             elif msg_type == "ping":
                 try:
                     await websocket.send_json({"type": "pong"})
                 except WebSocketDisconnect:
                     break
-
-            # ----------------------------
-            # 6) Nếu type không được định nghĩa, trả về echo
-            # ----------------------------
             else:
                 try:
                     await websocket.send_json({
