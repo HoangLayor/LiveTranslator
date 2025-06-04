@@ -41,7 +41,7 @@ async def extract_text_from_image(file: UploadFile = File(...)) -> Dict[str, Any
         )
         
         # Extract text with positions
-        text_regions = image_service.extract_sentences_with_positions(image_url)
+        text_regions = image_service.extract_sentences_with_positions_by_gemini(image_bytes)
 
         # Translate text
         for text_region in text_regions:

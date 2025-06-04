@@ -8,6 +8,9 @@ from fastapi.staticfiles import StaticFiles
 from backend.api import file_routes, feedback_routes
 from starlette.requests import Request
 import json
+from PIL import Image
+import requests
+from io import BytesIO
 import asyncio
 from backend.utils.logger import setup_logger
 from backend.database import engine
@@ -15,10 +18,7 @@ from backend.models.feedback_model import Base
 from backend.services.image_translation_service import ImageTranslationService
 from backend.services.draw_service import DrawService
 import base64
-from backend.services.translation_service import translate_text
 
-
-# Import hai hàm PUNCTUATION
 from backend.services.punctuation import restore_punctuation, capitalize_after_punctuation
 
 # Initialize database
@@ -30,7 +30,8 @@ logger = setup_logger()
 # Thêm đường dẫn services vào sys.path để import các service khác (translate, stt, tts)
 sys.path.append(str(Path(__file__).parent / "services"))
 try:
-    from translation_service import translate_text
+    from translation_service import translate_text, load_models
+    load_models()  # Tải các mô hình dịch thuật khi khởi tạo ứng dụng
 except ImportError as e:
     print(f"Import error: {e}")
     raise
@@ -57,11 +58,25 @@ def handle_audio(base64_audio_str: str):
 # === TẠO ỨNG DỤNG FASTAPI ===
 app = FastAPI()
 
+# Thêm xử lý graceful shutdown
+@app.on_event("shutdown")
+async def shutdown_event():
+    logger.info("Shutting down server...")
+    # Đóng tất cả các kết nối WebSocket đang mở
+    for websocket in app.state.active_connections:
+        try:
+            await websocket.close()
+        except:
+            pass
+    logger.info("Server shutdown complete")
+
+# Lưu trữ các kết nối WebSocket đang hoạt động
+app.state.active_connections = set()
+
 # Include các router HTTP nếu có
 app.include_router(file_routes.router, prefix="/api", tags=["file-translator"])
 app.include_router(feedback_routes.router, prefix="/api", tags=["feedback"])
 
-# Khởi tạo các service 
 image_service = ImageTranslationService(
     "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"
 )
@@ -111,11 +126,12 @@ async def contact(request: Request):
     # logger.info("Contact page accessed")
     return templates.TemplateResponse("contact.html", {"request": request})
 
-
 # === WEBSOCKET ENDPOINT ===
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
+    # Thêm kết nối vào danh sách active
+    app.state.active_connections.add(websocket)
     logger.info("Client connected via WebSocket")
     # Ngôn ngữ mặc định (dùng cho STT hoặc TTS)
     lang = "vi"
@@ -284,7 +300,9 @@ async def websocket_endpoint(websocket: WebSocket):
                 target_lang = message.get("target_lang", "en")
 
                 # Trích xuất text
-                text_regions = image_service.extract_sentences_with_positions(image_url)
+                response = requests.get(image_url)
+                image = Image.open(BytesIO(response.content)).convert("RGB")
+                text_regions = image_service.extract_sentences_with_positions_by_gemini(image)
 
                 # Dịch từng đoạn text
                 for region in text_regions:
@@ -337,6 +355,8 @@ async def websocket_endpoint(websocket: WebSocket):
             pass
 
     finally:
+        # Xóa kết nối khỏi danh sách active
+        app.state.active_connections.remove(websocket)
         # Đóng WebSocket nếu chưa đóng
         try:
             await websocket.close()
@@ -347,4 +367,14 @@ async def websocket_endpoint(websocket: WebSocket):
 # Nếu chạy main.py trực tiếp:
 if __name__ == "__main__":
     import uvicorn
+    import signal
+    import sys
+
+    def signal_handler(sig, frame):
+        print("\nShutting down server...")
+        sys.exit(0)
+
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+    
     uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)

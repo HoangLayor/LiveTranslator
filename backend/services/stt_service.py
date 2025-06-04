@@ -2,11 +2,10 @@ import whisper
 import tempfile
 import subprocess
 import os
-from punctuation import restore_punctuation
-
 
 # Load mô hình Whisper (nhẹ và đủ tốt)
 model = whisper.load_model("base")
+print("Whisper model loaded successfully.")
 
 def convert_webm_to_wav(webm_path: str, wav_path: str):
     subprocess.run(["ffmpeg", "-y", "-i", webm_path, wav_path], check=True)

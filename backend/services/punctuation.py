@@ -1,4 +1,3 @@
-# punctuation.py
 import re
 import torch
 from transformers import AutoTokenizer, AutoModelForTokenClassification, pipeline
@@ -13,6 +12,7 @@ punct_model = AutoModelForTokenClassification.from_pretrained(
 punct_tokenizer = AutoTokenizer.from_pretrained(
     "oliverguhr/fullstop-punctuation-multilang-large"
 )
+print("punctuation model loaded successfully.")
 punct_pipeline = pipeline(
     task="ner",
     model=punct_model,
